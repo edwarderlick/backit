@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Hanken+Grotesk:ital,wght@0,400..800;1,400..800&amp;family=JetBrains+Mono:wght@400..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "secondary": "#6d5e00", "surface-tint": "#5f5e5e", "on-secondary-fixed-variant": "#524700", "on-surface-variant": "#444748", "on-primary": "#ffffff", "primary": "#000000", "inverse-surface": "#30312d", "outline-variant": "#c4c7c7", "outline": "#747878", "surface-dim": "#dbdad5", "secondary-fixed": "#ffe243", "on-error": "#ffffff", "on-secondary-container": "#6d5f00", "on-error-container": "#93000a", "tertiary-fixed-dim": "#c8c6c0", "inverse-primary": "#c8c6c5", "on-tertiary": "#ffffff", "on-tertiary-container": "#84847e", "error": "#ba1a1a", "on-tertiary-fixed-variant": "#474742", "surface-container-lowest": "#ffffff", "background": "#fbf9f4", "on-tertiary-fixed": "#1b1c18", "primary-fixed-dim": "#c8c6c5", "tertiary-fixed": "#e4e2dc", "on-secondary": "#ffffff", "surface-variant": "#e4e2dd", "surface-container-low": "#f5f3ee", "secondary-container": "#f9da00", "surface-container": "#efeee9", "surface-container-highest": "#e4e2dd", "on-primary-container": "#858383", "tertiary": "#000000", "primary-container": "#1c1b1b", "on-surface": "#1b1c19", "surface-bright": "#fbf9f4", "surface": "#fbf9f4", "on-secondary-fixed": "#211b00", "on-background": "#1b1c19", "inverse-on-surface": "#f2f1eb", "on-primary-fixed-variant": "#474646", "tertiary-container": "#1b1c18", "surface-container-high": "#eae8e3", "secondary-fixed-dim": "#e3c600", "primary-fixed": "#e5e2e1", "error-container": "#ffdad6", "on-primary-fixed": "#1c1b1b" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-2xs": "0.25rem", "space-xl": "2rem", "space-xs": "0.5rem", "space-2xl": "3rem", "space-3xl": "4.5rem", "space-sm": "0.75rem", "space-4xl": "6rem", "content-max-width": "75rem", "gutter-desktop": "1.5rem", "gutter-mobile": "1rem", "space-md": "1rem", "space-lg": "1.5rem" }, "fontFamily": { "display-hero-mobile": [ "Anton" ], "body-sm": [ "Hanken Grotesk" ], "headline-lg": [ "Anton" ], "badge-numeral": [ "JetBrains Mono" ], "headline-xl-mobile": [ "Anton" ], "body-lg": [ "Hanken Grotesk" ], "body-md": [ "Hanken Grotesk" ], "label-mono-sm": [ "JetBrains Mono" ], "display-hero": [ "Anton" ], "headline-md": [ "Hanken Grotesk" ], "headline-xl": [ "Anton" ] }, "fontSize": { "display-hero-mobile": [ "44px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "400" } ], "body-sm": [ "12px", { "lineHeight": "18px", "fontWeight": "400" } ], "headline-lg": [ "40px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "badge-numeral": [ "13px", { "lineHeight": "16px", "fontWeight": "700" } ], "headline-xl-mobile": [ "32px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "body-lg": [ "16px", { "lineHeight": "24px", "fontWeight": "500" } ], "body-md": [ "14px", { "lineHeight": "20px", "fontWeight": "400" } ], "label-mono-sm": [ "11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" } ], "display-hero": [ "84px", { "lineHeight": "84px", "letterSpacing": "-0.03em", "fontWeight": "400" } ], "headline-md": [ "22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" } ], "headline-xl": [ "56px", { "lineHeight": "58px", "letterSpacing": "-0.02em", "fontWeight": "400" } ] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><div class="hidden w-full bg-error text-on-error px-gutter-desktop py-space-xs font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-center flex items-center justify-center gap-space-xs z-[60] relative" id="wrong-network-banner"><span class="material-symbols-outlined text-[16px]">warning</span><span>WRONG NETWORK DETECTED. PLEASE SWITCH WALLET RPC TO GENLAYER STUDIONET (CHAIN ID 421614).</span></div><header class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 max-w-content-max-width mx-auto px-gutter-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-sm"><img alt="BackIt Brand Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XPD7GQ_C52vc28NEyEE84xPiAuRJigwRNgRfx1uOzZbnKfLnr_ynCBC3etUZTKloQ-9tN400Td7jglRL3xlMCnb5EQ1ZG0R1gZfKby16UsvWqMVP2It7vk3n6olQv7FenwBjgJKGNincN2QqQqb7QFq-gYKNlCeuhDsX4s_EbxOLoDJvbh1DZefRS5XyUtJgX8RGzk5b1t7srUeQ2StOnf8Hqy1QX4kAfdkfvWfDRsNjnUtVsX01FpoQ"/><span class="font-headline-lg text-headline-md tracking-tight uppercase text-primary">BackIt</span><span class="hidden sm:inline-flex items-center px-space-xs py-space-2xs rounded-full bg-surface-container font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-wider">StudioNet · GenLayer</span></div><nav class="hidden xl:flex items-center gap-space-lg" data-active-classes="text-primary font-bold"><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="browse-claims" href="#">Browse Claims</a><a aria-current="page" class="transition-colors text-primary font-bold" data-path="back-a-claim" href="#">Back a Claim</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="my-backs" href="#">My Backs</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="economics" href="#">Economics</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="how-it-works" href="#">How It Works</a></nav><div class="flex items-center gap-space-xs"><div class="hidden md:flex items-center gap-space-2xs px-space-sm py-space-xs rounded-full bg-surface-container font-label-mono-sm text-label-mono-sm text-on-surface"><span class="w-2 h-2 rounded-full bg-secondary-container inline-block"></span><span>StudioNet</span></div><div class="hidden lg:flex items-center px-space-sm py-space-xs rounded-full bg-surface-container-high font-badge-numeral text-badge-numeral text-primary">0.00 GEN</div><button class="flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-badge-numeral hover:bg-secondary-fixed transition-colors shadow-[0_2px_0px_#000000]" type="button"><span>0x71C...4f9a</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Top Sovereign Header / Contract State Banner -->
+<section class="w-full bg-surface py-space-2xl md:py-space-3xl">
+<div class="max-w-content-max-width mx-auto px-gutter-desktop flex flex-col gap-space-xl">
+<!-- Micro Overline Badging -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-sm border-b-0">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-container animate-pulse inline-block"></span>
+<span class="font-label-mono-sm text-label-mono-sm uppercase tracking-widest text-on-surface-variant">
+            GET_ECONOMICS · ON-CHAIN REPOSITORY AUDIT
+          </span>
+</div>
+<div class="flex items-center gap-space-xs font-label-mono-sm text-label-mono-sm text-on-surface-variant bg-surface-container-high px-space-sm py-space-2xs rounded-full">
+<span>CONSENSUS SYNC: DETERMINISTIC</span>
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="text-primary font-bold">STUDIONET #1,940,305</span>
+</div>
+</div>
+<!-- Main Typography Lockup -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-end">
+<div class="lg:col-span-8 flex flex-col gap-space-xs">
+<h1 class="font-headline-xl text-headline-xl uppercase text-primary tracking-tight leading-none">
+            PROTOCOL ECONOMICS &amp; TREASURY
+          </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl pt-space-xs">
+            Transparent on-chain accounting of all locked test GEN, protocol fees, prover bounties, and unspent credit liabilities across StudioNet. Deterministic arithmetic without token speculation.
+          </p>
+</div>
+<!-- Contract Address Widget -->
+<div class="lg:col-span-4 flex flex-col items-start lg:items-end justify-end gap-space-xs">
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-wider">Target Contract Address</span>
+<div class="flex items-center gap-space-xs bg-surface-container p-space-xs rounded-xl shadow-sm w-full sm:w-auto justify-between lg:justify-start">
+<span class="material-symbols-outlined text-primary text-[18px]">terminal</span>
+<code class="font-badge-numeral text-badge-numeral text-primary" id="contract-addr">0x8a92...32d1</code>
+<button class="font-label-mono-sm text-label-mono-sm px-space-xs py-space-2xs bg-primary text-on-primary rounded uppercase hover:bg-secondary-container hover:text-on-secondary-fixed transition-colors" id="copy-btn" onclick="navigator.clipboard.writeText('0x8a927fae98126b482910fa381903e1b1298432d1'); this.innerText='COPIED'; setTimeout(()=&gt;this.innerText='COPY', 1500);">
+              COPY
+            </button>
+<a class="p-space-2xs text-on-surface-variant hover:text-primary transition-colors flex items-center" href="#" rel="noopener noreferrer" target="_blank" title="Open StudioNet Explorer">
+<span class="material-symbols-outlined text-[18px]">open_in_new</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Core Metric Cards (Bold numbers, brutalist contrast) -->
+<section class="w-full bg-surface-container-low py-space-2xl">
+<div class="max-w-content-max-width mx-auto px-gutter-desktop flex flex-col gap-space-xl">
+<div class="flex items-center justify-between">
+<span class="font-label-mono-sm text-label-mono-sm uppercase text-on-surface-variant tracking-wider">
+          LIVE ON-CHAIN RESERVES · GENLAYER STUDIONET
+        </span>
+<span class="font-label-mono-sm text-label-mono-sm text-primary uppercase font-bold">
+          SOLVENCY RATIO: 100.00%
+        </span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Metric Card 1 -->
+<div class="bg-primary text-on-primary p-space-lg rounded-xl flex flex-col justify-between shadow-md relative overflow-hidden group">
+<div class="absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-surface-container-highest/10 pointer-events-none group-hover:scale-125 transition-transform"></div>
+<div class="flex items-center justify-between pb-space-md">
+<span class="w-7 h-7 rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-badge-numeral flex items-center justify-center font-bold">01</span>
+<span class="material-symbols-outlined text-secondary-container text-[20px]">lock_clock</span>
+</div>
+<div class="flex flex-col gap-space-2xs">
+<span class="font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-surface-tint">TOTAL BOND CAPITAL LOCKED</span>
+<div class="font-headline-lg text-headline-lg uppercase text-secondary-container tracking-tight">1,220.00</div>
+<div class="flex items-center justify-between font-label-mono-sm text-label-mono-sm text-surface-dim pt-space-xs">
+<span>GEN IN ESCROW</span>
+<span class="bg-surface-container-highest/20 px-space-xs py-space-2xs rounded">6 ACTIVE CLAIMS</span>
+</div>
+</div>
+</div>
+<!-- Metric Card 2 -->
+<div class="bg-secondary-container text-on-secondary-fixed p-space-lg rounded-xl flex flex-col justify-between shadow-md relative overflow-hidden group">
+<div class="flex items-center justify-between pb-space-md">
+<span class="w-7 h-7 rounded-full bg-primary text-on-primary font-badge-numeral text-badge-numeral flex items-center justify-center font-bold">02</span>
+<span class="material-symbols-outlined text-primary text-[20px]">account_balance</span>
+</div>
+<div class="flex flex-col gap-space-2xs">
+<span class="font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-on-secondary-container">CUMULATIVE TREASURY ACCRUAL</span>
+<div class="font-headline-lg text-headline-lg uppercase text-primary tracking-tight">182.50</div>
+<div class="flex items-center justify-between font-label-mono-sm text-label-mono-sm text-on-secondary-container pt-space-xs font-semibold">
+<span>GEN ACCRUED (2.5%)</span>
+<span class="bg-on-secondary-container/10 px-space-xs py-space-2xs rounded">HELD IN RESERVE</span>
+</div>
+</div>
+</div>
+<!-- Metric Card 3 -->
+<div class="bg-surface-container-lowest text-on-surface p-space-lg rounded-xl flex flex-col justify-between shadow-md relative overflow-hidden group">
+<div class="flex items-center justify-between pb-space-md">
+<span class="w-7 h-7 rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-badge-numeral flex items-center justify-center font-bold">03</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">verified_user</span>
+</div>
+<div class="flex flex-col gap-space-2xs">
+<span class="font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-on-surface-variant">TOTAL BOUNTIES PAID</span>
+<div class="font-headline-lg text-headline-lg uppercase text-primary tracking-tight">2,850.00</div>
+<div class="flex items-center justify-between font-label-mono-sm text-label-mono-sm text-on-surface-variant pt-space-xs">
+<span>GEN SLASHED &amp; PAID</span>
+<span class="bg-surface-container px-space-xs py-space-2xs rounded">100% TO PROVERS</span>
+</div>
+</div>
+</div>
+<!-- Metric Card 4 -->
+<div class="bg-surface-container-high text-on-surface p-space-lg rounded-xl flex flex-col justify-between shadow-md relative overflow-hidden group">
+<div class="flex items-center justify-between pb-space-md">
+<span class="w-7 h-7 rounded-full bg-primary text-on-primary font-badge-numeral text-badge-numeral flex items-center justify-center font-bold">04</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">account_balance_wallet</span>
+</div>
+<div class="flex flex-col gap-space-2xs">
+<span class="font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-on-surface-variant">UNCLAIMED CREDITS</span>
+<div class="font-headline-lg text-headline-lg uppercase text-primary tracking-tight">225.00</div>
+<div class="flex items-center justify-between font-label-mono-sm text-label-mono-sm text-on-surface-variant pt-space-xs">
+<span>GEN OWED TO USERS</span>
+<span class="bg-surface-container px-space-xs py-space-2xs rounded">WITHDRAWABLE</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Contract Balance Verification Math Bar -->
+<div class="bg-surface-container p-space-md rounded-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-space-sm font-label-mono-sm text-label-mono-sm">
+<div class="flex flex-wrap items-center gap-space-xs text-on-surface">
+<span class="font-bold uppercase text-primary">AUDIT RECONCILIATION:</span>
+<span>1,220.00 (Escrow) + 182.50 (Reserve) + 225.00 (Liabilities)</span>
+<span class="text-primary font-bold">= 1,627.50 GEN REAL BALANCE</span>
+</div>
+<div class="flex items-center gap-space-xs text-on-secondary-fixed bg-secondary-container px-space-sm py-space-2xs rounded-full font-bold">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span>100% RECONCILED WITH EVM STORAGE</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Detailed Mathematical Breakdown: Three Zero-Sum Flows -->
+<section class="w-full bg-surface py-space-3xl">
+<div class="max-w-content-max-width mx-auto px-gutter-desktop flex flex-col gap-space-2xl">
+<div class="flex flex-col gap-space-2xs">
+<div class="flex items-center gap-space-xs font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-wider">
+<span>ZERO-SUM ARITHMETIC</span>
+<span>/</span>
+<span>NO SINKHOLES OR PROTOCOL MINTING</span>
+</div>
+<h2 class="font-headline-xl text-headline-xl uppercase text-primary tracking-tight">
+          THE THREE ZERO-SUM CASH FLOWS
+        </h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+          BackIt executes purely deterministic game theory. Capital never sits in speculative pools. It is either completely returned, harvested via a nominal verification fee, or 100% transferred to a successful prover.
+        </p>
+</div>
+<!-- 3 Flow Architecture Columns -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+<!-- Case 1: TRUE -->
+<div class="bg-surface-container-low rounded-xl p-space-lg flex flex-col justify-between shadow-sm relative">
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-primary inline-block"></span>
+<span class="font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-primary font-bold">OUTCOME A</span>
+</div>
+<span class="bg-surface-container px-space-xs py-space-2xs rounded font-label-mono-sm text-label-mono-sm uppercase text-on-surface">ATTESTATION TRUE</span>
+</div>
+<div class="font-headline-md text-headline-md uppercase text-primary">
+              VERIFIED VALID CLAIM
+            </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              The poster's assertion holds true upon live-web resolution. The principal is returned with only a minimal protocol overhead deducted to sustain validator consensus.
+            </p>
+<!-- Breakdown Visual -->
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<div class="flex justify-between items-center bg-surface-container-lowest p-space-xs rounded font-label-mono-sm text-label-mono-sm">
+<span class="text-on-surface-variant">Poster Principal Return</span>
+<span class="font-bold text-primary">97.5%</span>
+</div>
+<div class="flex justify-between items-center bg-secondary-container/40 p-space-xs rounded font-label-mono-sm text-label-mono-sm">
+<span class="text-on-surface-variant">Protocol Treasury Accrual</span>
+<span class="font-bold text-primary">2.5%</span>
+</div>
+<div class="flex justify-between items-center bg-surface-container-lowest p-space-xs rounded font-label-mono-sm text-label-mono-sm">
+<span class="text-on-surface-variant">Prover / Challenger Bounty</span>
+<span class="font-bold text-outline">0.0%</span>
+</div>
+</div>
+</div>
+<!-- Micro SVG Ratio Bar -->
+<div class="pt-space-md">
+<div class="w-full h-3 bg-surface-container rounded-full overflow-hidden flex">
+<div class="bg-primary h-full" style="width: 97.5%;"></div>
+<div class="bg-secondary-container h-full" style="width: 2.5%;"></div>
+</div>
+<div class="flex justify-between text-label-mono-sm font-label-mono-sm text-on-surface-variant pt-space-2xs">
+<span>97.5% Poster</span>
+<span>2.5% Treasury</span>
+</div>
+</div>
+</div>
+<!-- Case 2: FALSE -->
+<div class="bg-surface-container-high rounded-xl p-space-lg flex flex-col justify-between shadow-sm relative">
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-error inline-block"></span>
+<span class="font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-error font-bold">OUTCOME B</span>
+</div>
+<span class="bg-error-container px-space-xs py-space-2xs rounded font-label-mono-sm text-label-mono-sm uppercase text-on-error-container font-semibold">REFUTED FALSE</span>
+</div>
+<div class="font-headline-md text-headline-md uppercase text-primary">
+              BOUNTY SLASHED TO PROVER
+            </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              The poster's assertion is definitively refuted by cryptographic live-web evidence provided by a challenger. The bond is wholly confiscated and awarded to the prover.
+            </p>
+<!-- Breakdown Visual -->
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<div class="flex justify-between items-center bg-surface-container-lowest p-space-xs rounded font-label-mono-sm text-label-mono-sm">
+<span class="text-on-surface-variant">Poster Bond Slash</span>
+<span class="font-bold text-error">0.0% Return</span>
+</div>
+<div class="flex justify-between items-center bg-surface-container-lowest p-space-xs rounded font-label-mono-sm text-label-mono-sm">
+<span class="text-on-surface-variant">Protocol Treasury Cut</span>
+<span class="font-bold text-outline">0.0% Fee</span>
+</div>
+<div class="flex justify-between items-center bg-primary text-on-primary p-space-xs rounded font-label-mono-sm text-label-mono-sm">
+<span class="text-surface-dim">Awarded Prover Bounty</span>
+<span class="font-bold text-secondary-container">100.0%</span>
+</div>
+</div>
+</div>
+<!-- Micro SVG Ratio Bar -->
+<div class="pt-space-md">
+<div class="w-full h-3 bg-surface-container rounded-full overflow-hidden flex">
+<div class="bg-primary h-full" style="width: 100%;"></div>
+</div>
+<div class="flex justify-between text-label-mono-sm font-label-mono-sm text-on-surface-variant pt-space-2xs">
+<span>0% Poster</span>
+<span class="font-bold text-primary">100% Prover Bounty</span>
+</div>
+</div>
+</div>
+<!-- Case 3: THIN -->
+<div class="bg-surface-container-low rounded-xl p-space-lg flex flex-col justify-between shadow-sm relative">
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-outline inline-block"></span>
+<span class="font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-outline font-bold">OUTCOME C</span>
+</div>
+<span class="bg-surface-container px-space-xs py-space-2xs rounded font-label-mono-sm text-label-mono-sm uppercase text-on-surface">EVIDENCE INCONCLUSIVE</span>
+</div>
+<div class="font-headline-md text-headline-md uppercase text-primary">
+              THIN / UNVERIFIED REFUND
+            </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              GenLayer deterministic consensus cannot locate authoritative ground-truth or web endpoints are unreachable. Capital returns untaxed to avoid unfair penalty.
+            </p>
+<!-- Breakdown Visual -->
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<div class="flex justify-between items-center bg-surface-container-lowest p-space-xs rounded font-label-mono-sm text-label-mono-sm">
+<span class="text-on-surface-variant">Full Poster Refund</span>
+<span class="font-bold text-primary">100.0%</span>
+</div>
+<div class="flex justify-between items-center bg-surface-container-lowest p-space-xs rounded font-label-mono-sm text-label-mono-sm">
+<span class="text-on-surface-variant">Protocol Treasury Cut</span>
+<span class="font-bold text-outline">0.0%</span>
+</div>
+<div class="flex justify-between items-center bg-surface-container-lowest p-space-xs rounded font-label-mono-sm text-label-mono-sm">
+<span class="text-on-surface-variant">Challenger Penalty/Share</span>
+<span class="font-bold text-outline">0.0%</span>
+</div>
+</div>
+</div>
+<!-- Micro SVG Ratio Bar -->
+<div class="pt-space-md">
+<div class="w-full h-3 bg-surface-container rounded-full overflow-hidden flex">
+<div class="bg-surface-tint h-full" style="width: 100%;"></div>
+</div>
+<div class="flex justify-between text-label-mono-sm font-label-mono-sm text-on-surface-variant pt-space-2xs">
+<span class="font-bold text-primary">100% Poster Refund</span>
+<span>0% Tax</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Live Treasury Ledger & Contract Transactions Table -->
+<section class="w-full bg-surface-container-low py-space-3xl">
+<div class="max-w-content-max-width mx-auto px-gutter-desktop flex flex-col gap-space-xl">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-space-sm">
+<div class="flex flex-col gap-space-2xs">
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-wider">
+            RAW GENLAYER STUDIONET DISPATCH FEED
+          </span>
+<h2 class="font-headline-xl text-headline-xl uppercase text-primary tracking-tight">
+            TREASURY FLOW LEDGER
+          </h2>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container px-space-sm py-space-xs rounded-full font-label-mono-sm text-label-mono-sm">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span>FILTER: ALL CASH DISPATCHES</span>
+</div>
+</div>
+<!-- Tabular Ledger -->
+<div class="w-full overflow-x-auto rounded-xl bg-surface-container-lowest shadow-sm">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high text-on-surface font-label-mono-sm text-label-mono-sm uppercase tracking-wider">
+<th class="py-space-sm px-space-md">Tx Hash</th>
+<th class="py-space-sm px-space-md">Type</th>
+<th class="py-space-sm px-space-md">Claim Statement</th>
+<th class="py-space-sm px-space-md text-right">Inflow / Outflow</th>
+<th class="py-space-sm px-space-md">Recipient / Pool</th>
+<th class="py-space-sm px-space-md text-right">Block</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 font-body-sm text-body-sm">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-space-md px-space-md font-badge-numeral text-badge-numeral text-primary">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">receipt_long</span>
+<span>0x8f4d...391b</span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-xs py-space-2xs rounded bg-surface-container text-on-surface font-label-mono-sm text-label-mono-sm font-semibold uppercase">
+                  TRUE Attestation Fee
+                </span>
+</td>
+<td class="py-space-md px-space-md font-body-md text-body-md text-primary font-medium truncate max-w-xs">
+                Claude 3.7 Sonnet Release Announced Before March
+              </td>
+<td class="py-space-md px-space-md text-right font-badge-numeral text-badge-numeral text-primary font-bold">
+                +12.50 GEN
+              </td>
+<td class="py-space-md px-space-md font-label-mono-sm text-label-mono-sm text-on-surface-variant">
+<div class="flex items-center gap-space-2xs">
+<span class="w-2 h-2 rounded-full bg-secondary-container inline-block"></span>
+<span>Treasury Reserve (0x8a92...32d1)</span>
+</div>
+</td>
+<td class="py-space-md px-space-md text-right font-badge-numeral text-badge-numeral text-on-surface-variant">
+                #1,940,291
+              </td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors bg-surface-container/20">
+<td class="py-space-md px-space-md font-badge-numeral text-badge-numeral text-primary">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">receipt_long</span>
+<span>0x1f80...11cd</span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-xs py-space-2xs rounded bg-error-container text-on-error-container font-label-mono-sm text-label-mono-sm font-semibold uppercase">
+                  FALSE Bounty Payout
+                </span>
+</td>
+<td class="py-space-md px-space-md font-body-md text-body-md text-primary font-medium truncate max-w-xs">
+                Satoshi Nakamoto moved 50 BTC from 2009 block
+              </td>
+<td class="py-space-md px-space-md text-right font-badge-numeral text-badge-numeral text-error font-bold">
+                -400.00 GEN
+              </td>
+<td class="py-space-md px-space-md font-label-mono-sm text-label-mono-sm text-on-surface-variant">
+<div class="flex items-center gap-space-2xs">
+<span class="w-2 h-2 rounded-full bg-primary inline-block"></span>
+<span>Prover (0x71c...4f9a)</span>
+</div>
+</td>
+<td class="py-space-md px-space-md text-right font-badge-numeral text-badge-numeral text-on-surface-variant">
+                #1,938,110
+              </td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-space-md px-space-md font-badge-numeral text-badge-numeral text-primary">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">receipt_long</span>
+<span>0xd73e...99bb</span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-xs py-space-2xs rounded bg-surface-container text-on-surface font-label-mono-sm text-label-mono-sm font-semibold uppercase">
+                  THIN Full Refund
+                </span>
+</td>
+<td class="py-space-md px-space-md font-body-md text-body-md text-primary font-medium truncate max-w-xs">
+                OpenAI major status page outage unresolved
+              </td>
+<td class="py-space-md px-space-md text-right font-badge-numeral text-badge-numeral text-on-surface-variant font-bold">
+                -150.00 GEN
+              </td>
+<td class="py-space-md px-space-md font-label-mono-sm text-label-mono-sm text-on-surface-variant">
+<div class="flex items-center gap-space-2xs">
+<span class="w-2 h-2 rounded-full bg-outline inline-block"></span>
+<span>Poster Refund (0x22a...8831)</span>
+</div>
+</td>
+<td class="py-space-md px-space-md text-right font-badge-numeral text-badge-numeral text-on-surface-variant">
+                #1,935,842
+              </td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors bg-surface-container/20">
+<td class="py-space-md px-space-md font-badge-numeral text-badge-numeral text-primary">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">receipt_long</span>
+<span>0x4c2a...89e1</span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-xs py-space-2xs rounded bg-secondary-container text-on-secondary-fixed font-label-mono-sm text-label-mono-sm font-semibold uppercase">
+                  Bond Locked (OPEN)
+                </span>
+</td>
+<td class="py-space-md px-space-md font-body-md text-body-md text-primary font-medium truncate max-w-xs">
+                Stripe introduces native Arbitrum USDC rails
+              </td>
+<td class="py-space-md px-space-md text-right font-badge-numeral text-badge-numeral text-secondary font-bold">
+                +250.00 GEN
+              </td>
+<td class="py-space-md px-space-md font-label-mono-sm text-label-mono-sm text-on-surface-variant">
+<div class="flex items-center gap-space-2xs">
+<span class="w-2 h-2 rounded-full bg-secondary inline-block"></span>
+<span>Contract Escrow Vault</span>
+</div>
+</td>
+<td class="py-space-md px-space-md text-right font-badge-numeral text-badge-numeral text-on-surface-variant">
+                #1,934,019
+              </td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Explanatory note -->
+<div class="flex items-center justify-between font-label-mono-sm text-label-mono-sm text-on-surface-variant">
+<span>SHOWING 4 OF 1,489 TOTAL PROTOCOL LEDGER EVENTS</span>
+<button class="uppercase font-bold text-primary hover:text-secondary transition-colors flex items-center gap-space-2xs">
+<span>QUERY ALL RAW DISPATCHES</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Safety Invariants Banner -->
+<section class="w-full bg-primary text-on-primary py-space-3xl">
+<div class="max-w-content-max-width mx-auto px-gutter-desktop flex flex-col gap-space-xl">
+<div class="flex flex-col gap-space-2xs">
+<div class="flex items-center gap-space-xs font-label-mono-sm text-label-mono-sm text-secondary-container uppercase tracking-widest">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span>INTELLIGENT CONTRACT FORMAL INVARIANTS</span>
+</div>
+<h2 class="font-headline-xl text-headline-xl uppercase text-on-primary tracking-tight">
+          GENLAYER DETERMINISTIC GUARANTEES
+        </h2>
+<p class="font-body-md text-body-md text-on-primary-container max-w-2xl">
+          BackIt contracts are compiled to GenLayer deterministic Python execution. Solvency and security are non-negotiable laws enforced by decentralized validator nodes.
+        </p>
+</div>
+<!-- Invariant 3 Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg pt-space-xs">
+<!-- Invariant 1 -->
+<div class="bg-primary-container p-space-lg rounded-xl flex flex-col justify-between shadow-lg">
+<div class="flex flex-col gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-fixed flex items-center justify-center font-badge-numeral text-badge-numeral font-bold">
+              01
+            </div>
+<h3 class="font-headline-md text-headline-md uppercase text-secondary-container">
+              STRICT SOLVENCY
+            </h3>
+<p class="font-body-md text-body-md text-on-primary-container">
+              Contract Native GEN Balance is proven at every state transition:
+            </p>
+<div class="bg-surface-container-highest/10 p-space-xs rounded font-label-mono-sm text-label-mono-sm text-secondary-container leading-relaxed">
+              Balance &gt;= (Open Bonds + Outstanding Credits + Protocol Treasury)
+            </div>
+</div>
+<div class="pt-space-md font-label-mono-sm text-label-mono-sm text-surface-tint uppercase">
+            FAIL-CLOSED PANIC ON DEFICIT
+          </div>
+</div>
+<!-- Invariant 2 -->
+<div class="bg-primary-container p-space-lg rounded-xl flex flex-col justify-between shadow-lg">
+<div class="flex flex-col gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-fixed flex items-center justify-center font-badge-numeral text-badge-numeral font-bold">
+              02
+            </div>
+<h3 class="font-headline-md text-headline-md uppercase text-secondary-container">
+              ZERO SEIZURE
+            </h3>
+<p class="font-body-md text-body-md text-on-primary-container">
+              No multi-sig, protocol key, or admin operator possesses a function to extract locked escrow or alter settlement status flags.
+            </p>
+<div class="bg-surface-container-highest/10 p-space-xs rounded font-label-mono-sm text-label-mono-sm text-secondary-container leading-relaxed">
+              ADMIN PRIVILEGE = NONE (IRREVOCABLE)
+            </div>
+</div>
+<div class="pt-space-md font-label-mono-sm text-label-mono-sm text-surface-tint uppercase">
+            IMMUTABLE DEPLOYMENT
+          </div>
+</div>
+<!-- Invariant 3 -->
+<div class="bg-primary-container p-space-lg rounded-xl flex flex-col justify-between shadow-lg">
+<div class="flex flex-col gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-fixed flex items-center justify-center font-badge-numeral text-badge-numeral font-bold">
+              03
+            </div>
+<h3 class="font-headline-md text-headline-md uppercase text-secondary-container">
+              ATOMIC SETTLEMENT
+            </h3>
+<p class="font-body-md text-body-md text-on-primary-container">
+              When GenLayer consensus completes an attestation, the bond release or bounty distribution occurs synchronously in the same ledger tick.
+            </p>
+<div class="bg-surface-container-highest/10 p-space-xs rounded font-label-mono-sm text-label-mono-sm text-secondary-container leading-relaxed">
+              RESOLVE() == DISPATCH() IN 1 EVM TX
+            </div>
+</div>
+<div class="pt-space-md font-label-mono-sm text-label-mono-sm text-surface-tint uppercase">
+            NO ESCROW STALLING
+          </div>
+</div>
+</div>
+<!-- Developer Verification Footer Note -->
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pt-space-xl border-t-0 gap-space-md">
+<div class="flex items-center gap-space-xs font-label-mono-sm text-label-mono-sm text-on-primary-container">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span>GET_ECONOMICS ABI CALL ID: 0x6e80b2a7 · GENLAYER STUDIONET RPC</span>
+</div>
+<a class="px-space-md py-space-xs rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-badge-numeral font-bold hover:bg-secondary-fixed transition-colors flex items-center gap-space-xs" href="#">
+<span>READ CONTRACT SOURCE</span>
+<span class="material-symbols-outlined text-[16px]">code</span>
+</a>
+</div>
+</div>
+</section>
+</div></main><footer class="w-full bg-primary text-on-primary py-space-3xl"><div class="max-w-content-max-width mx-auto px-gutter-desktop flex flex-col gap-space-2xl"><div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-space-xl"><div class="flex flex-col gap-space-xs"><span class="font-headline-xl text-headline-xl uppercase tracking-tight text-secondary-container">BackIt</span><p class="font-body-md text-body-md text-on-primary-container max-w-md">Settled on GenLayer live-web consensus. Not a court. Put up or shut up.</p></div><div class="flex flex-wrap gap-space-xl font-label-mono-sm text-label-mono-sm uppercase tracking-wider"><div class="flex flex-col gap-space-xs"><span class="text-surface-tint">Protocol</span><a class="hover:text-secondary-container transition-colors" data-path="browse-claims" href="#">Claims Matrix</a><a class="hover:text-secondary-container transition-colors" data-path="economics" href="#">Bond Mechanics</a><a class="hover:text-secondary-container transition-colors" data-path="how-it-works" href="#">Optimistic Dispute</a></div><div class="flex flex-col gap-space-xs"><span class="text-surface-tint">Resources</span><a class="hover:text-secondary-container transition-colors" href="#">GenLayer Docs</a><a class="hover:text-secondary-container transition-colors" href="#">StudioNet Explorer</a><a class="hover:text-secondary-container transition-colors" href="#">Bug Bounty</a></div></div></div><div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-space-sm pt-space-xl bg-primary-container/40 p-space-md rounded-xl font-label-mono-sm text-label-mono-sm text-on-primary-container"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-secondary-container"></span><span>CONTRACT: 0x8a92...32d1 (GENLAYER INTELLIGENT CONTRACT)</span></div><div>© 2025 BackIt Protocol · Consensus by Deterministic LLM Execution</div></div></div></footer></body></html>

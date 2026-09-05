@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Hanken+Grotesk:ital,wght@0,400..800;1,400..800&amp;family=JetBrains+Mono:wght@400..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "secondary": "#6d5e00", "surface-tint": "#5f5e5e", "on-secondary-fixed-variant": "#524700", "on-surface-variant": "#444748", "on-primary": "#ffffff", "primary": "#000000", "inverse-surface": "#30312d", "outline-variant": "#c4c7c7", "outline": "#747878", "surface-dim": "#dbdad5", "secondary-fixed": "#ffe243", "on-error": "#ffffff", "on-secondary-container": "#6d5f00", "on-error-container": "#93000a", "tertiary-fixed-dim": "#c8c6c0", "inverse-primary": "#c8c6c5", "on-tertiary": "#ffffff", "on-tertiary-container": "#84847e", "error": "#ba1a1a", "on-tertiary-fixed-variant": "#474742", "surface-container-lowest": "#ffffff", "background": "#fbf9f4", "on-tertiary-fixed": "#1b1c18", "primary-fixed-dim": "#c8c6c5", "tertiary-fixed": "#e4e2dc", "on-secondary": "#ffffff", "surface-variant": "#e4e2dd", "surface-container-low": "#f5f3ee", "secondary-container": "#f9da00", "surface-container": "#efeee9", "surface-container-highest": "#e4e2dd", "on-primary-container": "#858383", "tertiary": "#000000", "primary-container": "#1c1b1b", "on-surface": "#1b1c19", "surface-bright": "#fbf9f4", "surface": "#fbf9f4", "on-secondary-fixed": "#211b00", "on-background": "#1b1c19", "inverse-on-surface": "#f2f1eb", "on-primary-fixed-variant": "#474646", "tertiary-container": "#1b1c18", "surface-container-high": "#eae8e3", "secondary-fixed-dim": "#e3c600", "primary-fixed": "#e5e2e1", "error-container": "#ffdad6", "on-primary-fixed": "#1c1b1b" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-2xs": "0.25rem", "space-xl": "2rem", "space-xs": "0.5rem", "space-2xl": "3rem", "space-3xl": "4.5rem", "space-sm": "0.75rem", "space-4xl": "6rem", "content-max-width": "75rem", "gutter-desktop": "1.5rem", "gutter-mobile": "1rem", "space-md": "1rem", "space-lg": "1.5rem" }, "fontFamily": { "display-hero-mobile": [ "Anton" ], "body-sm": [ "Hanken Grotesk" ], "headline-lg": [ "Anton" ], "badge-numeral": [ "JetBrains Mono" ], "headline-xl-mobile": [ "Anton" ], "body-lg": [ "Hanken Grotesk" ], "body-md": [ "Hanken Grotesk" ], "label-mono-sm": [ "JetBrains Mono" ], "display-hero": [ "Anton" ], "headline-md": [ "Hanken Grotesk" ], "headline-xl": [ "Anton" ] }, "fontSize": { "display-hero-mobile": [ "44px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "400" } ], "body-sm": [ "12px", { "lineHeight": "18px", "fontWeight": "400" } ], "headline-lg": [ "40px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "badge-numeral": [ "13px", { "lineHeight": "16px", "fontWeight": "700" } ], "headline-xl-mobile": [ "32px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "body-lg": [ "16px", { "lineHeight": "24px", "fontWeight": "500" } ], "body-md": [ "14px", { "lineHeight": "20px", "fontWeight": "400" } ], "label-mono-sm": [ "11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" } ], "display-hero": [ "84px", { "lineHeight": "84px", "letterSpacing": "-0.03em", "fontWeight": "400" } ], "headline-md": [ "22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" } ], "headline-xl": [ "56px", { "lineHeight": "58px", "letterSpacing": "-0.02em", "fontWeight": "400" } ] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><div class="hidden w-full bg-error text-on-error px-gutter-desktop py-space-xs font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-center flex items-center justify-center gap-space-xs z-[60] relative" id="wrong-network-banner"><span class="material-symbols-outlined text-[16px]">warning</span><span>WRONG NETWORK DETECTED. PLEASE SWITCH WALLET RPC TO GENLAYER STUDIONET (CHAIN ID 421614).</span></div><header class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 max-w-content-max-width mx-auto px-gutter-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-sm"><img alt="BackIt Brand Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XPD7GQ_C52vc28NEyEE84xPiAuRJigwRNgRfx1uOzZbnKfLnr_ynCBC3etUZTKloQ-9tN400Td7jglRL3xlMCnb5EQ1ZG0R1gZfKby16UsvWqMVP2It7vk3n6olQv7FenwBjgJKGNincN2QqQqb7QFq-gYKNlCeuhDsX4s_EbxOLoDJvbh1DZefRS5XyUtJgX8RGzk5b1t7srUeQ2StOnf8Hqy1QX4kAfdkfvWfDRsNjnUtVsX01FpoQ"/><span class="font-headline-lg text-headline-md tracking-tight uppercase text-primary">BackIt</span><span class="hidden sm:inline-flex items-center px-space-xs py-space-2xs rounded-full bg-surface-container font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-wider">StudioNet · GenLayer</span></div><nav class="hidden xl:flex items-center gap-space-lg" data-active-classes="text-primary font-bold"><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="browse-claims" href="#">Browse Claims</a><a aria-current="page" class="transition-colors text-primary font-bold" data-path="back-a-claim" href="#">Back a Claim</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="my-backs" href="#">My Backs</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="economics" href="#">Economics</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="how-it-works" href="#">How It Works</a></nav><div class="flex items-center gap-space-xs"><div class="hidden md:flex items-center gap-space-2xs px-space-sm py-space-xs rounded-full bg-surface-container font-label-mono-sm text-label-mono-sm text-on-surface"><span class="w-2 h-2 rounded-full bg-secondary-container inline-block"></span><span>StudioNet</span></div><div class="hidden lg:flex items-center px-space-sm py-space-xs rounded-full bg-surface-container-high font-badge-numeral text-badge-numeral text-primary">0.00 GEN</div><button class="flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-badge-numeral hover:bg-secondary-fixed transition-colors shadow-[0_2px_0px_#000000]" type="button"><span>0x71C...4f9a</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Top Hero Header Section -->
+<section class="w-full bg-surface pt-space-2xl pb-space-xl">
+<div class="max-w-content-max-width mx-auto px-gutter-desktop flex flex-col items-center text-center">
+<div class="inline-flex items-center gap-space-xs px-space-md py-space-2xs rounded-full bg-surface-container font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-on-surface mb-space-md">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span>StudioNet Protocol · Deterministic Web Consensus</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl uppercase tracking-tight text-primary max-w-4xl">
+        BACK A CLAIM. PUT UP OR SHUT UP.
+      </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-space-sm">
+        Lock test GEN behind a single verifiable sentence and an official HTTPS URL. Settled deterministically on the live web.
+      </p>
+<!-- Step Indicator Ribbon (Inspired by Reference Pill / Badges) -->
+<div class="w-full max-w-3xl mt-space-2xl grid grid-cols-2 md:grid-cols-4 gap-space-sm">
+<button class="flex items-center gap-space-sm p-space-sm rounded-xl bg-primary text-on-primary transition-all shadow-[0_4px_0_#1b1c19] text-left" id="step-tab-1" onclick="setWizardStep(1)" type="button">
+<span class="w-7 h-7 rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-badge-numeral flex items-center justify-center shrink-0">01</span>
+<div class="flex flex-col leading-tight min-w-0">
+<span class="font-label-mono-sm text-label-mono-sm text-secondary-container uppercase tracking-wider">Step 01</span>
+<span class="font-headline-md text-body-md font-bold truncate">The Sentence</span>
+</div>
+</button>
+<button class="flex items-center gap-space-sm p-space-sm rounded-xl bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-all text-left" id="step-tab-2" onclick="setWizardStep(2)" type="button">
+<span class="w-7 h-7 rounded-full bg-surface text-on-surface font-badge-numeral text-badge-numeral flex items-center justify-center shrink-0">02</span>
+<div class="flex flex-col leading-tight min-w-0">
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-wider">Step 02</span>
+<span class="font-headline-md text-body-md font-bold truncate">The Source</span>
+</div>
+</button>
+<button class="flex items-center gap-space-sm p-space-sm rounded-xl bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-all text-left" id="step-tab-3" onclick="setWizardStep(3)" type="button">
+<span class="w-7 h-7 rounded-full bg-surface text-on-surface font-badge-numeral text-badge-numeral flex items-center justify-center shrink-0">03</span>
+<div class="flex flex-col leading-tight min-w-0">
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-wider">Step 03</span>
+<span class="font-headline-md text-body-md font-bold truncate">Bond Amount</span>
+</div>
+</button>
+<button class="flex items-center gap-space-sm p-space-sm rounded-xl bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-all text-left" id="step-tab-4" onclick="setWizardStep(4)" type="button">
+<span class="w-7 h-7 rounded-full bg-surface text-on-surface font-badge-numeral text-badge-numeral flex items-center justify-center shrink-0">04</span>
+<div class="flex flex-col leading-tight min-w-0">
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-wider">Step 04</span>
+<span class="font-headline-md text-body-md font-bold truncate">Review &amp; Lock</span>
+</div>
+</button>
+</div>
+</div>
+</section>
+<!-- Interactive Wizard Container -->
+<section class="w-full bg-surface pb-space-4xl">
+<div class="max-w-content-max-width mx-auto px-gutter-desktop">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start">
+<!-- Left Interactive Form Panels (7 Cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-lg">
+<!-- STEP 1: THE SENTENCE -->
+<div class="bg-surface-container-lowest p-space-xl rounded-xl shadow-md flex flex-col gap-space-md" id="wizard-panel-1">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-badge-numeral flex items-center justify-center">01</span>
+<span class="font-headline-lg text-headline-md uppercase tracking-tight text-primary">The Sentence</span>
+</div>
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant bg-surface-container px-space-xs py-space-2xs rounded-full" id="char-counter">0 / 280</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              A single checkable statement. Not an essay. Must be directly confirmed or refuted by the target webpage text.
+            </p>
+<div class="flex flex-col gap-space-2xs">
+<textarea class="w-full p-space-md bg-surface-container-low rounded-xl text-primary font-body-lg text-body-lg focus:outline-none focus:bg-surface-container-lowest transition-all placeholder:text-surface-tint resize-none" id="claim-sentence" maxlength="280" placeholder="e.g. Stripe has officially enabled crypto payouts on mainnet." rows="3"></textarea>
+</div>
+<!-- Kind Chips -->
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-on-surface-variant">Kind Classification</span>
+<span class="font-body-sm text-body-sm text-surface-tint">Kind does not change payout math</span>
+</div>
+<div class="flex flex-wrap gap-space-xs" id="kind-selector">
+<button class="kind-chip px-space-md py-space-xs rounded-full bg-primary text-on-primary font-label-mono-sm text-label-mono-sm uppercase tracking-wider transition-all" onclick="selectKind(this, 'Fact')" type="button">Fact</button>
+<button class="kind-chip px-space-md py-space-xs rounded-full bg-surface-container text-on-surface font-label-mono-sm text-label-mono-sm uppercase tracking-wider hover:bg-surface-container-high transition-all" onclick="selectKind(this, 'Listing')" type="button">Listing</button>
+<button class="kind-chip px-space-md py-space-xs rounded-full bg-surface-container text-on-surface font-label-mono-sm text-label-mono-sm uppercase tracking-wider hover:bg-surface-container-high transition-all" onclick="selectKind(this, 'Press')" type="button">Press</button>
+<button class="kind-chip px-space-md py-space-xs rounded-full bg-surface-container text-on-surface font-label-mono-sm text-label-mono-sm uppercase tracking-wider hover:bg-surface-container-high transition-all" onclick="selectKind(this, 'Job')" type="button">Job</button>
+<button class="kind-chip px-space-md py-space-xs rounded-full bg-surface-container text-on-surface font-label-mono-sm text-label-mono-sm uppercase tracking-wider hover:bg-surface-container-high transition-all" onclick="selectKind(this, 'Status')" type="button">Status</button>
+<button class="kind-chip px-space-md py-space-xs rounded-full bg-surface-container text-on-surface font-label-mono-sm text-label-mono-sm uppercase tracking-wider hover:bg-surface-container-high transition-all" onclick="selectKind(this, 'Other')" type="button">Other</button>
+</div>
+</div>
+<div class="pt-space-md flex justify-end">
+<button class="px-space-xl py-space-xs rounded-full bg-primary text-on-primary font-badge-numeral text-badge-numeral uppercase hover:bg-primary-container transition-all flex items-center gap-space-xs" onclick="setWizardStep(2)" type="button">
+<span>Next: Target Source</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- STEP 2: THE SOURCE -->
+<div class="bg-surface-container-lowest p-space-xl rounded-xl shadow-md flex flex-col gap-space-md" id="wizard-panel-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-badge-numeral flex items-center justify-center">02</span>
+<span class="font-headline-lg text-headline-md uppercase tracking-tight text-primary">The Source</span>
+</div>
+<span class="font-label-mono-sm text-label-mono-sm text-secondary px-space-xs py-space-2xs bg-secondary-container/20 rounded-full">Web Scrapable</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              The immutable HTTPS destination read live by GenLayer validators during optimism consensus.
+            </p>
+<div class="flex flex-col gap-space-2xs">
+<div class="relative flex items-center">
+<span class="absolute left-space-md material-symbols-outlined text-surface-tint">link</span>
+<input class="w-full pl-12 pr-space-md py-space-sm bg-surface-container-low rounded-xl text-primary font-body-md text-body-md focus:outline-none focus:bg-surface-container-lowest transition-all placeholder:text-surface-tint" id="claim-url" placeholder="https://stripe.com/newsroom/crypto-payouts-announcement" type="url"/>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm font-label-mono-sm text-label-mono-sm text-surface-tint px-space-xs pt-space-2xs">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">lock</span> Must start with https://</span>
+<span>•</span>
+<span>No javascript: execution</span>
+<span>•</span>
+<span>Max 512 chars</span>
+</div>
+</div>
+<!-- Real-time Hostname Preview Box -->
+<div class="p-space-md rounded-xl bg-surface-container flex items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-9 h-9 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-[20px]">public</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-wider">Resolved Hostname</span>
+<span class="font-badge-numeral text-badge-numeral font-bold text-primary truncate" id="resolved-host-display">stripe.com</span>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 px-space-sm py-space-2xs rounded-full bg-surface-container-lowest font-label-mono-sm text-label-mono-sm text-on-surface shrink-0">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span>Live public page</span>
+</span>
+</div>
+<div class="pt-space-md flex justify-between items-center">
+<button class="px-space-md py-space-xs rounded-full text-on-surface-variant font-label-mono-sm text-label-mono-sm uppercase hover:text-primary transition-all" onclick="setWizardStep(1)" type="button">
+                ← Back
+              </button>
+<button class="px-space-xl py-space-xs rounded-full bg-primary text-on-primary font-badge-numeral text-badge-numeral uppercase hover:bg-primary-container transition-all flex items-center gap-space-xs" onclick="setWizardStep(3)" type="button">
+<span>Next: Bond Amount</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- STEP 3: BOND MECHANICS -->
+<div class="bg-surface-container-lowest p-space-xl rounded-xl shadow-md flex flex-col gap-space-md" id="wizard-panel-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-badge-numeral flex items-center justify-center">03</span>
+<span class="font-headline-lg text-headline-md uppercase tracking-tight text-primary">Bond Amount</span>
+</div>
+<span class="font-label-mono-sm text-label-mono-sm text-primary bg-secondary-container px-space-xs py-space-2xs rounded-full">Single-Sided Stake</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Deposit test GEN. Your capital is at stake against any Internet user willing to prove your sentence wrong.
+            </p>
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between bg-surface-container-low rounded-xl px-space-md py-space-sm">
+<input class="bg-transparent font-headline-lg text-headline-md text-primary focus:outline-none w-2/3" id="bond-input" min="10" oninput="updateBondCalculations(this.value)" step="10" type="number" value="100.00"/>
+<span class="font-headline-lg text-headline-md text-on-surface-variant">GEN</span>
+</div>
+<!-- Quick fill chips -->
+<div class="flex items-center gap-space-xs pt-space-2xs">
+<button class="px-space-md py-space-2xs rounded-full bg-surface-container font-label-mono-sm text-label-mono-sm text-primary hover:bg-secondary-container transition-all" onclick="setBondAmount(50)" type="button">+50 GEN</button>
+<button class="px-space-md py-space-2xs rounded-full bg-surface-container font-label-mono-sm text-label-mono-sm text-primary hover:bg-secondary-container transition-all" onclick="setBondAmount(100)" type="button">+100 GEN</button>
+<button class="px-space-md py-space-2xs rounded-full bg-surface-container font-label-mono-sm text-label-mono-sm text-primary hover:bg-secondary-container transition-all" onclick="setBondAmount(500)" type="button">+500 GEN</button>
+<button class="px-space-md py-space-2xs rounded-full bg-secondary-container font-badge-numeral text-badge-numeral text-on-secondary-fixed hover:bg-secondary-fixed transition-all" onclick="setBondAmount(1000)" type="button">MAX (1,000)</button>
+</div>
+</div>
+<!-- Economic Breakdown Card (Dark Swiss brutalist card mirroring ref contrast) -->
+<div class="bg-primary text-on-primary p-space-lg rounded-xl flex flex-col gap-space-md mt-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-secondary-container">Consensus Economic Breakdown</span>
+<span class="font-label-mono-sm text-label-mono-sm text-surface-tint">Contract v2.4</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<!-- True -->
+<div class="bg-primary-container p-space-sm rounded-lg flex flex-col gap-space-2xs">
+<div class="flex items-center gap-1 text-secondary-container font-label-mono-sm text-label-mono-sm uppercase">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span>True Outcome</span>
+</div>
+<span class="font-headline-lg text-headline-md text-on-primary" id="payout-true-val">97.50 GEN</span>
+<span class="font-body-sm text-body-sm text-on-primary-container">Returned to you + 2.50 GEN fee + permanent on-chain attestation.</span>
+</div>
+<!-- False -->
+<div class="bg-primary-container p-space-sm rounded-lg flex flex-col gap-space-2xs">
+<div class="flex items-center gap-1 text-error font-label-mono-sm text-label-mono-sm uppercase">
+<span class="material-symbols-outlined text-[16px]">cancel</span>
+<span>False Outcome</span>
+</div>
+<span class="font-headline-lg text-headline-md text-on-primary" id="payout-false-val">100.00 GEN</span>
+<span class="font-body-sm text-body-sm text-on-primary-container">Awarded entirely to the 1st prover who exposes inaccuracy.</span>
+</div>
+<!-- Thin -->
+<div class="bg-primary-container p-space-sm rounded-lg flex flex-col gap-space-2xs">
+<div class="flex items-center gap-1 text-on-tertiary-container font-label-mono-sm text-label-mono-sm uppercase">
+<span class="material-symbols-outlined text-[16px]">help</span>
+<span>Thin Outcome</span>
+</div>
+<span class="font-headline-lg text-headline-md text-on-primary" id="payout-thin-val">100.00 GEN</span>
+<span class="font-body-sm text-body-sm text-on-primary-container">100% refunded if URL returns 404, empty, or unreadable content.</span>
+</div>
+</div>
+<div class="font-label-mono-sm text-label-mono-sm text-on-primary-container flex items-center gap-space-xs pt-space-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary-container">info</span>
+<span>One bond. One poster. No challenger side. No keeper clock.</span>
+</div>
+</div>
+<div class="pt-space-md flex justify-between items-center">
+<button class="px-space-md py-space-xs rounded-full text-on-surface-variant font-label-mono-sm text-label-mono-sm uppercase hover:text-primary transition-all" onclick="setWizardStep(2)" type="button">
+                ← Back
+              </button>
+<button class="px-space-xl py-space-xs rounded-full bg-primary text-on-primary font-badge-numeral text-badge-numeral uppercase hover:bg-primary-container transition-all flex items-center gap-space-xs" onclick="setWizardStep(4)" type="button">
+<span>Next: Review &amp; Lock</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- STEP 4: REVIEW & SUBMIT ACTION -->
+<div class="bg-surface-container-lowest p-space-xl rounded-xl shadow-md flex flex-col gap-space-md" id="wizard-panel-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-badge-numeral flex items-center justify-center">04</span>
+<span class="font-headline-lg text-headline-md uppercase tracking-tight text-primary">Review &amp; Lock</span>
+</div>
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant bg-surface-container px-space-xs py-space-2xs rounded-full">Final Check</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Confirm statement clarity and stake integrity. Your signature commits your bond to GenLayer StudioNet.
+            </p>
+<!-- Verification Checklist -->
+<div class="flex flex-col gap-space-xs bg-surface-container-low p-space-md rounded-xl">
+<label class="flex items-start gap-space-sm cursor-pointer select-none">
+<input checked="" class="mt-1 w-4 h-4 rounded text-primary accent-primary" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Sentence contains no ambiguous adjectives or relative time markers (e.g., "recently", "soon").</span>
+</label>
+<label class="flex items-start gap-space-sm cursor-pointer select-none">
+<input checked="" class="mt-1 w-4 h-4 rounded text-primary accent-primary" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Target source link is public and does not require a login wall or CAPTCHA.</span>
+</label>
+<label class="flex items-start gap-space-sm cursor-pointer select-none">
+<input checked="" class="mt-1 w-4 h-4 rounded text-primary accent-primary" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">I understand that anyone proving this false receives 100% of my bond.</span>
+</label>
+</div>
+<!-- Big Main Action Button (Canary Yellow styling from reference) -->
+<div class="pt-space-md flex flex-col gap-space-xs">
+<button class="w-full py-space-md px-space-xl rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-badge-numeral uppercase hover:bg-secondary-fixed transition-all shadow-[0_4px_0px_#1b1c19] active:translate-y-1 active:shadow-none flex items-center justify-center gap-space-sm" onclick="lockAndPublishClaim()" type="button">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+<span class="tracking-wider">Lock Bond &amp; Publish Claim</span>
+</button>
+<span class="font-body-sm text-body-sm text-center text-on-surface-variant">
+                Once published, claim is OPEN. You may cancel only before any user proves it.
+              </span>
+</div>
+</div>
+</div>
+<!-- Right Side: Tactile Physical Card Deck Preview (40% width on desktop) -->
+<div class="lg:col-span-5 flex flex-col gap-space-lg sticky top-28">
+<div class="flex items-center justify-between px-space-xs">
+<span class="font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-on-surface-variant">Live On-Chain Ticket Preview</span>
+<span class="font-badge-numeral text-badge-numeral text-secondary">READY TO MINT</span>
+</div>
+<!-- Tactile Debit / Membership Card Motif from reference image -->
+<div class="relative w-full">
+<!-- Background Layer Card for Physical Stacking Look -->
+<div class="absolute inset-0 bg-secondary-container rounded-xl translate-y-3 -rotate-1 shadow-md opacity-90 transition-transform"></div>
+<!-- Front Card: Deep Pitch Black Card with Stark Contrast -->
+<div class="relative bg-primary text-on-primary rounded-xl p-space-xl shadow-xl flex flex-col justify-between min-h-[360px] border-t border-primary-container">
+<!-- Header Bar of Physical Card -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-lg text-headline-md tracking-tight uppercase text-secondary-container">BackIt</span>
+<span class="font-label-mono-sm text-label-mono-sm text-surface-tint">/ CLAIM TICKET</span>
+</div>
+<!-- Contactless Icon -->
+<span class="material-symbols-outlined text-secondary-container text-[26px]">contactless</span>
+</div>
+<!-- Card Center: The Statement -->
+<div class="my-space-md flex flex-col gap-space-2xs">
+<div class="inline-flex items-center gap-1 w-fit px-space-xs py-space-2xs rounded bg-primary-container font-label-mono-sm text-label-mono-sm text-secondary-container uppercase">
+<span class="material-symbols-outlined text-[13px]">label</span>
+<span id="preview-kind-label">Fact</span>
+</div>
+<p class="font-body-lg text-body-lg text-on-primary leading-snug" id="preview-sentence-text">
+                  Stripe has officially enabled crypto payouts on mainnet.
+                </p>
+<div class="flex items-center gap-1 font-label-mono-sm text-label-mono-sm text-on-primary-container truncate">
+<span class="material-symbols-outlined text-[14px]">link</span>
+<span class="truncate" id="preview-url-text">https://stripe.com/newsroom/crypto-payouts-announcement</span>
+</div>
+</div>
+<!-- Footer Bar of Physical Card -->
+<div class="flex items-end justify-between pt-space-md bg-primary-container/60 -mx-space-xl -mb-space-xl p-space-md rounded-b-xl">
+<div class="flex flex-col">
+<span class="font-label-mono-sm text-label-mono-sm text-on-primary-container uppercase">Bond Stake</span>
+<span class="font-headline-lg text-headline-md text-secondary-container" id="preview-bond-text">100.00 GEN</span>
+</div>
+<div class="flex items-center gap-space-2xs">
+<div class="w-6 h-6 rounded-full bg-error opacity-80"></div>
+<div class="w-6 h-6 rounded-full bg-secondary-container -ml-3 opacity-90"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Protocol Metrics Panel Under Card -->
+<div class="bg-surface-container p-space-md rounded-xl flex flex-col gap-space-sm">
+<div class="flex items-center justify-between font-label-mono-sm text-label-mono-sm">
+<span class="text-on-surface-variant uppercase">Settlement Engine</span>
+<span class="text-primary font-bold">GenLayer StudioNet LLM</span>
+</div>
+<div class="flex items-center justify-between font-label-mono-sm text-label-mono-sm">
+<span class="text-on-surface-variant uppercase">Poster Address</span>
+<span class="text-primary font-bold">0x71C...4f9a</span>
+</div>
+<div class="flex items-center justify-between font-label-mono-sm text-label-mono-sm">
+<span class="text-on-surface-variant uppercase">Contest Window</span>
+<span class="text-primary font-bold">Open until proven</span>
+</div>
+<div class="flex items-center justify-between font-label-mono-sm text-label-mono-sm">
+<span class="text-on-surface-variant uppercase">Cancel Fee</span>
+<span class="text-primary font-bold">0.00 GEN (free if unclaimed)</span>
+</div>
+</div>
+<!-- Proof Quality Safeguards Card -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[24px] shrink-0">shield</span>
+<div class="flex flex-col">
+<span class="font-headline-md text-body-md font-bold text-primary">Web Consensus Security</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                Validators independently fetch the HTTPS response at execution time. Ensure the source URL is free of geoblocking or session cookies.
+              </span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Numbered Methodology Section (Reflecting 'How it Works' from the Reference Image) -->
+<section class="w-full bg-primary text-on-primary py-space-3xl">
+<div class="max-w-content-max-width mx-auto px-gutter-desktop flex flex-col gap-space-2xl">
+<div class="flex flex-col items-center text-center gap-space-xs">
+<span class="font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-secondary-container">How BackIt Resolves</span>
+<h2 class="font-headline-xl text-headline-xl uppercase tracking-tight text-on-primary">
+          HIGH-STAKES TRUTH, ZERO OPINION.
+        </h2>
+<p class="font-body-md text-body-md text-on-primary-container max-w-xl">
+          Traditional prediction markets require subjective human oracles. BackIt locks capital strictly to live web text.
+        </p>
+</div>
+<!-- 3 Columns of Cards with Canary Numbered Badges (Direct homage to Benkuy cards) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+<!-- Step Card 1 -->
+<div class="bg-surface-container-lowest text-on-surface p-space-xl rounded-xl flex flex-col justify-between shadow-md h-full">
+<div class="flex flex-col gap-space-sm">
+<span class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-badge-numeral flex items-center justify-center">01</span>
+<h3 class="font-headline-md text-headline-md font-bold uppercase text-primary">Sentence Committed</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Your exact phrase and designated source URL are permanently registered in the intelligent contract with your GEN bond.
+            </p>
+</div>
+<div class="mt-space-lg pt-space-md border-t border-surface-variant flex items-center justify-between font-label-mono-sm text-label-mono-sm text-surface-tint">
+<span>PHASE 1: LIVE</span>
+<span class="material-symbols-outlined text-[16px] text-primary">fingerprint</span>
+</div>
+</div>
+<!-- Step Card 2 -->
+<div class="bg-surface-container-lowest text-on-surface p-space-xl rounded-xl flex flex-col justify-between shadow-md h-full">
+<div class="flex flex-col gap-space-sm">
+<span class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-badge-numeral flex items-center justify-center">02</span>
+<h3 class="font-headline-md text-headline-md font-bold uppercase text-primary">Open Challenger Window</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Any Web3 user can trigger a GenLayer validation test. If the text disputes your claim, the challenger takes 100% of your bond.
+            </p>
+</div>
+<div class="mt-space-lg pt-space-md border-t border-surface-variant flex items-center justify-between font-label-mono-sm text-label-mono-sm text-surface-tint">
+<span>PHASE 2: CONTEST</span>
+<span class="material-symbols-outlined text-[16px] text-primary">gavel</span>
+</div>
+</div>
+<!-- Step Card 3 -->
+<div class="bg-surface-container-lowest text-on-surface p-space-xl rounded-xl flex flex-col justify-between shadow-md h-full">
+<div class="flex flex-col gap-space-sm">
+<span class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-badge-numeral flex items-center justify-center">03</span>
+<h3 class="font-headline-md text-headline-md font-bold uppercase text-primary">Attestation or Slash</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              If verified true, 97.5% of your bond is returned instantly with an immutable cryptographic attestation proof on StudioNet.
+            </p>
+</div>
+<div class="mt-space-lg pt-space-md border-t border-surface-variant flex items-center justify-between font-label-mono-sm text-label-mono-sm text-surface-tint">
+<span>PHASE 3: SETTLE</span>
+<span class="material-symbols-outlined text-[16px] text-primary">task_alt</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- High-Impact Canary Yellow Metric Ribbon (Homage to reference yellow band) -->
+<section class="w-full bg-secondary-container text-on-secondary-fixed py-space-2xl">
+<div class="max-w-content-max-width mx-auto px-gutter-desktop grid grid-cols-2 md:grid-cols-4 gap-space-xl text-center md:text-left">
+<div class="flex flex-col">
+<span class="font-headline-xl text-headline-xl text-on-secondary-fixed uppercase">100%</span>
+<span class="font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-secondary">Prover Bounty Ratio</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-xl text-headline-xl text-on-secondary-fixed uppercase">12.4s</span>
+<span class="font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-secondary">Average Consensus Finality</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-xl text-headline-xl text-on-secondary-fixed uppercase">0%</span>
+<span class="font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-secondary">Subjective Discretion</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-xl text-headline-xl text-on-secondary-fixed uppercase">2.5%</span>
+<span class="font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-secondary">Protocol Verification Fee</span>
+</div>
+</div>
+</section>
+</div>
+<script>
+  let currentWizardStep = 1;
+  let activeKind = 'Fact';
+
+  function setWizardStep(step) {
+    currentWizardStep = step;
+    for (let i = 1; i <= 4; i++) {
+      const panel = document.getElementById('wizard-panel-' + i);
+      const tab = document.getElementById('step-tab-' + i);
+      if (panel && tab) {
+        if (i === step) {
+          panel.classList.remove('hidden');
+          tab.classList.remove('bg-surface-container-high', 'text-on-surface');
+          tab.classList.add('bg-primary', 'text-on-primary', 'shadow-[0_4px_0_#1b1c19]');
+          const badge = tab.querySelector('span');
+          if (badge) {
+            badge.classList.remove('bg-surface', 'text-on-surface');
+            badge.classList.add('bg-secondary-container', 'text-on-secondary-fixed');
+          }
+        } else {
+          panel.classList.add('hidden');
+          tab.classList.remove('bg-primary', 'text-on-primary', 'shadow-[0_4px_0_#1b1c19]');
+          tab.classList.add('bg-surface-container-high', 'text-on-surface');
+          const badge = tab.querySelector('span');
+          if (badge) {
+            badge.classList.remove('bg-secondary-container', 'text-on-secondary-fixed');
+            badge.classList.add('bg-surface', 'text-on-surface');
+          }
+        }
+      }
+    }
+  }
+
+  function selectKind(element, kind) {
+    activeKind = kind;
+    const chips = document.querySelectorAll('.kind-chip');
+    chips.forEach(chip => {
+      chip.classList.remove('bg-primary', 'text-on-primary');
+      chip.classList.add('bg-surface-container', 'text-on-surface');
+    });
+    element.classList.remove('bg-surface-container', 'text-on-surface');
+    element.classList.add('bg-primary', 'text-on-primary');
+
+    const previewKind = document.getElementById('preview-kind-label');
+    if (previewKind) previewKind.textContent = kind;
+  }
+
+  function setBondAmount(amount) {
+    const input = document.getElementById('bond-input');
+    if (input) {
+      input.value = amount.toFixed(2);
+      updateBondCalculations(amount);
+    }
+  }
+
+  function updateBondCalculations(val) {
+    const num = parseFloat(val) || 0;
+    const trueVal = (num * 0.975).toFixed(2);
+    const falseVal = num.toFixed(2);
+    const thinVal = num.toFixed(2);
+
+    const pt = document.getElementById('payout-true-val');
+    const pf = document.getElementById('payout-false-val');
+    const pth = document.getElementById('payout-thin-val');
+    const pb = document.getElementById('preview-bond-text');
+
+    if (pt) pt.textContent = trueVal + ' GEN';
+    if (pf) pf.textContent = falseVal + ' GEN';
+    if (pth) pth.textContent = thinVal + ' GEN';
+    if (pb) pb.textContent = num.toFixed(2) + ' GEN';
+  }
+
+  const sentenceInput = document.getElementById('claim-sentence');
+  const previewSentence = document.getElementById('preview-sentence-text');
+  const counter = document.getElementById('char-counter');
+
+  if (sentenceInput) {
+    sentenceInput.addEventListener('input', (e) => {
+      const length = e.target.value.length;
+      if (counter) counter.textContent = length + ' / 280';
+      if (previewSentence) {
+        previewSentence.textContent = e.target.value.trim() !== '' 
+          ? e.target.value 
+          : 'Stripe has officially enabled crypto payouts on mainnet.';
+      }
+    });
+  }
+
+  const urlInput = document.getElementById('claim-url');
+  const previewUrl = document.getElementById('preview-url-text');
+  const resolvedHost = document.getElementById('resolved-host-display');
+
+  if (urlInput) {
+    urlInput.addEventListener('input', (e) => {
+      const val = e.target.value.trim();
+      if (previewUrl) {
+        previewUrl.textContent = val !== '' ? val : 'https://stripe.com/newsroom/crypto-payouts-announcement';
+      }
+      try {
+        if (val.startsWith('http')) {
+          const parsed = new URL(val);
+          if (resolvedHost) resolvedHost.textContent = parsed.hostname;
+        } else if (resolvedHost) {
+          resolvedHost.textContent = 'stripe.com';
+        }
+      } catch (err) {
+        if (resolvedHost) resolvedHost.textContent = 'invalid URL';
+      }
+    });
+  }
+
+  function lockAndPublishClaim() {
+    const sentence = sentenceInput ? sentenceInput.value : '';
+    const bond = document.getElementById('bond-input')?.value || '100';
+    alert('Submitting transaction to GenLayer StudioNet...\nBond: ' + bond + ' GEN\nStatus: Pending Web Consensus.');
+  }
+
+  // Initialize display on Step 1
+  setWizardStep(1);
+</script></main><footer class="w-full bg-primary text-on-primary py-space-3xl"><div class="max-w-content-max-width mx-auto px-gutter-desktop flex flex-col gap-space-2xl"><div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-space-xl"><div class="flex flex-col gap-space-xs"><span class="font-headline-xl text-headline-xl uppercase tracking-tight text-secondary-container">BackIt</span><p class="font-body-md text-body-md text-on-primary-container max-w-md">Settled on GenLayer live-web consensus. Not a court. Put up or shut up.</p></div><div class="flex flex-wrap gap-space-xl font-label-mono-sm text-label-mono-sm uppercase tracking-wider"><div class="flex flex-col gap-space-xs"><span class="text-surface-tint">Protocol</span><a class="hover:text-secondary-container transition-colors" data-path="browse-claims" href="#">Claims Matrix</a><a class="hover:text-secondary-container transition-colors" data-path="economics" href="#">Bond Mechanics</a><a class="hover:text-secondary-container transition-colors" data-path="how-it-works" href="#">Optimistic Dispute</a></div><div class="flex flex-col gap-space-xs"><span class="text-surface-tint">Resources</span><a class="hover:text-secondary-container transition-colors" href="#">GenLayer Docs</a><a class="hover:text-secondary-container transition-colors" href="#">StudioNet Explorer</a><a class="hover:text-secondary-container transition-colors" href="#">Bug Bounty</a></div></div></div><div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-space-sm pt-space-xl bg-primary-container/40 p-space-md rounded-xl font-label-mono-sm text-label-mono-sm text-on-primary-container"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-secondary-container"></span><span>CONTRACT: 0x8a92...32d1 (GENLAYER INTELLIGENT CONTRACT)</span></div><div>© 2025 BackIt Protocol · Consensus by Deterministic LLM Execution</div></div></div></footer></body></html>

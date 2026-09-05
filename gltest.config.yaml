@@ -1,0 +1,8 @@
+paths:
+  contracts: contracts
+  artifacts: artifacts
+
+networks:
+  default: localnet
+  localnet: {}
+  studionet: {}

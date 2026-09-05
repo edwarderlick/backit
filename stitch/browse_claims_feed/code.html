@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Hanken+Grotesk:ital,wght@0,400..800;1,400..800&amp;family=JetBrains+Mono:wght@400..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "secondary": "#6d5e00", "surface-tint": "#5f5e5e", "on-secondary-fixed-variant": "#524700", "on-surface-variant": "#444748", "on-primary": "#ffffff", "primary": "#000000", "inverse-surface": "#30312d", "outline-variant": "#c4c7c7", "outline": "#747878", "surface-dim": "#dbdad5", "secondary-fixed": "#ffe243", "on-error": "#ffffff", "on-secondary-container": "#6d5f00", "on-error-container": "#93000a", "tertiary-fixed-dim": "#c8c6c0", "inverse-primary": "#c8c6c5", "on-tertiary": "#ffffff", "on-tertiary-container": "#84847e", "error": "#ba1a1a", "on-tertiary-fixed-variant": "#474742", "surface-container-lowest": "#ffffff", "background": "#fbf9f4", "on-tertiary-fixed": "#1b1c18", "primary-fixed-dim": "#c8c6c5", "tertiary-fixed": "#e4e2dc", "on-secondary": "#ffffff", "surface-variant": "#e4e2dd", "surface-container-low": "#f5f3ee", "secondary-container": "#f9da00", "surface-container": "#efeee9", "surface-container-highest": "#e4e2dd", "on-primary-container": "#858383", "tertiary": "#000000", "primary-container": "#1c1b1b", "on-surface": "#1b1c19", "surface-bright": "#fbf9f4", "surface": "#fbf9f4", "on-secondary-fixed": "#211b00", "on-background": "#1b1c19", "inverse-on-surface": "#f2f1eb", "on-primary-fixed-variant": "#474646", "tertiary-container": "#1b1c18", "surface-container-high": "#eae8e3", "secondary-fixed-dim": "#e3c600", "primary-fixed": "#e5e2e1", "error-container": "#ffdad6", "on-primary-fixed": "#1c1b1b" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-2xs": "0.25rem", "space-xl": "2rem", "space-xs": "0.5rem", "space-2xl": "3rem", "space-3xl": "4.5rem", "space-sm": "0.75rem", "space-4xl": "6rem", "content-max-width": "75rem", "gutter-desktop": "1.5rem", "gutter-mobile": "1rem", "space-md": "1rem", "space-lg": "1.5rem" }, "fontFamily": { "display-hero-mobile": [ "Anton" ], "body-sm": [ "Hanken Grotesk" ], "headline-lg": [ "Anton" ], "badge-numeral": [ "JetBrains Mono" ], "headline-xl-mobile": [ "Anton" ], "body-lg": [ "Hanken Grotesk" ], "body-md": [ "Hanken Grotesk" ], "label-mono-sm": [ "JetBrains Mono" ], "display-hero": [ "Anton" ], "headline-md": [ "Hanken Grotesk" ], "headline-xl": [ "Anton" ] }, "fontSize": { "display-hero-mobile": [ "44px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "400" } ], "body-sm": [ "12px", { "lineHeight": "18px", "fontWeight": "400" } ], "headline-lg": [ "40px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "badge-numeral": [ "13px", { "lineHeight": "16px", "fontWeight": "700" } ], "headline-xl-mobile": [ "32px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "body-lg": [ "16px", { "lineHeight": "24px", "fontWeight": "500" } ], "body-md": [ "14px", { "lineHeight": "20px", "fontWeight": "400" } ], "label-mono-sm": [ "11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" } ], "display-hero": [ "84px", { "lineHeight": "84px", "letterSpacing": "-0.03em", "fontWeight": "400" } ], "headline-md": [ "22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" } ], "headline-xl": [ "56px", { "lineHeight": "58px", "letterSpacing": "-0.02em", "fontWeight": "400" } ] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><div class="hidden w-full bg-error text-on-error px-gutter-desktop py-space-xs font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-center flex items-center justify-center gap-space-xs z-[60] relative" id="wrong-network-banner"><span class="material-symbols-outlined text-[16px]">warning</span><span>WRONG NETWORK DETECTED. PLEASE SWITCH WALLET RPC TO GENLAYER STUDIONET (CHAIN ID 421614).</span></div><header class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 max-w-content-max-width mx-auto px-gutter-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-sm"><img alt="BackIt Brand Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XPD7GQ_C52vc28NEyEE84xPiAuRJigwRNgRfx1uOzZbnKfLnr_ynCBC3etUZTKloQ-9tN400Td7jglRL3xlMCnb5EQ1ZG0R1gZfKby16UsvWqMVP2It7vk3n6olQv7FenwBjgJKGNincN2QqQqb7QFq-gYKNlCeuhDsX4s_EbxOLoDJvbh1DZefRS5XyUtJgX8RGzk5b1t7srUeQ2StOnf8Hqy1QX4kAfdkfvWfDRsNjnUtVsX01FpoQ"/><span class="font-headline-lg text-headline-md tracking-tight uppercase text-primary">BackIt</span><span class="hidden sm:inline-flex items-center px-space-xs py-space-2xs rounded-full bg-surface-container font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-wider">StudioNet · GenLayer</span></div><nav class="hidden xl:flex items-center gap-space-lg" data-active-classes="text-primary font-bold"><a aria-current="page" class="transition-colors text-primary font-bold" data-path="browse-claims" href="#">Browse Claims</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="back-a-claim" href="#">Back a Claim</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="my-backs" href="#">My Backs</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="economics" href="#">Economics</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="how-it-works" href="#">How It Works</a></nav><div class="flex items-center gap-space-xs"><div class="hidden md:flex items-center gap-space-2xs px-space-sm py-space-xs rounded-full bg-surface-container font-label-mono-sm text-label-mono-sm text-on-surface"><span class="w-2 h-2 rounded-full bg-secondary-container inline-block"></span><span>StudioNet</span></div><div class="hidden lg:flex items-center px-space-sm py-space-xs rounded-full bg-surface-container-high font-badge-numeral text-badge-numeral text-primary">0.00 GEN</div><button class="flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-badge-numeral hover:bg-secondary-fixed transition-colors shadow-[0_2px_0px_#000000]" type="button"><span>0x71C...4f9a</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- SECTION 1: HEADER & HIGH-IMPACT HERO -->
+<section class="w-full bg-surface py-space-3xl md:py-space-4xl relative overflow-hidden">
+<!-- Subtle architectural backdrop aura -->
+<div class="absolute -top-24 left-1/2 -translate-x-1/2 w-[700px] h-[340px] bg-secondary-container/15 blur-[120px] rounded-full pointer-events-none"></div>
+<div class="max-w-content-max-width mx-auto px-gutter-desktop relative z-10 flex flex-col gap-space-2xl">
+<!-- Title Block strictly adhering to inspired Swiss scale -->
+<div class="flex flex-col items-center text-center gap-space-md max-w-4xl mx-auto">
+<div class="inline-flex items-center gap-space-xs px-space-md py-space-2xs rounded-full bg-surface-container font-label-mono-sm text-label-mono-sm uppercase tracking-widest text-primary shadow-sm">
+<span class="w-2 h-2 rounded-full bg-secondary-container animate-ping"></span>
+<span>GenLayer Live-Web Consensus Feed</span>
+</div>
+<h1 class="font-display-hero text-display-hero text-primary uppercase tracking-tight leading-none">
+          LIVE CLAIMS.<br/>INSTANT PROOF.
+        </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl text-balance">
+          One sentence. One live HTTPS source. Locked GEN settled immediately on GenLayer intelligent contracts through deterministic web fetch.
+        </p>
+<!-- Quick Stats Pill Bar -->
+<div class="flex flex-wrap items-center justify-center gap-space-md pt-space-xs">
+<div class="flex items-center gap-space-xs px-space-md py-space-xs bg-surface-container rounded-full font-label-mono-sm text-label-mono-sm text-primary">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span class="text-on-surface-variant">ACTIVE POOL:</span>
+<span class="font-bold">14,850 GEN</span>
+</div>
+<div class="flex items-center gap-space-xs px-space-md py-space-xs bg-surface-container rounded-full font-label-mono-sm text-label-mono-sm text-primary">
+<span class="text-on-surface-variant">SETTLED IN SECONDS:</span>
+<span class="font-bold">100% PROGRAMMATIC</span>
+</div>
+<div class="flex items-center gap-space-xs px-space-md py-space-xs bg-surface-container rounded-full font-label-mono-sm text-label-mono-sm text-primary">
+<span class="text-on-surface-variant">STUDIONET ORACLE:</span>
+<span class="font-bold">ACTIVE</span>
+</div>
+</div>
+</div>
+<!-- Hero Visual: Signature Pitch-Black Dual Card (Inspiration Deck Style) -->
+<div class="relative w-full max-w-4xl mx-auto pt-space-md">
+<!-- Back-layer stacked dummy card for tactile card deck aesthetic -->
+<div class="absolute inset-x-8 -top-3 h-28 rounded-xl bg-secondary-container -rotate-1 shadow-md opacity-90 transition-transform"></div>
+<div class="absolute inset-x-4 -top-1 h-32 rounded-xl bg-surface-container-high rotate-1 shadow-md"></div>
+<!-- Master Featured Claim Card -->
+<div class="relative z-10 w-full bg-primary text-on-primary rounded-xl p-space-lg md:p-space-xl shadow-[0_20px_45px_-10px_rgba(0,0,0,0.45)] flex flex-col gap-space-lg">
+<!-- Top Metadata Bar -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-sm border-b-0">
+<div class="flex items-center gap-space-sm">
+<span class="w-7 h-7 rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-badge-numeral flex items-center justify-center font-bold">
+                01
+              </span>
+<div class="flex items-center gap-space-2xs font-label-mono-sm text-label-mono-sm text-primary-fixed-dim tracking-wider">
+<span>TX:</span>
+<span class="text-on-primary">0x8f4d...391b</span>
+<button class="hover:text-secondary-container transition-colors ml-1" onclick="navigator.clipboard.writeText('0x8f4d92a1c002391b');" title="Copy Hash" type="button">
+<span class="material-symbols-outlined text-[15px] align-middle">content_copy</span>
+</button>
+</div>
+<span class="px-space-xs py-space-2xs rounded-full bg-surface-tint/30 text-surface-variant font-label-mono-sm text-label-mono-sm uppercase tracking-wider">
+                PRESS
+              </span>
+</div>
+<!-- Pulsating State Badge -->
+<div class="flex items-center gap-space-xs px-space-md py-space-2xs rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-badge-numeral uppercase font-bold tracking-wider">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span>OPEN CLAIM</span>
+</div>
+</div>
+<!-- Main Claim Text & Live Citation -->
+<div class="flex flex-col gap-space-sm">
+<div class="font-label-mono-sm text-label-mono-sm text-secondary-container uppercase tracking-widest">
+              PRIMARY TARGET ASSERTION
+            </div>
+<p class="font-headline-md text-headline-md text-on-primary tracking-normal leading-snug">
+              “Anthropic has released Claude 3.7 Sonnet with hybrid reasoning capabilities.”
+            </p>
+<div class="flex flex-wrap items-center gap-space-xs pt-space-2xs">
+<span class="font-label-mono-sm text-label-mono-sm text-primary-fixed-dim">SOURCE URL:</span>
+<a class="inline-flex items-center gap-space-2xs px-space-sm py-space-2xs rounded-full bg-primary-container text-on-primary font-label-mono-sm text-label-mono-sm hover:text-secondary-container transition-colors" href="https://anthropic.com/news/claude-3-7-sonnet" rel="noopener noreferrer" target="_blank">
+<span class="material-symbols-outlined text-[14px]">link</span>
+<span>anthropic.com/news/claude-3-7-sonnet</span>
+</a>
+<span class="inline-flex items-center gap-space-2xs px-space-xs py-space-2xs rounded bg-surface-tint/20 text-secondary-container font-label-mono-sm text-label-mono-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span>
+<span>Live public page</span>
+</span>
+</div>
+</div>
+<!-- Bond Summary + Big Action Button CTA -->
+<div class="pt-space-md flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-space-md bg-primary-container/80 rounded-lg p-space-md">
+<div class="flex flex-col gap-space-2xs">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-mono-sm text-label-mono-sm text-primary-fixed-dim">LOCKED BOND:</span>
+<span class="font-headline-md text-headline-md text-secondary-container">500.00 GEN</span>
+</div>
+<span class="font-label-mono-sm text-label-mono-sm text-surface-tint">
+                Backed by poster <code class="text-primary-fixed-dim">0x3a92...bc11</code>
+</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="w-full sm:w-auto px-space-xl py-space-sm rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-badge-numeral uppercase hover:bg-secondary-fixed transition-transform active:scale-95 shadow-[0_4px_0px_#6d5e00] flex items-center justify-center gap-space-xs" id="prove-featured-btn" type="button">
+<span class="material-symbols-outlined text-[20px]">bolt</span>
+<span>PROVE NOW (EXECUTE)</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 2: INTERACTIVE FILTER & SEARCH MATRIX -->
+<section class="w-full bg-surface-container-low py-space-xl">
+<div class="max-w-content-max-width mx-auto px-gutter-desktop flex flex-col gap-space-md">
+<!-- Search Input & Sorting Controls -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-md items-center">
+<!-- Search field -->
+<div class="md:col-span-8 relative">
+<span class="material-symbols-outlined absolute left-space-md top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">
+            search
+          </span>
+<input class="w-full pl-12 pr-space-md py-space-sm bg-surface-container-lowest text-on-surface rounded-full font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-on-surface-variant/60 transition-all" id="claim-search-input" placeholder="Search by claim text, URL hostname, or tx hash 0x..." type="text"/>
+</div>
+<!-- Sorting selector & Reset -->
+<div class="md:col-span-4 flex items-center justify-end gap-space-xs">
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase">SORT:</span>
+<div class="flex items-center bg-surface-container-lowest p-1 rounded-full shadow-sm">
+<button class="sort-btn px-space-sm py-space-2xs rounded-full bg-primary text-on-primary font-label-mono-sm text-label-mono-sm font-semibold" data-sort="newest" type="button">
+              Newest
+            </button>
+<button class="sort-btn px-space-sm py-space-2xs rounded-full text-on-surface-variant hover:text-primary font-label-mono-sm text-label-mono-sm font-semibold transition-colors" data-sort="highest" type="button">
+              Highest Bond
+            </button>
+<button class="sort-btn px-space-sm py-space-2xs rounded-full text-on-surface-variant hover:text-primary font-label-mono-sm text-label-mono-sm font-semibold transition-colors" data-sort="awaiting" type="button">
+              Awaiting Proof
+            </button>
+</div>
+</div>
+</div>
+<!-- State Filter Pills (Sticky-feel Row) -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm pt-space-xs">
+<div class="flex flex-wrap items-center gap-space-xs" id="status-filters">
+<button class="filter-pill px-space-md py-space-xs rounded-full bg-primary text-on-primary font-badge-numeral text-badge-numeral transition-all" data-filter="all" type="button">
+            All Claims (24)
+          </button>
+<button class="filter-pill px-space-md py-space-xs rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface font-badge-numeral text-badge-numeral transition-all flex items-center gap-space-2xs" data-filter="open" type="button">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span>OPEN (8)</span>
+</button>
+<button class="filter-pill px-space-md py-space-xs rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface font-badge-numeral text-badge-numeral transition-all flex items-center gap-space-2xs" data-filter="true" type="button">
+<span class="w-2 h-2 rounded-full bg-[#16a34a]"></span>
+<span>TRUE (9)</span>
+</button>
+<button class="filter-pill px-space-md py-space-xs rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface font-badge-numeral text-badge-numeral transition-all flex items-center gap-space-2xs" data-filter="false" type="button">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span>FALSE (4)</span>
+</button>
+<button class="filter-pill px-space-md py-space-xs rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface font-badge-numeral text-badge-numeral transition-all flex items-center gap-space-2xs" data-filter="thin" type="button">
+<span class="w-2 h-2 rounded-full bg-surface-tint"></span>
+<span>THIN (2)</span>
+</button>
+<button class="filter-pill px-space-md py-space-xs rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface font-badge-numeral text-badge-numeral transition-all flex items-center gap-space-2xs" data-filter="canceled" type="button">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span>CANCELED (1)</span>
+</button>
+</div>
+<!-- Kind Tags Dropdown or Quick Pills -->
+<div class="flex items-center gap-space-xs overflow-x-auto py-1">
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase">KIND:</span>
+<button class="kind-tag px-space-xs py-space-2xs rounded bg-surface-container-highest text-primary font-label-mono-sm text-label-mono-sm font-bold" type="button">ALL</button>
+<button class="kind-tag px-space-xs py-space-2xs rounded bg-surface-container text-on-surface-variant hover:text-primary font-label-mono-sm text-label-mono-sm" type="button">FACT</button>
+<button class="kind-tag px-space-xs py-space-2xs rounded bg-surface-container text-on-surface-variant hover:text-primary font-label-mono-sm text-label-mono-sm" type="button">LISTING</button>
+<button class="kind-tag px-space-xs py-space-2xs rounded bg-surface-container text-on-surface-variant hover:text-primary font-label-mono-sm text-label-mono-sm" type="button">PRESS</button>
+<button class="kind-tag px-space-xs py-space-2xs rounded bg-surface-container text-on-surface-variant hover:text-primary font-label-mono-sm text-label-mono-sm" type="button">JOB</button>
+<button class="kind-tag px-space-xs py-space-2xs rounded bg-surface-container text-on-surface-variant hover:text-primary font-label-mono-sm text-label-mono-sm" type="button">STATUS</button>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 3: THE MAIN CLAIMS FEED MATRIX -->
+<section class="w-full bg-surface py-space-2xl md:py-space-3xl">
+<div class="max-w-content-max-width mx-auto px-gutter-desktop flex flex-col gap-space-xl">
+<!-- Section subhead with live counter -->
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-mono-sm text-label-mono-sm bg-primary text-on-primary px-space-sm py-space-2xs rounded">
+            LEDGER_STREAM
+          </span>
+<span class="font-headline-md text-headline-md text-primary">CLAIMS STREAMING ON GENLAYER</span>
+</div>
+<div class="hidden sm:flex items-center gap-space-xs font-label-mono-sm text-label-mono-sm text-on-surface-variant">
+<span>GAS:</span>
+<span class="font-bold text-primary">0.0001 GEN</span>
+<span>·</span>
+<span>LATENCY:</span>
+<span class="font-bold text-primary">1.2s</span>
+</div>
+</div>
+<!-- Feed Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg" id="claims-grid">
+<!-- CARD 1: OPEN CLAIM -->
+<article class="claim-card bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between gap-space-md relative overflow-hidden group" data-kind="listing" data-state="open">
+<div class="flex flex-col gap-space-sm">
+<!-- Top bar -->
+<div class="flex items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-[11px] flex items-center justify-center font-bold">
+                  02
+                </span>
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant">0x4c2a...89e1</span>
+<span class="px-space-xs py-space-2xs rounded bg-surface-container font-label-mono-sm text-[10px] uppercase text-primary font-bold">
+                  LISTING
+                </span>
+</div>
+<span class="px-space-xs py-space-2xs rounded-full bg-secondary-container/90 text-on-secondary-fixed font-badge-numeral text-badge-numeral font-bold">
+                OPEN
+              </span>
+</div>
+<!-- Claim sentence -->
+<h3 class="font-body-lg text-body-lg text-primary font-bold line-clamp-3 pt-space-xs leading-snug">
+              “Stripe supports USDC payouts to 150+ countries as of today.”
+            </h3>
+<!-- Hostname source + live badge -->
+<div class="flex flex-col gap-space-2xs pt-space-2xs">
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[14px]">public</span>
+<span>stripe.com/newsroom</span>
+</span>
+<div class="inline-flex items-center gap-space-2xs px-space-xs py-space-2xs rounded bg-surface-container w-fit text-primary font-label-mono-sm text-[10px]">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Live public page</span>
+</div>
+</div>
+</div>
+<!-- Bottom Action & Economics -->
+<div class="flex flex-col gap-space-sm pt-space-sm bg-surface-container-low -mx-space-lg -mb-space-lg p-space-md rounded-b-xl">
+<div class="flex items-center justify-between font-label-mono-sm text-label-mono-sm">
+<span class="text-on-surface-variant">Bond Locked:</span>
+<span class="font-badge-numeral text-badge-numeral font-bold text-primary">250 GEN</span>
+</div>
+<div class="flex items-center justify-between font-label-mono-sm text-label-mono-sm text-on-surface-variant">
+<span>Poster:</span>
+<span class="font-mono text-primary">0x81d...f402</span>
+</div>
+<button class="w-full py-space-xs rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-badge-numeral uppercase hover:bg-secondary-fixed transition-colors font-bold shadow-[0_2px_0px_#000000]" type="button">
+              PROVE CLAIM
+            </button>
+</div>
+</article>
+<!-- CARD 2: TRUE CLAIM (RESOLVED) -->
+<article class="claim-card bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between gap-space-md relative overflow-hidden group" data-kind="job" data-state="true">
+<div class="flex flex-col gap-space-sm">
+<!-- Top bar -->
+<div class="flex items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-6 h-6 rounded-full bg-surface-container-high text-primary font-badge-numeral text-[11px] flex items-center justify-center font-bold">
+                  03
+                </span>
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant">0x9b11...fa74</span>
+<span class="px-space-xs py-space-2xs rounded bg-surface-container font-label-mono-sm text-[10px] uppercase text-primary font-bold">
+                  JOB
+                </span>
+</div>
+<span class="px-space-xs py-space-2xs rounded-full bg-[#16a34a] text-white font-badge-numeral text-badge-numeral font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>TRUE</span>
+</span>
+</div>
+<!-- Claim sentence -->
+<h3 class="font-body-lg text-body-lg text-primary font-bold line-clamp-3 pt-space-xs leading-snug">
+              “GenLayer is hiring a Senior Smart Contract Engineer with Remote flexibility.”
+            </h3>
+<!-- Hostname source + live badge -->
+<div class="flex flex-col gap-space-2xs pt-space-2xs">
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[14px]">public</span>
+<span>jobs.lever.co/genlayer</span>
+</span>
+<div class="inline-flex items-center gap-space-2xs px-space-xs py-space-2xs rounded bg-surface-container w-fit text-primary font-label-mono-sm text-[10px]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#16a34a]"></span>
+<span>Live public page</span>
+</div>
+</div>
+<!-- Stored Quote Excerpt -->
+<div class="p-space-xs bg-surface-container rounded font-label-mono-sm text-label-mono-sm text-on-surface-variant italic">
+              “Role: Senior Smart Contract Engineer (Remote) - Open for applications.”
+            </div>
+</div>
+<!-- Bottom Ledger Settlement -->
+<div class="flex flex-col gap-space-xs pt-space-sm bg-surface-container-low -mx-space-lg -mb-space-lg p-space-md rounded-b-xl font-label-mono-sm text-label-mono-sm">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span>Bond Amount:</span>
+<span class="font-bold text-primary font-badge-numeral text-badge-numeral">100 GEN</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant">
+<span>Prover:</span>
+<span class="font-mono text-primary">0x14b...5529</span>
+</div>
+<div class="pt-space-2xs text-[#16a34a] font-semibold flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[14px]">savings</span>
+<span>97.5 GEN returned to poster + 2.5 GEN treasury</span>
+</div>
+</div>
+</article>
+<!-- CARD 3: FALSE CLAIM (RESOLVED) -->
+<article class="claim-card bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between gap-space-md relative overflow-hidden group" data-kind="fact" data-state="false">
+<div class="flex flex-col gap-space-sm">
+<!-- Top bar -->
+<div class="flex items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-6 h-6 rounded-full bg-surface-container-high text-primary font-badge-numeral text-[11px] flex items-center justify-center font-bold">
+                  04
+                </span>
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant">0x1f80...11cd</span>
+<span class="px-space-xs py-space-2xs rounded bg-surface-container font-label-mono-sm text-[10px] uppercase text-primary font-bold">
+                  FACT
+                </span>
+</div>
+<span class="px-space-xs py-space-2xs rounded-full bg-error text-on-error font-badge-numeral text-badge-numeral font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">cancel</span>
+<span>FALSE</span>
+</span>
+</div>
+<!-- Claim sentence -->
+<h3 class="font-body-lg text-body-lg text-primary font-bold line-clamp-3 pt-space-xs leading-snug">
+              “Bitcoin whitepaper was published in the year 2015.”
+            </h3>
+<!-- Hostname source + live badge -->
+<div class="flex flex-col gap-space-2xs pt-space-2xs">
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[14px]">public</span>
+<span>bitcoin.org/bitcoin.pdf</span>
+</span>
+<div class="inline-flex items-center gap-space-2xs px-space-xs py-space-2xs rounded bg-surface-container w-fit text-primary font-label-mono-sm text-[10px]">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+<span>Live public page</span>
+</div>
+</div>
+<!-- Stored Excerpt proving false -->
+<div class="p-space-xs bg-error-container/40 text-on-error-container rounded font-label-mono-sm text-label-mono-sm italic">
+              “Satoshi Nakamoto — 2008 / Released Jan 2009”
+            </div>
+</div>
+<!-- Bottom Ledger Settlement -->
+<div class="flex flex-col gap-space-xs pt-space-sm bg-surface-container-low -mx-space-lg -mb-space-lg p-space-md rounded-b-xl font-label-mono-sm text-label-mono-sm">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span>Bond Forfeited:</span>
+<span class="font-bold text-error font-badge-numeral text-badge-numeral">400 GEN</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant">
+<span>Beneficiary:</span>
+<span class="font-mono text-primary">0x71C...4f9a</span>
+</div>
+<div class="pt-space-2xs text-error font-semibold flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[14px]">payments</span>
+<span>400 GEN bond awarded to prover 0x71C...4f9a</span>
+</div>
+</div>
+</article>
+<!-- CARD 4: THIN CLAIM (UNREADABLE/ERROR) -->
+<article class="claim-card bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between gap-space-md relative overflow-hidden group" data-kind="status" data-state="thin">
+<div class="flex flex-col gap-space-sm">
+<!-- Top bar -->
+<div class="flex items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-6 h-6 rounded-full bg-surface-container-high text-primary font-badge-numeral text-[11px] flex items-center justify-center font-bold">
+                  05
+                </span>
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant">0xd73e...99bb</span>
+<span class="px-space-xs py-space-2xs rounded bg-surface-container font-label-mono-sm text-[10px] uppercase text-primary font-bold">
+                  STATUS
+                </span>
+</div>
+<span class="px-space-xs py-space-2xs rounded-full bg-surface-tint text-on-primary font-badge-numeral text-badge-numeral font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">link_off</span>
+<span>THIN</span>
+</span>
+</div>
+<!-- Claim sentence -->
+<h3 class="font-body-lg text-body-lg text-primary font-bold line-clamp-3 pt-space-xs leading-snug">
+              “OpenAI status page reports all API systems 100% operational.”
+            </h3>
+<!-- Hostname source + live badge -->
+<div class="flex flex-col gap-space-2xs pt-space-2xs">
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[14px]">public</span>
+<span>status.openai.com/archive/404-broken</span>
+</span>
+<div class="inline-flex items-center gap-space-2xs px-space-xs py-space-2xs rounded bg-surface-container w-fit text-primary font-label-mono-sm text-[10px]">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+<span>Live public page</span>
+</div>
+</div>
+<!-- Reason Excerpt -->
+<div class="p-space-xs bg-surface-container rounded font-label-mono-sm text-label-mono-sm text-on-surface-variant">
+<span class="font-bold text-primary">Reason:</span> HTTP 404 Not Found (Unreadable Source)
+            </div>
+</div>
+<!-- Bottom Ledger Settlement -->
+<div class="flex flex-col gap-space-xs pt-space-sm bg-surface-container-low -mx-space-lg -mb-space-lg p-space-md rounded-b-xl font-label-mono-sm text-label-mono-sm">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span>Bond Locked:</span>
+<span class="font-bold text-primary font-badge-numeral text-badge-numeral">150 GEN</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant">
+<span>Poster:</span>
+<span class="font-mono text-primary">0x22a...8831</span>
+</div>
+<div class="pt-space-2xs text-primary font-semibold flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[14px]">undo</span>
+<span>100% refund (150 GEN) returned to poster</span>
+</div>
+</div>
+</article>
+<!-- CARD 5: CANCELED CLAIM -->
+<article class="claim-card bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between gap-space-md relative overflow-hidden group" data-kind="fact" data-state="canceled">
+<div class="flex flex-col gap-space-sm">
+<!-- Top bar -->
+<div class="flex items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-6 h-6 rounded-full bg-surface-container-high text-primary font-badge-numeral text-[11px] flex items-center justify-center font-bold">
+                  06
+                </span>
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant">0xaa51...0012</span>
+<span class="px-space-xs py-space-2xs rounded bg-surface-container font-label-mono-sm text-[10px] uppercase text-primary font-bold">
+                  OTHER
+                </span>
+</div>
+<span class="px-space-xs py-space-2xs rounded-full bg-outline-variant text-on-surface font-badge-numeral text-badge-numeral font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">block</span>
+<span>CANCELED</span>
+</span>
+</div>
+<!-- Claim sentence -->
+<h3 class="font-body-lg text-body-lg text-on-surface-variant line-through line-clamp-3 pt-space-xs leading-snug">
+              “Local meetup schedule updated for Friday 6 PM.”
+            </h3>
+<!-- Hostname source + live badge -->
+<div class="flex flex-col gap-space-2xs pt-space-2xs opacity-60">
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[14px]">public</span>
+<span>meetup.com/crypto-sf</span>
+</span>
+<div class="inline-flex items-center gap-space-2xs px-space-xs py-space-2xs rounded bg-surface-container w-fit text-primary font-label-mono-sm text-[10px]">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+<span>Withdrawn</span>
+</div>
+</div>
+<!-- Cancellation Note -->
+<div class="p-space-xs bg-surface-container rounded font-label-mono-sm text-label-mono-sm text-on-surface-variant">
+              Canceled by poster prior to prove call. 100% refunded.
+            </div>
+</div>
+<!-- Bottom Ledger Settlement -->
+<div class="flex flex-col gap-space-xs pt-space-sm bg-surface-container-low -mx-space-lg -mb-space-lg p-space-md rounded-b-xl font-label-mono-sm text-label-mono-sm">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span>Bond Released:</span>
+<span class="font-bold text-primary font-badge-numeral text-badge-numeral">50 GEN</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant">
+<span>Poster:</span>
+<span class="font-mono text-primary">0x71C...4f9a</span>
+</div>
+<div class="pt-space-2xs text-on-surface-variant flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[14px]">check</span>
+<span>No fees deducted</span>
+</div>
+</div>
+</article>
+<!-- CARD 6: ADDITIONAL OPEN CLAIM FOR DENSITY -->
+<article class="claim-card bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between gap-space-md relative overflow-hidden group" data-kind="press" data-state="open">
+<div class="flex flex-col gap-space-sm">
+<!-- Top bar -->
+<div class="flex items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-[11px] flex items-center justify-center font-bold">
+                  07
+                </span>
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant">0x33e8...c9a0</span>
+<span class="px-space-xs py-space-2xs rounded bg-surface-container font-label-mono-sm text-[10px] uppercase text-primary font-bold">
+                  PRESS
+                </span>
+</div>
+<span class="px-space-xs py-space-2xs rounded-full bg-secondary-container/90 text-on-secondary-fixed font-badge-numeral text-badge-numeral font-bold">
+                OPEN
+              </span>
+</div>
+<!-- Claim sentence -->
+<h3 class="font-body-lg text-body-lg text-primary font-bold line-clamp-3 pt-space-xs leading-snug">
+              “GitHub Copilot Enterprise activates Anthropic models as default selection.”
+            </h3>
+<!-- Hostname source + live badge -->
+<div class="flex flex-col gap-space-2xs pt-space-2xs">
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[14px]">public</span>
+<span>github.blog/news</span>
+</span>
+<div class="inline-flex items-center gap-space-2xs px-space-xs py-space-2xs rounded bg-surface-container w-fit text-primary font-label-mono-sm text-[10px]">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Live public page</span>
+</div>
+</div>
+</div>
+<!-- Bottom Action & Economics -->
+<div class="flex flex-col gap-space-sm pt-space-sm bg-surface-container-low -mx-space-lg -mb-space-lg p-space-md rounded-b-xl">
+<div class="flex items-center justify-between font-label-mono-sm text-label-mono-sm">
+<span class="text-on-surface-variant">Bond Locked:</span>
+<span class="font-badge-numeral text-badge-numeral font-bold text-primary">320 GEN</span>
+</div>
+<div class="flex items-center justify-between font-label-mono-sm text-label-mono-sm text-on-surface-variant">
+<span>Poster:</span>
+<span class="font-mono text-primary">0x55c...28aa</span>
+</div>
+<button class="w-full py-space-xs rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-badge-numeral uppercase hover:bg-secondary-fixed transition-colors font-bold shadow-[0_2px_0px_#000000]" type="button">
+              PROVE CLAIM
+            </button>
+</div>
+</article>
+</div>
+<!-- Load More Action Strip -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-md pt-space-xl pb-space-lg bg-surface-container p-space-lg rounded-xl">
+<div class="flex items-center gap-space-sm">
+<span class="w-3 h-3 rounded-full bg-secondary-container"></span>
+<span class="font-label-mono-sm text-label-mono-sm uppercase text-primary font-bold">
+            SHOWING 6 OF 24 LIVE CONTRACT INSTANCES
+          </span>
+</div>
+<button class="px-space-xl py-space-sm rounded-full bg-primary text-on-primary font-badge-numeral text-badge-numeral uppercase hover:bg-primary/90 transition-colors shadow-sm" type="button">
+          LOAD NEXT 18 CLAIMS
+        </button>
+</div>
+</div>
+</section>
+<!-- SECTION 4: GLOBAL INTEROPERABILITY STRIP (Inspired by country discs in inspiration image) -->
+<section class="w-full bg-surface-container-high py-space-2xl overflow-hidden">
+<div class="max-w-content-max-width mx-auto px-gutter-desktop flex flex-col gap-space-xl">
+<div class="flex flex-col items-center text-center gap-space-xs">
+<span class="font-label-mono-sm text-label-mono-sm text-secondary uppercase tracking-widest font-bold">CONSENSUS TOPOLOGY</span>
+<h2 class="font-headline-lg text-headline-lg text-primary uppercase">GLOBALLY DISTRIBUTED VALIDATION</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xl">
+          Independent GenLayer nodes execute non-deterministic HTTP fetching with deterministic LLM equivalence mapping across 30+ jurisdictions.
+        </p>
+</div>
+<!-- Country disc avatar row matching inspiration image rhythm -->
+<div class="flex items-center justify-center gap-space-md md:gap-space-lg flex-wrap py-space-sm">
+<!-- Disc 1 -->
+<div class="flex flex-col items-center gap-space-2xs">
+<div class="w-12 h-12 rounded-full bg-surface-container-lowest flex items-center justify-center shadow-sm font-bold text-[18px]">
+            🇺🇸
+          </div>
+<span class="font-label-mono-sm text-[10px] text-on-surface-variant">US-EAST</span>
+</div>
+<!-- Disc 2 -->
+<div class="flex flex-col items-center gap-space-2xs">
+<div class="w-12 h-12 rounded-full bg-surface-container-lowest flex items-center justify-center shadow-sm font-bold text-[18px]">
+            🇩🇪
+          </div>
+<span class="font-label-mono-sm text-[10px] text-on-surface-variant">EU-CENTRAL</span>
+</div>
+<!-- Disc 3 -->
+<div class="flex flex-col items-center gap-space-2xs">
+<div class="w-12 h-12 rounded-full bg-surface-container-lowest flex items-center justify-center shadow-sm font-bold text-[18px]">
+            🇸🇬
+          </div>
+<span class="font-label-mono-sm text-[10px] text-on-surface-variant">AP-SOUTH</span>
+</div>
+<!-- Disc 4 -->
+<div class="flex flex-col items-center gap-space-2xs">
+<div class="w-12 h-12 rounded-full bg-surface-container-lowest flex items-center justify-center shadow-sm font-bold text-[18px]">
+            🇯🇵
+          </div>
+<span class="font-label-mono-sm text-[10px] text-on-surface-variant">AP-NORTHEAST</span>
+</div>
+<!-- Disc 5 -->
+<div class="flex flex-col items-center gap-space-2xs">
+<div class="w-12 h-12 rounded-full bg-surface-container-lowest flex items-center justify-center shadow-sm font-bold text-[18px]">
+            🇬🇧
+          </div>
+<span class="font-label-mono-sm text-[10px] text-on-surface-variant">EU-WEST</span>
+</div>
+<!-- Disc 6 -->
+<div class="flex flex-col items-center gap-space-2xs">
+<div class="w-12 h-12 rounded-full bg-surface-container-lowest flex items-center justify-center shadow-sm font-bold text-[18px]">
+            🇨🇭
+          </div>
+<span class="font-label-mono-sm text-[10px] text-on-surface-variant">CH-ZURICH</span>
+</div>
+<!-- Disc 7 -->
+<div class="flex flex-col items-center gap-space-2xs">
+<div class="w-12 h-12 rounded-full bg-surface-container-lowest flex items-center justify-center shadow-sm font-bold text-[18px]">
+            🇧🇷
+          </div>
+<span class="font-label-mono-sm text-[10px] text-on-surface-variant">SA-EAST</span>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 5: BRUTALIST CALLOUT BLOCK (CANARY ACCENT SECTION) -->
+<section class="w-full bg-secondary-container py-space-3xl text-on-secondary-fixed">
+<div class="max-w-content-max-width mx-auto px-gutter-desktop">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-space-xl">
+<div class="flex flex-col gap-space-sm max-w-2xl">
+<span class="font-label-mono-sm text-label-mono-sm uppercase tracking-widest text-on-secondary-container font-bold">
+            PUT UP OR SHUT UP
+          </span>
+<h2 class="font-headline-xl text-headline-xl uppercase text-primary leading-none">
+            HAVE A LIVE CLAIM?<br/>LOCK YOUR BOND.
+          </h2>
+<p class="font-body-lg text-body-lg text-primary font-medium">
+            Post an immutable statement backed by test GEN on GenLayer StudioNet. If verified true by public web consensus, collect your bond back. If proven false, the prover claims your entire stake.
+          </p>
+</div>
+<div class="flex flex-col sm:flex-row items-center gap-space-md w-full md:w-auto">
+<a class="w-full sm:w-auto text-center px-space-xl py-space-md rounded-full bg-primary text-on-primary font-badge-numeral text-badge-numeral uppercase hover:bg-surface-container-highest hover:text-primary transition-all shadow-[0_4px_0px_#000000]" data-path="back-a-claim" href="#">
+            BACK A NEW CLAIM
+          </a>
+<a class="w-full sm:w-auto text-center px-space-lg py-space-md rounded-full bg-transparent text-primary hover:bg-primary/10 font-badge-numeral text-badge-numeral uppercase transition-colors" data-path="economics" href="#">
+            READ ECONOMICS
+          </a>
+</div>
+</div>
+</div>
+</section>
+<!-- MODAL: PROVE NOW SIMULATION OVERLAY -->
+<div class="fixed inset-0 z-50 bg-primary/80 backdrop-blur-md flex items-center justify-center p-space-md hidden" id="prove-modal">
+<div class="bg-surface rounded-xl max-w-lg w-full p-space-xl shadow-2xl flex flex-col gap-space-lg border-0 relative">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-full bg-secondary-container"></span>
+<span class="font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-primary font-bold">
+            EXECUTE GENLAYER PROVE()
+          </span>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors" id="close-modal-btn" type="button">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant">TARGET CONTRACT</span>
+<div class="p-space-sm bg-surface-container rounded font-label-mono-sm text-label-mono-sm text-primary break-all">
+          0x8f4d...391b (500.00 GEN Bond)
+        </div>
+</div>
+<div class="flex flex-col gap-space-2xs text-body-md text-on-surface">
+<p class="font-semibold text-primary">Simulated GenLayer Execution:</p>
+<ol class="list-decimal pl-5 text-on-surface-variant space-y-1 font-body-sm text-body-sm">
+<li>Validator cluster dispatches HTTPS GET to source URL.</li>
+<li>Deterministic LLM parser runs sentence equivalence prompt.</li>
+<li>State transitions to TRUE or FALSE in atomic transaction.</li>
+</ol>
+</div>
+<div class="p-space-sm bg-surface-container-high rounded flex items-center justify-between font-label-mono-sm text-label-mono-sm">
+<span class="text-on-surface-variant">Estimated Gas:</span>
+<span class="font-bold text-primary">0.000124 GEN</span>
+</div>
+<div class="flex items-center justify-end gap-space-sm pt-space-xs">
+<button class="px-space-md py-space-xs rounded-full bg-surface-container text-on-surface font-badge-numeral text-badge-numeral uppercase hover:bg-surface-container-high transition-colors" id="cancel-prove-btn" type="button">
+          Cancel
+        </button>
+<button class="px-space-xl py-space-xs rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-badge-numeral uppercase hover:bg-secondary-fixed transition-colors font-bold shadow-[0_2px_0px_#000000]" id="confirm-prove-btn" type="button">
+          BROADCAST PROVE TX
+        </button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Simple interactive filter logic & modal triggers
+  (function() {
+    const filterPills = document.querySelectorAll('.filter-pill');
+    const claimCards = document.querySelectorAll('.claim-card');
+    const searchInput = document.getElementById('claim-search-input');
+    const sortBtns = document.querySelectorAll('.sort-btn');
+    const modal = document.getElementById('prove-modal');
+    const openModalBtn = document.getElementById('prove-featured-btn');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const cancelModalBtn = document.getElementById('cancel-prove-btn');
+    const confirmModalBtn = document.getElementById('confirm-prove-btn');
+
+    // Status Filter click handling
+    filterPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        filterPills.forEach(p => {
+          p.classList.remove('bg-primary', 'text-on-primary');
+          p.classList.add('bg-surface-container', 'text-on-surface');
+        });
+        pill.classList.remove('bg-surface-container', 'text-on-surface');
+        pill.classList.add('bg-primary', 'text-on-primary');
+
+        const filter = pill.getAttribute('data-filter');
+        claimCards.forEach(card => {
+          const cardState = card.getAttribute('data-state');
+          if (filter === 'all' || cardState === filter) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Search filter
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        claimCards.forEach(card => {
+          const text = card.textContent.toLowerCase();
+          if (text.includes(query)) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    }
+
+    // Sort buttons toggle visual state
+    sortBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        sortBtns.forEach(b => {
+          b.classList.remove('bg-primary', 'text-on-primary');
+          b.classList.add('text-on-surface-variant');
+        });
+        btn.classList.remove('text-on-surface-variant');
+        btn.classList.add('bg-primary', 'text-on-primary');
+      });
+    });
+
+    // Modal behavior
+    if (openModalBtn && modal) {
+      openModalBtn.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+      });
+    }
+    const hideModal = () => {
+      if (modal) modal.classList.add('hidden');
+    };
+    if (closeModalBtn) closeModalBtn.addEventListener('click', hideModal);
+    if (cancelModalBtn) cancelModalBtn.addEventListener('click', hideModal);
+    if (confirmModalBtn) {
+      confirmModalBtn.addEventListener('click', () => {
+        confirmModalBtn.innerHTML = '<span class="material-symbols-outlined text-[16px] animate-spin">autorenew</span> BROADCASTING...';
+        setTimeout(() => {
+          alert('Consensus prove() transaction simulated on StudioNet! Contract resolved TRUE.');
+          hideModal();
+          confirmModalBtn.innerHTML = 'BROADCAST PROVE TX';
+        }, 1200);
+      });
+    }
+  })();
+</script></main><footer class="w-full bg-primary text-on-primary py-space-3xl"><div class="max-w-content-max-width mx-auto px-gutter-desktop flex flex-col gap-space-2xl"><div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-space-xl"><div class="flex flex-col gap-space-xs"><span class="font-headline-xl text-headline-xl uppercase tracking-tight text-secondary-container">BackIt</span><p class="font-body-md text-body-md text-on-primary-container max-w-md">Settled on GenLayer live-web consensus. Not a court. Put up or shut up.</p></div><div class="flex flex-wrap gap-space-xl font-label-mono-sm text-label-mono-sm uppercase tracking-wider"><div class="flex flex-col gap-space-xs"><span class="text-surface-tint">Protocol</span><a class="hover:text-secondary-container transition-colors" data-path="browse-claims" href="#">Claims Matrix</a><a class="hover:text-secondary-container transition-colors" data-path="economics" href="#">Bond Mechanics</a><a class="hover:text-secondary-container transition-colors" data-path="how-it-works" href="#">Optimistic Dispute</a></div><div class="flex flex-col gap-space-xs"><span class="text-surface-tint">Resources</span><a class="hover:text-secondary-container transition-colors" href="#">GenLayer Docs</a><a class="hover:text-secondary-container transition-colors" href="#">StudioNet Explorer</a><a class="hover:text-secondary-container transition-colors" href="#">Bug Bounty</a></div></div></div><div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-space-sm pt-space-xl bg-primary-container/40 p-space-md rounded-xl font-label-mono-sm text-label-mono-sm text-on-primary-container"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-secondary-container"></span><span>CONTRACT: 0x8a92...32d1 (GENLAYER INTELLIGENT CONTRACT)</span></div><div>© 2025 BackIt Protocol · Consensus by Deterministic LLM Execution</div></div></div></footer></body></html>

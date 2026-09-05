@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+@theme {
+  --color-secondary: #6d5e00;
+  --color-surface-tint: #5f5e5e;
+  --color-on-secondary-fixed-variant: #524700;
+  --color-on-surface-variant: #444748;
+  --color-on-primary: #ffffff;
+  --color-primary: #000000;
+  --color-inverse-surface: #30312d;
+  --color-outline-variant: #c4c7c7;
+  --color-outline: #747878;
+  --color-surface-dim: #dbdad5;
+  --color-secondary-fixed: #ffe243;
+  --color-on-error: #ffffff;
+  --color-on-secondary-container: #6d5f00;
+  --color-on-error-container: #93000a;
+  --color-tertiary-fixed-dim: #c8c6c0;
+  --color-inverse-primary: #c8c6c5;
+  --color-on-tertiary: #ffffff;
+  --color-on-tertiary-container: #84847e;
+  --color-error: #ba1a1a;
+  --color-on-tertiary-fixed-variant: #474742;
+  --color-surface-container-lowest: #ffffff;
+  --color-background: #fbf9f4;
+  --color-on-tertiary-fixed: #1b1c18;
+  --color-primary-fixed-dim: #c8c6c5;
+  --color-tertiary-fixed: #e4e2dc;
+  --color-on-secondary: #ffffff;
+  --color-surface-variant: #e4e2dd;
+  --color-surface-container-low: #f5f3ee;
+  --color-secondary-container: #f9da00;
+  --color-surface-container: #efeee9;
+  --color-surface-container-highest: #e4e2dd;
+  --color-on-primary-container: #858383;
+  --color-tertiary: #000000;
+  --color-primary-container: #1c1b1b;
+  --color-on-surface: #1b1c19;
+  --color-surface-bright: #fbf9f4;
+  --color-surface: #fbf9f4;
+  --color-on-secondary-fixed: #211b00;
+  --color-on-background: #1b1c19;
+  --color-inverse-on-surface: #f2f1eb;
+  --color-on-primary-fixed-variant: #474646;
+  --color-tertiary-container: #1b1c18;
+  --color-surface-container-high: #eae8e3;
+  --color-secondary-fixed-dim: #e3c600;
+  --color-primary-fixed: #e5e2e1;
+  --color-error-container: #ffdad6;
+  --color-on-primary-fixed: #1c1b1b;
+
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+
+  --spacing-space-2xs: 0.25rem;
+  --spacing-space-xs: 0.5rem;
+  --spacing-space-sm: 0.75rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-xl: 2rem;
+  --spacing-space-2xl: 3rem;
+  --spacing-space-3xl: 4.5rem;
+  --spacing-space-4xl: 6rem;
+  --spacing-gutter-desktop: 1.5rem;
+  --spacing-gutter-mobile: 1rem;
+  --spacing-content-max-width: 75rem;
+
+  --font-display-hero: var(--font-anton), sans-serif;
+  --font-display-hero-mobile: var(--font-anton), sans-serif;
+  --font-headline-xl: var(--font-anton), sans-serif;
+  --font-headline-xl-mobile: var(--font-anton), sans-serif;
+  --font-headline-lg: var(--font-anton), sans-serif;
+  --font-headline-md: var(--font-hanken), sans-serif;
+  --font-body-lg: var(--font-hanken), sans-serif;
+  --font-body-md: var(--font-hanken), sans-serif;
+  --font-body-sm: var(--font-hanken), sans-serif;
+  --font-label-mono-sm: var(--font-jetbrains), monospace;
+  --font-badge-numeral: var(--font-jetbrains), monospace;
+
+  --text-display-hero: 84px;
+  --text-display-hero--line-height: 84px;
+  --text-display-hero--letter-spacing: -0.03em;
+  --text-display-hero-mobile: 44px;
+  --text-display-hero-mobile--line-height: 48px;
+  --text-headline-xl: 56px;
+  --text-headline-xl--line-height: 58px;
+  --text-headline-xl-mobile: 32px;
+  --text-headline-xl-mobile--line-height: 36px;
+  --text-headline-lg: 40px;
+  --text-headline-lg--line-height: 44px;
+  --text-headline-md: 22px;
+  --text-headline-md--line-height: 28px;
+  --text-body-lg: 16px;
+  --text-body-lg--line-height: 24px;
+  --text-body-md: 14px;
+  --text-body-md--line-height: 20px;
+  --text-body-sm: 12px;
+  --text-body-sm--line-height: 18px;
+  --text-label-mono-sm: 11px;
+  --text-label-mono-sm--line-height: 14px;
+  --text-badge-numeral: 13px;
+  --text-badge-numeral--line-height: 16px;
+}
+
+@layer base {
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    overscroll-behavior: none;
+    background: var(--color-surface);
+    color: var(--color-on-surface);
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .font-display-hero {
+    font-size: 44px;
+    line-height: 48px;
+  }
+  .font-headline-xl,
+  .text-headline-xl {
+    font-size: 32px;
+    line-height: 36px;
+  }
+}
