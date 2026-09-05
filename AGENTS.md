@@ -15,7 +15,6 @@ StudioNet only. Test GEN. No git push unless the human asks.
 - Courts, dockets, appeals, keepers, deadlines, countdown clocks, leaderboards, passports, validator vote theater.
 - Frontend LLM writing the verdict.
 - Party-supplied weights.
-- Rainline datetime gates.
 - Push to GitHub unless asked.
 
 ## Commands

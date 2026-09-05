@@ -30,18 +30,18 @@ Moved originals to `stitch/` (untouched source).
 - No countdown clocks, leaderboards, passports, or validator vote theater wired.
 - “Attestation NFT minted” stitch copy is marketing; contract stores an attestation JSON string, no NFT.
 
-## GenLayer APIs used (from docs + LicenseLock, not guessed)
+## GenLayer APIs used (from docs, not guessed)
 
 - Runner pin: `py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6`
 - Payable: `@gl.public.write.payable`, `gl.message.value` (`u256`)
 - Sender: `gl.message.sender_address` (docs: no `sender_account`)
-- EOA payout: `gl.get_contract_at(addr).emit_transfer(value=...)` (LicenseLock proven Studio path)
+- EOA payout: `gl.get_contract_at(addr).emit_transfer(value=...)`
 - Fallback credits if emit throws / returns falsy
 - Web: `gl.nondet.web.render(url, mode='text'|'html')` then `gl.nondet.web.get`
 - Equivalence: `gl.vm.run_nondet_unsafe` comparing **outcome enum only**
 - LLM: `gl.nondet.exec_prompt(..., response_format="json")`
 - StudioNet: chain **61999**, RPC `https://studio.genlayer.com/api`, `studionet` from `genlayer-js/chains`
-- Wallet: LicenseLock `GenLayerProvider` — MetaMask `eth_requestAccounts` + `wallet_switchEthereumChain` / `wallet_addEthereumChain` + `createClient({ chain: studionet, account, provider })`
+- Wallet: `GenLayerProvider` — MetaMask `eth_requestAccounts` + `wallet_switchEthereumChain` / `wallet_addEthereumChain` + `createClient({ chain: studionet, account, provider })`
 - Writes: `client.writeContract({ ..., value })` then `waitForTransactionReceipt` / `waitForFinalization`
 - RPC proxy: `POST /api/genlayer` (CORS)
 
@@ -60,7 +60,7 @@ Collision breaker: rehash with a deterministic suffix. Never a global CASE count
 - v1 deploy `0x4e6DDffB8CdFaf9141b29E827E8Dd413f4b65df1` / `0xec24131d6ebf614d9c61b978bade2c34c054cdc971321b5562356bad51b8d447`
 - Payout-path redeploy after API research: `emit_transfer` returns **None**, not bool. Official IC→EOA is `_Recipient(Address).emit_transfer`; Studio fallback remains `get_contract_at`. Both raise → credits + `withdraw()`.
 - Current contract `0x83EFF829F56756210c150591887c653F3233a135` tx `0xef49425566c691d0d15498ea26634f07d510ccac4c21d7f415a7dd466d768e01` ACCEPTED 5/5 AGREE
-- Wallet: browser `createClient` uses same-origin `/api/genlayer` (Studio CORS). IDs from this tx's leader return, then `list_ids` diff. Receipts checked for leader ERROR/rollback. MetaMask RPC remains `https://studio.genlayer.com/api` (not `:7182`). EOA payout reconstructs `Address(addr.as_hex)` per Alpha/Sybil.
+- Wallet: browser `createClient` uses same-origin `/api/genlayer` (Studio CORS). IDs from this tx's leader return, then `list_ids` diff. Receipts checked for leader ERROR/rollback. MetaMask RPC remains `https://studio.genlayer.com/api`. EOA payout reconstructs `Address(addr.as_hex)`.
 - `gl.message` has no tx_hash/nonce; ids hash origin|sender|datetime|value|claim|url|entry_data
 - `genvm-lint` rejects public `__receive__`; omitted. Failed child transfers are not auto-refunded (docs).
 

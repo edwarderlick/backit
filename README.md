@@ -15,8 +15,6 @@ Not a court. Not an appeal board. Not a delayed oracle. Not a keeper network. St
 - **RPC:** `https://studio.genlayer.com/api`
 - **Repo:** [github.com/edwarderlick/backit](https://github.com/edwarderlick/backit)
 
-Steward packet: [`SUBMISSION.md`](./SUBMISSION.md)
-
 ---
 
 ## Architecture
@@ -41,20 +39,15 @@ Equivalence compares **outcome enum only**. Quote and reason are stored, never c
 
 ---
 
-## Steward checklist (mapped to prior reviews)
+## How it works
 
-These are the exact failure modes from Provider Court, Sybil Court, Alpha Court, LicenseLock, and the pattern Rainline used to pass. BackIt is built so they cannot recur.
+1. **Back** — poster sends test GEN with one claim sentence, one `https://` URL, and a kind label (`FACT`, `LISTING`, `PRESS`, `JOB`, `STATUS`, `OTHER`). Kind is display only. It does not change payout.
+2. **Id** — the contract returns a SHA-256 of the transaction fields (`origin`, sender, datetime, value, claim, url, calldata). The UI never invents or remaps ids. Browse and detail only accept 64-hex.
+3. **Open** — anyone may `prove`. Only the poster may `cancel`, and only while OPEN. There is no deadline and no second round.
+4. **Prove** — validators fetch the live page (GET, then render if the GET is chrome or a bot-wall). HTML nav/header/footer/script is stripped. PDF / CAPTCHA / 404 / 403 / 5xx / empty is **THIN**. Otherwise the LLM must return exactly `TRUE`, `FALSE`, or `THIN`. Consensus is on that enum.
+5. **Pay in the same write** — TRUE: 2.5% treasury, rest poster. FALSE: 100% prover. THIN and CANCELED: 100% poster. If native `emit_transfer` fails, the amount is credited and the recipient calls `withdraw()`.
 
-| Prior review | What they asked (quoted / summarized) | What BackIt does |
-|---|---|---|
-| Provider Court | No global count-based listing. Transaction-specific ID correlation. Concurrent-creation tests. | Id = SHA-256(`origin \| sender \| datetime \| value \| claim \| url \| entry_data`) plus collision suffix. UI never assigns ids. `list_ids` is append-only. Test: five `back()` calls yield five distinct 64-hex ids, never `CASE-0001`. Unknown ids revert. |
-| Provider Court | Cap/normalize party-supplied clause weights. Adversarial-weight tests. | **There are no weights.** Kind is a label and **does not change payout math**. Test: all six kinds TRUE-settle at the same 2.5% / 97.5% split. |
-| Sybil Court | *“arbitrary public pages are not authenticated”*; UI must not promise slash/appeal the contract lacks; *“a label without settlement is not a court.”* | HTTPS only; reject `javascript:` / `data:` / `file:`; length caps. Unreadable source is **THIN**, never FALSE. TRUE/FALSE/THIN **move GEN in the prove write**. No appeal UI, no appeal method. Landing mock is `SAMPLE CARD · NOT A CONTRACT ID`. |
-| Alpha Court | *“Contract-held stakes … must either be released through a working … payout/refund path or the staking design must stop custodying funds it cannot return. Derive … every keeper recipient … against contract state instead of trusting the unauthenticated stake cache, and enforce the … deadlines inside the contract methods.”* | `prove` and `cancel` call `_pay` in the same tx. `_pay` = `_Recipient.emit_transfer` then `get_contract_at` then **credits + `withdraw()`**. No keeper. No cache. No deadlines. Prove twice reverts. Cancel after settle reverts. |
-| LicenseLock | Fail closed on missing evidence. Do not trap state on 404/UNAVAILABLE. | Missing/blocked/binary source is THIN: **100% refund poster**. If the LLM returns a non-enum, prove reverts, the bond stays OPEN, poster cancels for 100%. |
-| Rainline (accepted pattern) | Numeric pinned API; no trapped GEN; pull-over-push; UI matches methods. | Credits mapping + `withdraw()`. **Honest difference:** Rainline compares a number from Open-Meteo. BackIt asks the LLM for `TRUE\|FALSE\|THIN` on a live HTML page. That remaining subjectivity is stated, not hidden. |
-
-BackIt is **not** a court. It does not implement appeals, keepers, passports, leaderboards, NFTs, or validator-vote theater. Those surfaces were omitted on purpose.
+Prove twice reverts. Cancel after settle reverts. Unknown ids revert. If the LLM returns garbage, prove reverts, the bond stays OPEN, and the poster can cancel for a full refund.
 
 ---
 
@@ -115,7 +108,6 @@ tests/direct/test_backit.py
 scripts/deploy.mjs
 web/                 Next.js App Router (Vercel root)
 stitch/              original Stitch HTML/PNG, untouched
-SUBMISSION.md        steward packet
 ```
 
 Routes: `/` `/how` `/back` `/browse` `/claim/[id]` `/me` `/economics`
@@ -165,6 +157,4 @@ Next app root is `web/`. Live: [https://backit-seven.vercel.app/](https://backit
 - Live HTTPS pages can be CAPTCHA-blocked. That is THIN (refund), never FALSE.
 - `bitcoin.org/bitcoin.pdf` settles THIN (binary). RFC HTML pages settle TRUE/FALSE.
 - WalletConnect QR is not wired. Injected EIP-6963 wallets only.
-- LLM outcome is an enum, not a Rainline-style numeric compare. Equivalence is outcome-only.
-
-See `AGENTS.md` for the agent runbook.
+- Validators agree on `TRUE | FALSE | THIN` only. Quote and reason are stored, never compared.
