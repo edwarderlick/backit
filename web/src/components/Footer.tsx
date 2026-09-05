@@ -48,6 +48,14 @@ export function Footer() {
               </a>
               <a
                 className="hover:text-secondary-container transition-colors"
+                href="https://backit-seven.vercel.app/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Live app
+              </a>
+              <a
+                className="hover:text-secondary-container transition-colors"
                 href="https://github.com/edwarderlick/backit"
                 target="_blank"
                 rel="noreferrer"

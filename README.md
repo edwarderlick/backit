@@ -8,11 +8,14 @@ Not a court. Not an appeal board. Not a delayed oracle. Not a keeper network. St
 
 ### Live
 
+- **App:** [https://backit-seven.vercel.app/](https://backit-seven.vercel.app/)
 - **StudioNet contract:** [`0xEb3c460DD484fd3A4bF1003FA9C29f25B3c45568`](https://explorer-studio.genlayer.com/address/0xEb3c460DD484fd3A4bF1003FA9C29f25B3c45568)
 - **Deploy tx:** [`0x7c3b1ff389ffe9dda09a1b79e59285f97bb3fcffce2ba79d1242a296a170f1d4`](https://explorer-studio.genlayer.com/tx/0x7c3b1ff389ffe9dda09a1b79e59285f97bb3fcffce2ba79d1242a296a170f1d4) (ACCEPTED, 5/5 AGREE)
 - **Chain ID:** 61999
 - **RPC:** `https://studio.genlayer.com/api`
-- **Local app:** `cd web && npm run dev` then http://localhost:3000
+- **Repo:** [github.com/edwarderlick/backit](https://github.com/edwarderlick/backit)
+
+Steward packet: [`SUBMISSION.md`](./SUBMISSION.md)
 
 ---
 
@@ -40,20 +43,18 @@ Equivalence compares **outcome enum only**. Quote and reason are stored, never c
 
 ## Steward checklist (mapped to prior reviews)
 
-These are the exact failure modes from Provider Court, Sybil Court, Alpha Court, and LicenseLock. BackIt is built so they cannot recur.
+These are the exact failure modes from Provider Court, Sybil Court, Alpha Court, LicenseLock, and the pattern Rainline used to pass. BackIt is built so they cannot recur.
 
-| Prior review | What they asked | What BackIt does |
+| Prior review | What they asked (quoted / summarized) | What BackIt does |
 |---|---|---|
-| Provider Court | No global count-based listing / order lookup. Transaction-specific ID correlation. Concurrent-creation tests. | Id = SHA-256(`origin \| sender \| datetime \| value \| claim \| url \| entry_data`) plus collision suffix. UI never assigns ids. `list_ids` is append-only. Test: five concurrent `back()` calls yield five distinct 64-hex ids, never `CASE-0001`. |
-| Provider Court | Cap/normalize party-supplied clause weights. Adversarial-weight tests. | **There are no weights.** Kind is `FACT \| LISTING \| PRESS \| JOB \| STATUS \| OTHER` and **does not change payout math**. Test: all six kinds lock the same amount and pay the same TRUE/FALSE/THIN table. |
-| Sybil Court | Arbitrary public pages are not authenticated; verdict must enforce eligibility; UI must not promise bond/appeal the contract lacks. | Eligibility is encoded: HTTPS only; reject `javascript:` / `data:` / `file:`; length caps; empty claim rejected. Unreadable source (404/403/CAPTCHA/PDF/empty/5xx) is **THIN**, never FALSE. There is **no appeal UI and no appeal method**. Landing mock is labeled `SAMPLE TICKET (NOT AN ID)`. |
-| Sybil Court | Connect outcome to a real consequence. | TRUE/FALSE/THIN **move GEN in the prove write**. Reconstruct amounts from `get_back` / `get_economics` / `get_credit`, never from a frontend cache. |
-| Alpha Court | Contract-held stakes must be released. No no-op payout. No keeper cache deciding recipients. | `prove` and `cancel` call `_pay` in the same tx. `_pay` = `_Recipient(Address(hex)).emit_transfer` then `get_contract_at` fallback then **credits + `withdraw()`**. No keeper. No off-chain stake cache. |
-| Alpha Court | Deadlines advertised in UI must be in the contract. | **There are no deadlines.** Copy does not draw countdown clocks. |
-| LicenseLock | Fail closed on missing evidence. Do not release escrow on unavailable proof. | Missing/blocked/binary source is THIN: **100% refund poster**. Funds are never left locked after prove. OPEN funds leave via cancel (poster only) or prove. |
-| Rainline (accepted pattern) | No trapped GEN. Pull-over-push if native IC to EOA fails. | Credits mapping + `withdraw()`. If withdraw transfer fails, credits are restored (revert-safe). |
+| Provider Court | No global count-based listing. Transaction-specific ID correlation. Concurrent-creation tests. | Id = SHA-256(`origin \| sender \| datetime \| value \| claim \| url \| entry_data`) plus collision suffix. UI never assigns ids. `list_ids` is append-only. Test: five `back()` calls yield five distinct 64-hex ids, never `CASE-0001`. Unknown ids revert. |
+| Provider Court | Cap/normalize party-supplied clause weights. Adversarial-weight tests. | **There are no weights.** Kind is a label and **does not change payout math**. Test: all six kinds TRUE-settle at the same 2.5% / 97.5% split. |
+| Sybil Court | *“arbitrary public pages are not authenticated”*; UI must not promise slash/appeal the contract lacks; *“a label without settlement is not a court.”* | HTTPS only; reject `javascript:` / `data:` / `file:`; length caps. Unreadable source is **THIN**, never FALSE. TRUE/FALSE/THIN **move GEN in the prove write**. No appeal UI, no appeal method. Landing mock is `SAMPLE CARD · NOT A CONTRACT ID`. |
+| Alpha Court | *“Contract-held stakes … must either be released through a working … payout/refund path or the staking design must stop custodying funds it cannot return. Derive … every keeper recipient … against contract state instead of trusting the unauthenticated stake cache, and enforce the … deadlines inside the contract methods.”* | `prove` and `cancel` call `_pay` in the same tx. `_pay` = `_Recipient.emit_transfer` then `get_contract_at` then **credits + `withdraw()`**. No keeper. No cache. No deadlines. Prove twice reverts. Cancel after settle reverts. |
+| LicenseLock | Fail closed on missing evidence. Do not trap state on 404/UNAVAILABLE. | Missing/blocked/binary source is THIN: **100% refund poster**. If the LLM returns a non-enum, prove reverts, the bond stays OPEN, poster cancels for 100%. |
+| Rainline (accepted pattern) | Numeric pinned API; no trapped GEN; pull-over-push; UI matches methods. | Credits mapping + `withdraw()`. **Honest difference:** Rainline compares a number from Open-Meteo. BackIt asks the LLM for `TRUE\|FALSE\|THIN` on a live HTML page. That remaining subjectivity is stated, not hidden. |
 
-BackIt is **not** a court. It does not implement appeals, keepers, passports, leaderboards, or validator-vote theater. Those surfaces were omitted on purpose.
+BackIt is **not** a court. It does not implement appeals, keepers, passports, leaderboards, NFTs, or validator-vote theater. Those surfaces were omitted on purpose.
 
 ---
 
@@ -85,7 +86,9 @@ Autonomous matrix on this contract, 0.1 GEN bonds, poster `0x9CE8…F0DD`, prove
 | OTHER TRUE (Wikipedia REST, 2008) | TRUE | [`0x74c6317c…`](https://explorer-studio.genlayer.com/tx/0x74c6317ce7ad252d12258d8b4f0a7891bdb41563c95913676d2784dfb74c164c) |
 | JOB THIN (HTTP 404) | THIN | [`0x5e0facd5…`](https://explorer-studio.genlayer.com/tx/0x5e0facd55e5ce67a80eebe790dff8ce98304ff17f8948d1bb728c86d3d0c9154) |
 
-CAPTCHA / bot-wall sources refund the poster (THIN). That is fail-closed evidence, not a trapped-fund bug.
+Public app settlement on the same contract (2 GEN FACT TRUE): fee **0.05 GEN**, poster **1.95 GEN**, credits 0. Treasury after that write: **0.0675 GEN**.
+
+CAPTCHA / bot-wall sources refund the poster (THIN). That is fail-closed evidence, not a trapped-fund bug. A PDF is THIN because validators cannot read binary; use an HTML source if you want TRUE/FALSE.
 
 ---
 
@@ -112,6 +115,7 @@ tests/direct/test_backit.py
 scripts/deploy.mjs
 web/                 Next.js App Router (Vercel root)
 stitch/              original Stitch HTML/PNG, untouched
+SUBMISSION.md        steward packet
 ```
 
 Routes: `/` `/how` `/back` `/browse` `/claim/[id]` `/me` `/economics`
@@ -147,7 +151,7 @@ Connect MetaMask to StudioNet **61999**, RPC `https://studio.genlayer.com/api`. 
 
 ## Vercel
 
-Next app root is `web/`.
+Next app root is `web/`. Live: [https://backit-seven.vercel.app/](https://backit-seven.vercel.app/)
 
 1. Build: `npm run build` in `web/`
 2. Env: `NEXT_PUBLIC_CONTRACT_ADDRESS`, `NEXT_PUBLIC_STUDIO_RPC_URL=https://studio.genlayer.com/api`
@@ -159,7 +163,8 @@ Next app root is `web/`.
 
 - StudioNet test GEN only. Not insurance, not a legal court, not mainnet.
 - Live HTTPS pages can be CAPTCHA-blocked. That is THIN (refund), never FALSE.
+- `bitcoin.org/bitcoin.pdf` settles THIN (binary). RFC HTML pages settle TRUE/FALSE.
 - WalletConnect QR is not wired. Injected EIP-6963 wallets only.
-- No GitHub remote existed until this repo. Prior work stayed local by design.
+- LLM outcome is an enum, not a Rainline-style numeric compare. Equivalence is outcome-only.
 
 See `AGENTS.md` for the agent runbook.

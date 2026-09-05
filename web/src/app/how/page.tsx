@@ -64,7 +64,9 @@ export default function HowPage() {
           <div className="font-body-lg text-body-lg font-bold">Not a court or appeal docket</div>
           <p className="font-body-md text-body-md text-on-primary-container mt-space-sm">
             Judgment lives in the Intelligent Contract. The frontend never writes a verdict. There is
-            no appeal, keeper, countdown, or validator vote theater.
+            no appeal, keeper, countdown, NFT, CASE counter, or validator vote theater. Prove twice
+            reverts. Cancel after settle reverts. A PDF, CAPTCHA, 404, or 5xx is THIN (refund), not
+            FALSE. If the LLM returns garbage, prove reverts and the poster can cancel for a full refund.
           </p>
         </div>
       </section>

@@ -85,16 +85,25 @@ def test_ids_are_hashes_not_counters(direct_vm, direct_deploy, direct_alice):
 
 def test_kind_does_not_change_payout_math(direct_vm, direct_deploy, direct_alice, direct_bob):
     c = direct_deploy(CONTRACT)
-    direct_vm.sender = direct_alice
-    amounts = []
+    fees = []
+    posters = []
     for kind in ("FACT", "LISTING", "PRESS", "JOB", "STATUS", "OTHER"):
+        direct_vm.sender = direct_alice
         direct_vm.value = 10000
         bid = c.back(f"kind {kind} claim text", f"https://example.com/{kind}", kind)
         rec = c.get_back(bid)
-        amounts.append(rec["amount"])
+        assert rec["amount"] == 10000
         assert rec["kind"] == kind
-        assert rec["state"] == "OPEN"
-    assert len(set(amounts)) == 1
+        _mock_get(direct_vm, f"example.com/{kind}", 200, TRUE_PAGE)
+        _mock_llm(direct_vm, "TRUE", quote="2008", reason="matches")
+        direct_vm.sender = direct_bob
+        c.prove(bid)
+        rec = c.get_back(bid)
+        assert rec["state"] == "TRUE"
+        fees.append(rec["fee_paid"])
+        posters.append(rec["paid_to_poster"] + rec["credit_poster"])
+    assert fees == [250] * 6
+    assert posters == [9750] * 6
 
 
 def test_cancel_poster_only_open(direct_vm, direct_deploy, direct_alice, direct_bob):
@@ -326,3 +335,87 @@ def test_hash_uses_transaction_fields(direct_vm, direct_deploy, direct_alice):
     assert hashlib.sha256(bid.encode()).hexdigest()
     assert rec["poster"]
     assert rec["amount"] == 77
+
+
+def test_unknown_id_reverts_on_views_and_writes(direct_vm, direct_deploy, direct_alice):
+    c = direct_deploy(CONTRACT)
+    fake = "ab" * 32
+    with pytest.raises(Exception) as exc:
+        c.get_back(fake)
+    assert "not found" in str(exc.value).lower()
+
+    direct_vm.sender = direct_alice
+    with pytest.raises(Exception) as prove_exc:
+        c.prove(fake)
+    assert "not found" in str(prove_exc.value).lower()
+    with pytest.raises(Exception) as cancel_exc:
+        c.cancel(fake)
+    assert "not found" in str(cancel_exc.value).lower()
+    assert c.list_ids() == []
+    assert c.get_economics()["locked"] == 0
+
+
+def test_prove_twice_and_cancel_after_prove_revert(direct_vm, direct_deploy, direct_alice, direct_bob):
+    c = direct_deploy(CONTRACT)
+    direct_vm.sender = direct_alice
+    direct_vm.value = 10000
+    bid = c.back("Bitcoin whitepaper was released in 2008", "https://bitcoin.org/html", "FACT")
+    _mock_get(direct_vm, "bitcoin.org", 200, TRUE_PAGE)
+    _mock_llm(direct_vm, "TRUE", quote="2008", reason="matches")
+    direct_vm.sender = direct_bob
+    c.prove(bid)
+    rec = c.get_back(bid)
+    assert rec["state"] == "TRUE"
+    treasury = c.get_economics()["treasury"]
+
+    with pytest.raises(Exception) as prove_exc:
+        c.prove(bid)
+    assert "OPEN" in str(prove_exc.value)
+
+    direct_vm.sender = direct_alice
+    with pytest.raises(Exception) as cancel_exc:
+        c.cancel(bid)
+    assert "OPEN" in str(cancel_exc.value)
+
+    rec2 = c.get_back(bid)
+    assert rec2["state"] == "TRUE"
+    assert rec2["fee_paid"] == rec["fee_paid"]
+    eco = c.get_economics()
+    assert eco["treasury"] == treasury
+    assert eco["locked"] == 0
+
+
+def test_invalid_llm_reverts_and_poster_can_cancel(direct_vm, direct_deploy, direct_alice, direct_bob):
+    """LLM garbage must not settle. Bond stays OPEN; poster cancel is the refund hatch."""
+    c = direct_deploy(CONTRACT)
+    direct_vm.sender = direct_alice
+    direct_vm.value = 400
+    bid = c.back("Bitcoin whitepaper was released in 2008", "https://bitcoin.org/html", "FACT")
+    _mock_get(direct_vm, "bitcoin.org", 200, TRUE_PAGE)
+    _mock_llm(direct_vm, "MAYBE", quote="n/a", reason="not an enum")
+    direct_vm.sender = direct_bob
+    with pytest.raises(Exception) as exc:
+        c.prove(bid)
+    assert "TRUE|FALSE|THIN" in str(exc.value) or "LLM" in str(exc.value) or "outcome" in str(exc.value).lower()
+
+    rec = c.get_back(bid)
+    assert rec["state"] == "OPEN"
+    assert rec["paid_to_poster"] == 0
+    assert rec["paid_to_prover"] == 0
+    assert rec["fee_paid"] == 0
+    assert c.get_economics()["locked"] == 400
+
+    direct_vm.sender = direct_alice
+    c.cancel(bid)
+    rec = c.get_back(bid)
+    assert rec["state"] == "CANCELED"
+    assert rec["paid_to_poster"] + rec["credit_poster"] == 400
+    assert c.get_economics()["locked"] == 0
+
+
+def test_withdraw_without_credits_reverts(direct_vm, direct_deploy, direct_alice):
+    c = direct_deploy(CONTRACT)
+    direct_vm.sender = direct_alice
+    with pytest.raises(Exception) as exc:
+        c.withdraw()
+    assert "no credits" in str(exc.value).lower()

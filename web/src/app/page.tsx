@@ -43,7 +43,7 @@ export default function LandingPage() {
         <div className="w-full max-w-3xl bg-surface-container-lowest p-space-lg md:p-space-xl rounded-2xl shadow-[0_16px_36px_-8px_rgba(0,0,0,0.08)] text-left flex flex-col gap-space-md">
           <div className="flex flex-wrap items-center justify-between gap-space-xs">
             <span className="px-space-xs py-space-2xs rounded-full bg-secondary-container text-on-secondary-fixed font-label-mono-sm text-label-mono-sm font-bold uppercase">
-              SAMPLE TICKET (NOT AN ID)
+              SAMPLE CARD · NOT A CONTRACT ID
             </span>
             <span className="px-space-xs py-space-2xs rounded bg-surface-container-high text-primary uppercase font-badge-numeral text-badge-numeral">
               STATE: OPEN
@@ -126,15 +126,15 @@ export default function LandingPage() {
         <div className="max-w-content-max-width mx-auto flex flex-col gap-space-2xl">
           <div className="text-center">
             <span className="font-label-mono-sm text-label-mono-sm text-secondary uppercase tracking-widest">
-              Canonical fixtures
+              Live outcome shapes (not listing IDs)
             </span>
             <h2 className="font-headline-xl text-headline-xl uppercase text-primary">WHAT CAN YOU BACK?</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
             {[
-              ["TRUE", "Bitcoin whitepaper was released in 2008.", "bitcoin.org/bitcoin.pdf", "97.5% returned to poster"],
-              ["FALSE", "Ethereum Pectra upgrade scheduled for 2024.", "ethereum.org/roadmap/pectra", "100% to the prover"],
-              ["THIN", "Archived blog post behind broken paywall.", "paywall.example.com/post/99", "100% refund poster"],
+              ["TRUE", "RFC 791 Internet Protocol was published in September 1981.", "datatracker.ietf.org/doc/html/rfc791", "2.5% treasury · 97.5% poster"],
+              ["FALSE", "RFC 791 is dated 2024.", "datatracker.ietf.org/doc/html/rfc791", "100% to the prover"],
+              ["THIN", "Bitcoin whitepaper was released in 2008.", "bitcoin.org/bitcoin.pdf", "PDF/binary is unreadable → 100% poster"],
             ].map(([st, claim, url, pay]) => (
               <div key={st} className="bg-surface-container-low p-space-lg rounded-2xl flex flex-col gap-space-md">
                 <span className="px-space-xs py-space-2xs rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral text-badge-numeral w-fit">
@@ -158,7 +158,7 @@ export default function LandingPage() {
             <h2 className="font-headline-xl text-headline-xl uppercase tracking-tight leading-none">
               PUT UP YOUR TEST GEN.
               <br />
-              THE INTERNET WILL DECIDE.
+              THE LIVE PAGE SETTLES IT.
             </h2>
           </div>
           <div className="flex flex-col sm:flex-row gap-space-md">
