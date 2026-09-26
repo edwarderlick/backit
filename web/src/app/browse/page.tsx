@@ -3,14 +3,24 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useGenLayer } from "@/components/GenLayerProvider";
-import { listBacks, type BackRecord } from "@/lib/contract";
+import { CONTRACT_ADDRESS } from "@/lib/chain";
+import { getEconomics, getFeed, type BackRecord } from "@/lib/contract";
 import { formatGen, hostOf, shortAddr, shortId } from "@/lib/format";
 import { EmptyState, ErrorState, LoadingState } from "@/components/EmptyState";
 import { StateChip } from "@/components/StateChip";
 
+function readErrorMessage(e: unknown) {
+  const msg = e instanceof Error ? e.message : "Studio Next is busy. Refresh in a moment.";
+  if (/Failed to connect to GenLayer node|Server busy|rate limit|timeout|Failed to fetch/i.test(msg)) {
+    return "Studio Next is busy. Refresh in a moment.";
+  }
+  return msg;
+}
+
 export default function BrowsePage() {
   const { client } = useGenLayer();
   const [rows, setRows] = useState<BackRecord[]>([]);
+  const [total, setTotal] = useState(0);
   const [q, setQ] = useState("");
   const [kind, setKind] = useState("ALL");
   const [state, setState] = useState("ALL");
@@ -18,15 +28,29 @@ export default function BrowsePage() {
   const [err, setErr] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!CONTRACT_ADDRESS) {
+      setErr("Contract address is not set for this deployment.");
+      setLoading(false);
+      return;
+    }
     if (!client) return;
     let live = true;
     setLoading(true);
-    listBacks(client)
-      .then((r) => {
-        if (live) setRows(r);
+    Promise.all([getFeed(client, 0, 20), getEconomics(client)])
+      .then(([r, eco]) => {
+        if (!live) return;
+        setRows(r);
+        setTotal(Number(eco.count || r.length));
       })
-      .catch((e: unknown) => setErr(e instanceof Error ? e.message : "Failed to read backs"))
-      .finally(() => setLoading(false));
+      .catch((e: unknown) => {
+        if (!live) return;
+        setRows([]);
+        setTotal(0);
+        setErr(readErrorMessage(e));
+      })
+      .finally(() => {
+        if (live) setLoading(false);
+      });
     return () => {
       live = false;
     };
@@ -64,7 +88,7 @@ export default function BrowsePage() {
                 ACTIVE POOL: {formatGen(locked)} GEN
               </span>
               <span className="px-space-md py-space-xs bg-surface-container rounded-full">
-                {rows.length} BACKS ON CONTRACT
+                NEWEST {rows.length} OF {total} BACKS
               </span>
             </div>
           </div>

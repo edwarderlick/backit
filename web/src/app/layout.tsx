@@ -25,7 +25,7 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "BackIt — Put up or shut up",
   description:
-    "Same-session live-web primitive on GenLayer StudioNet. Lock test GEN on one sentence and one HTTPS URL. Anyone can prove. Not a court.",
+    "Same-session live-web primitive on GenLayer Studio Next. Lock test GEN on one sentence and one HTTPS URL. Anyone can prove. Not a court.",
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },

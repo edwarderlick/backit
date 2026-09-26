@@ -1,11 +1,11 @@
 "use client";
 
-import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
-import { studionet } from "genlayer-js/chains";
-import { STUDIONET_CHAIN_ID } from "@/lib/chain";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { createTransactionKit, type TransactionKit } from "@genlayer/transaction-kit";
+import { kitChain, STUDIO_NEXT_CHAIN_ID } from "@/lib/chain";
 import {
-  buildClient,
-  switchToStudioNet,
+  buildReadClient,
+  switchToStudioNext,
   type EthereumProvider,
 } from "@/lib/genlayer";
 import {
@@ -19,7 +19,8 @@ import {
 
 
 type Ctx = {
-  client: ReturnType<typeof buildClient> | null;
+  client: ReturnType<typeof buildReadClient> | null;
+  kit: TransactionKit | null;
   account: string | null;
   connect: () => Promise<void>;
   connectWallet: (wallet: DetectedWallet) => Promise<void>;
@@ -36,6 +37,7 @@ type Ctx = {
 
 const GenLayerContext = createContext<Ctx>({
   client: null,
+  kit: null,
   account: null,
   connect: async () => {},
   connectWallet: async () => {},
@@ -62,7 +64,7 @@ async function liveAccounts(eth: EthereumProvider): Promise<string[]> {
 }
 
 export function GenLayerProvider({ children }: { children: React.ReactNode }) {
-  const [client, setClient] = useState<ReturnType<typeof buildClient> | null>(null);
+  const [client, setClient] = useState<ReturnType<typeof buildReadClient> | null>(null);
   const [account, setAccount] = useState<string | null>(null);
   const [isConnecting, setIsConnecting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -85,7 +87,6 @@ export function GenLayerProvider({ children }: { children: React.ReactNode }) {
     setAccount(null);
     setChainId(null);
     setError(null);
-    setClient(null);
     providerRef.current = undefined;
     walletIdRef.current = null;
     setActiveProvider(undefined);
@@ -105,7 +106,7 @@ export function GenLayerProvider({ children }: { children: React.ReactNode }) {
     } catch {
       /* chain read is best-effort */
     }
-    setClient(buildClient(addr, wallet.provider));
+    setClient(buildReadClient());
   }, []);
 
   const connectWallet = useCallback(
@@ -118,11 +119,11 @@ export function GenLayerProvider({ children }: { children: React.ReactNode }) {
         })) as string[];
         const addr = accounts?.[0];
         if (!addr) throw new Error("Wallet did not return an account.");
-        let nextChain = await switchToStudioNet(wallet.provider);
+        let nextChain = await switchToStudioNext(wallet.provider);
         try {
-          const c = buildClient(addr, wallet.provider);
+          const c = buildReadClient();
           if (typeof (c as { connect?: (n: string) => Promise<void> }).connect === "function") {
-            await (c as { connect: (n: string) => Promise<void> }).connect("studionet");
+            await (c as { connect: (n: string) => Promise<void> }).connect("studioDevnet");
           }
         } catch {
           /* Snap is optional. Permission already granted via eth_requestAccounts. */
@@ -159,6 +160,10 @@ export function GenLayerProvider({ children }: { children: React.ReactNode }) {
   const connect = useCallback(async () => {
     openWalletModal();
   }, [openWalletModal]);
+
+  useEffect(() => {
+    setClient(buildReadClient());
+  }, []);
 
   useEffect(() => {
     return discoverInjectedWallets(setWallets);
@@ -207,19 +212,24 @@ export function GenLayerProvider({ children }: { children: React.ReactNode }) {
     };
   }, [account, disconnect]);
 
-  useEffect(() => {
-    if (!account) return;
+  const kit = useMemo(() => {
     const provider = providerRef.current;
-    setClient(buildClient(account, provider));
-  }, [account]);
+    if (!account || !provider) return null;
+    return createTransactionKit({
+      chain: kitChain(),
+      provider,
+      account: account as `0x${string}`,
+    });
+  }, [account, chainId]);
 
-  const target = studionet.id || STUDIONET_CHAIN_ID;
+  const target = STUDIO_NEXT_CHAIN_ID;
   const wrongNetwork = Boolean(account && chainId && chainId !== target);
 
   return (
     <GenLayerContext.Provider
       value={{
         client,
+        kit,
         account,
         connect,
         connectWallet,

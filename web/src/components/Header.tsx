@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useGenLayer } from "./GenLayerProvider";
 import { shortAddr } from "@/lib/format";
-import { STUDIONET_CHAIN_ID } from "@/lib/chain";
+import { STUDIO_NEXT_CHAIN_ID, CONTRACT_ADDRESS, EXPLORER_URL } from "@/lib/chain";
 
 const NAV = [
   { href: "/browse", label: "Browse Claims" },
@@ -24,9 +24,15 @@ export function Header() {
         <div className="w-full bg-error text-on-error px-gutter-desktop py-space-xs font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-center flex items-center justify-center gap-space-xs z-[60] relative">
           <span className="material-symbols-outlined text-[16px]">warning</span>
           <span>
-            WRONG NETWORK DETECTED. PLEASE SWITCH WALLET RPC TO GENLAYER STUDIONET (CHAIN ID{" "}
-            {STUDIONET_CHAIN_ID}).
+            WRONG NETWORK DETECTED. PLEASE SWITCH WALLET RPC TO GENLAYER STUDIO NEXT (CHAIN ID{" "}
+            {STUDIO_NEXT_CHAIN_ID}).
           </span>
+        </div>
+      )}
+      {!CONTRACT_ADDRESS && (
+        <div className="w-full bg-secondary-container text-on-secondary-fixed px-gutter-desktop py-space-xs font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-center flex items-center justify-center gap-space-xs z-[60] relative">
+          <span className="material-symbols-outlined text-[16px]">info</span>
+          <span>NO STUDIO NEXT CONTRACT IN THIS ENV YET</span>
         </div>
       )}
       <header className="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
@@ -37,7 +43,7 @@ export function Header() {
               BackIt
             </span>
             <span className="hidden sm:inline-flex items-center px-space-xs py-space-2xs rounded-full bg-surface-container font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-wider">
-              StudioNet · GenLayer
+              Studio Next · GenLayer
             </span>
           </Link>
           <nav className="hidden xl:flex items-center gap-space-lg">
@@ -59,9 +65,21 @@ export function Header() {
             })}
           </nav>
           <div className="flex items-center gap-space-xs">
+            {CONTRACT_ADDRESS && (
+              <a
+                className="hidden lg:flex items-center gap-space-2xs px-space-sm py-space-xs rounded-full bg-surface-container font-label-mono-sm text-label-mono-sm text-on-surface hover:bg-surface-container-high transition-colors"
+                href={`${EXPLORER_URL}/address/${CONTRACT_ADDRESS}`}
+                target="_blank"
+                rel="noreferrer"
+                title="Open current BackIt contract on Studio Next explorer"
+              >
+                <span className="material-symbols-outlined text-[15px]">contract</span>
+                <span>{shortAddr(CONTRACT_ADDRESS)}</span>
+              </a>
+            )}
             <div className="hidden md:flex items-center gap-space-2xs px-space-sm py-space-xs rounded-full bg-surface-container font-label-mono-sm text-label-mono-sm text-on-surface">
               <span className="w-2 h-2 rounded-full bg-secondary-container inline-block" />
-              <span>StudioNet</span>
+              <span>Studio Next</span>
             </div>
             {account ? (
               <button

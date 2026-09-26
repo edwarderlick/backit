@@ -3,29 +3,47 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { CONTRACT_ADDRESS, EXPLORER_URL } from "@/lib/chain";
 import { useGenLayer } from "@/components/GenLayerProvider";
-import { cancelBack, getBack, proveBack, type BackRecord } from "@/lib/contract";
-import { formatGen, hostOf, shortAddr, shortId } from "@/lib/format";
+import { cancelBack, getBack, getCredit, proveBack, withdrawCredits, type BackRecord } from "@/lib/contract";
+import { formatGen, hostOf, shortAddr, shortId, toWei } from "@/lib/format";
 import { isContractId } from "@/lib/ids";
 import { EmptyState, ErrorState, LoadingState } from "@/components/EmptyState";
 import { StateChip } from "@/components/StateChip";
 
 export default function ClaimPage() {
   const { id } = useParams<{ id: string }>();
-  const { client, account, connect, wrongNetwork } = useGenLayer();
+  const { client, kit, account, connect, wrongNetwork } = useGenLayer();
   const [rec, setRec] = useState<BackRecord | null>(null);
+  const [credit, setCredit] = useState(BigInt(0));
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState<string | null>(null);
-  const [busy, setBusy] = useState<"prove" | "cancel" | null>(null);
+  const [busy, setBusy] = useState<"prove" | "cancel" | "withdraw" | null>(null);
   const [confirmProve, setConfirmProve] = useState(false);
+  const [latestTx, setLatestTx] = useState<`0x${string}` | null>(null);
+  const [nowSeconds, setNowSeconds] = useState(() => Math.floor(Date.now() / 1000));
 
   async function reload() {
     if (!client || !id) return;
-    const row = await getBack(client, id);
-    setRec(row);
+    const next = await getBack(client, id);
+    setRec(next);
+    if (account) {
+      setCredit(await getCredit(client, account));
+    }
+    return next;
   }
 
   useEffect(() => {
+    const timer = window.setInterval(() => setNowSeconds(Math.floor(Date.now() / 1000)), 30_000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!CONTRACT_ADDRESS) {
+      setErr("Contract address is not set for this deployment.");
+      setLoading(false);
+      return;
+    }
     if (!client || !id) return;
     if (!isContractId(id)) {
       setErr("This is not a contract id. BackIt never uses CASE counters.");
@@ -33,48 +51,106 @@ export default function ClaimPage() {
       return;
     }
     setLoading(true);
-    getBack(client, id)
-      .then(setRec)
+    Promise.all([getBack(client, id), account ? getCredit(client, account) : Promise.resolve(BigInt(0))])
+      .then(([next, nextCredit]) => {
+        setRec(next);
+        setCredit(nextCredit);
+      })
       .catch((e: unknown) => setErr(e instanceof Error ? e.message : "Not found"))
       .finally(() => setLoading(false));
-  }, [client, id]);
+  }, [account, client, id]);
 
-  const isPoster =
-    account && rec && account.toLowerCase() === rec.poster.toLowerCase();
+  const isPoster = Boolean(account && rec && account.toLowerCase() === rec.poster.toLowerCase());
   const open = rec?.state === "OPEN";
+  const createdSeconds = Number(rec?.created_at || 0);
+  const cancelReady = open && createdSeconds > 0 && nowSeconds >= createdSeconds + 600;
 
   async function onProve() {
     if (!account) {
       await connect();
       return;
     }
-    if (!client || !id) return;
+    if (!kit || !id) return;
     if (wrongNetwork) {
-      setErr("Switch to StudioNet chain 61999.");
+      setErr("Switch to Studio Next chain 61997.");
       return;
     }
     setBusy("prove");
     setErr(null);
     try {
-      await proveBack(client, id);
-      await reload();
+      const { hash } = await proveBack(kit, id);
+      setLatestTx(hash);
+      const next = await reload();
+      if (next?.state === "OPEN") throw new Error(`prove() finalized but claim is still OPEN.\nTx: ${hash}`);
       setConfirmProve(false);
     } catch (e: unknown) {
+      noteTxFromError(e);
+      setConfirmProve(false);
       setErr(e instanceof Error ? e.message : "prove() failed");
+      await reload();
     } finally {
       setBusy(null);
     }
   }
 
+  function noteTxFromError(error: unknown) {
+    const text = error instanceof Error ? error.message : String(error);
+    const match = text.match(/0x[a-fA-F0-9]{64}/);
+    if (match) setLatestTx(match[0] as `0x${string}`);
+  }
+
   async function onCancel() {
-    if (!client || !id) return;
+    if (!kit || !id) return;
+    if (!cancelReady) {
+      setErr("Cancel is available after the 10-minute commitment window.");
+      return;
+    }
     setBusy("cancel");
     setErr(null);
     try {
-      await cancelBack(client, id);
-      await reload();
+      const beforeCredit = credit;
+      const { hash } = await cancelBack(kit, id);
+      setLatestTx(hash);
+      const next = await reload();
+      if (next?.state !== "CANCELED") {
+        throw new Error(`cancel() finalized but claim status is ${next?.state || "unknown"}.\nTx: ${hash}`);
+      }
+      const refund = toWei(next.amount) - (toWei(next.amount) * BigInt(1000)) / BigInt(10000);
+      const paid = toWei(next.paid_to_poster);
+      const credited = toWei(next.credit_poster);
+      const afterCredit = account && client ? await getCredit(client, account) : credit;
+      setCredit(afterCredit);
+      if (paid !== refund && credited !== refund && afterCredit - beforeCredit !== refund) {
+        throw new Error(`cancel() did not expose the expected 90% refund.\nTx: ${hash}`);
+      }
     } catch (e: unknown) {
+      noteTxFromError(e);
       setErr(e instanceof Error ? e.message : "cancel() failed");
+      await reload();
+    } finally {
+      setBusy(null);
+    }
+  }
+
+  async function onWithdraw() {
+    if (!account) {
+      await connect();
+      return;
+    }
+    if (!kit || !client) return;
+    if (wrongNetwork) {
+      setErr("Switch to Studio Next chain 61997.");
+      return;
+    }
+    setBusy("withdraw");
+    setErr(null);
+    try {
+      const { hash } = await withdrawCredits(kit);
+      setLatestTx(hash);
+      setCredit(await getCredit(client, account));
+    } catch (e: unknown) {
+      noteTxFromError(e);
+      setErr(e instanceof Error ? e.message : "withdraw() failed");
     } finally {
       setBusy(null);
     }
@@ -90,7 +166,44 @@ export default function ClaimPage() {
   if (err && !rec) {
     return (
       <div className="max-w-content-max-width mx-auto px-gutter-desktop py-space-2xl">
-        <ErrorState message={err} />
+        <div className="bg-surface-container-lowest p-space-xl rounded-2xl flex flex-col gap-space-md">
+          <div className="flex items-center gap-space-sm">
+            <span className="material-symbols-outlined text-[28px] text-secondary">history</span>
+            <h1 className="font-headline-lg text-headline-lg uppercase">Claim not on this contract</h1>
+          </div>
+          <p className="font-body-md text-body-md text-on-surface-variant max-w-3xl">
+            This claim id was not found in the current BackIt deployment. It may belong to an older
+            contract from a previous Studio Next redeploy. New claims should be opened from the
+            current browse feed.
+          </p>
+          <div className="font-label-mono-sm text-label-mono-sm text-on-surface-variant break-all">
+            Current contract: {CONTRACT_ADDRESS ? shortAddr(CONTRACT_ADDRESS) : "not deployed"}
+          </div>
+          <div className="flex flex-wrap gap-space-sm">
+            <Link
+              href="/browse"
+              className="inline-flex items-center gap-space-xs px-space-lg py-space-sm rounded-full bg-primary text-on-primary font-badge-numeral"
+            >
+              <span className="material-symbols-outlined text-[16px]">arrow_back</span>
+              Browse current claims
+            </Link>
+            {CONTRACT_ADDRESS && (
+              <a
+                className="inline-flex items-center gap-space-xs px-space-lg py-space-sm rounded-full bg-surface-container font-badge-numeral"
+                href={`${EXPLORER_URL}/address/${CONTRACT_ADDRESS}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span className="material-symbols-outlined text-[16px]">open_in_new</span>
+                View contract
+              </a>
+            )}
+          </div>
+          <details className="font-label-mono-sm text-label-mono-sm text-on-surface-variant">
+            <summary>Read error</summary>
+            <div className="mt-space-xs break-all">{err}</div>
+          </details>
+        </div>
       </div>
     );
   }
@@ -147,8 +260,8 @@ export default function ClaimPage() {
                 Awaiting proof settlement
               </div>
               <p className="font-body-lg mt-space-2xs">
-                Any connected wallet can call prove now. The contract fetches the live HTTPS page and
-                settles immediately.
+                Prove sends one fee-bearing write, then validators fetch the live page. TRUE pays the prover 10%.
+                Cancel is open only before settlement, and it keeps 10% in the treasury.
               </p>
             </div>
             <div className="flex flex-wrap gap-space-md">
@@ -157,19 +270,49 @@ export default function ClaimPage() {
                 type="button"
                 onClick={() => setConfirmProve(true)}
               >
-                Prove this claim
+                Prove claim
               </button>
               {isPoster && (
                 <button
                   className="px-space-lg py-space-md rounded-full bg-primary-container text-on-primary"
                   type="button"
-                  disabled={busy === "cancel"}
+                  disabled={busy === "cancel" || !cancelReady}
                   onClick={onCancel}
+                  title={cancelReady ? "Cancel claim" : "Cancel is available after the commitment window."}
                 >
-                  {busy === "cancel" ? "Canceling…" : "Cancel backing"}
+                  {busy === "cancel" ? "Canceling..." : cancelReady ? "Cancel (10% slash)" : "Cancel after window"}
+                </button>
+              )}
+              {credit > BigInt(0) && (
+                <button
+                  className="px-space-lg py-space-md rounded-full bg-surface text-on-surface font-badge-numeral"
+                  type="button"
+                  disabled={busy === "withdraw"}
+                  onClick={onWithdraw}
+                >
+                  {busy === "withdraw" ? "Withdrawing..." : `Withdraw ${formatGen(credit)} GEN`}
                 </button>
               )}
             </div>
+          </div>
+        </section>
+      )}
+
+      {!open && credit > BigInt(0) && (
+        <section className="w-full bg-primary text-on-primary py-space-lg">
+          <div className="max-w-content-max-width mx-auto px-gutter-desktop flex flex-col sm:flex-row justify-between gap-space-md sm:items-center">
+            <div>
+              <div className="font-label-mono-sm uppercase text-secondary-container">Withdrawable credit</div>
+              <div className="font-headline-md uppercase">{formatGen(credit)} GEN</div>
+            </div>
+            <button
+              className="px-space-lg py-space-md rounded-full bg-secondary-container text-on-secondary-fixed font-badge-numeral"
+              type="button"
+              disabled={busy === "withdraw"}
+              onClick={onWithdraw}
+            >
+              {busy === "withdraw" ? "Withdrawing..." : "Withdraw credits"}
+            </button>
           </div>
         </section>
       )}
@@ -178,10 +321,14 @@ export default function ClaimPage() {
         <div className="max-w-content-max-width mx-auto px-gutter-desktop grid grid-cols-1 lg:grid-cols-12 gap-space-xl">
           <div className="lg:col-span-7 bg-surface-container-lowest p-space-xl rounded-2xl flex flex-col gap-space-md">
             <span className="font-headline-md uppercase">Source board</span>
-            <a className="font-badge-numeral break-all text-primary" href={rec.source_url} target="_blank" rel="noreferrer">
-              {rec.source_url}
+            <a className="font-badge-numeral break-all text-primary" href={rec.final_url || rec.source_url} target="_blank" rel="noreferrer">
+              {rec.final_url || rec.source_url}
             </a>
-            <div className="font-label-mono-sm">{hostOf(rec.source_url)}</div>
+            <div className="font-label-mono-sm">{hostOf(rec.final_url || rec.source_url)}</div>
+            {rec.final_url && rec.final_url !== rec.source_url && (
+              <div className="font-label-mono-sm break-all">Posted URL {rec.source_url}</div>
+            )}
+            {rec.content_hash && <div className="font-label-mono-sm break-all">Snapshot {rec.content_hash}</div>}
           </div>
           <div className="lg:col-span-5 bg-surface-container-low p-space-xl rounded-2xl flex flex-col gap-space-sm">
             <span className="font-headline-md uppercase">Settlement from storage</span>
@@ -190,6 +337,8 @@ export default function ClaimPage() {
             <p className="font-body-md">Paid prover: {formatGen(rec.paid_to_prover)} GEN</p>
             <p className="font-body-md">Credits poster: {formatGen(rec.credit_poster)} GEN</p>
             <p className="font-body-md">Credits prover: {formatGen(rec.credit_prover)} GEN</p>
+            <p className="font-body-md">Status: {rec.state}</p>
+            {latestTx && <p className="font-label-mono-sm break-all">Latest tx {latestTx}</p>}
             {rec.quote && <p className="font-body-sm">Quote: {rec.quote}</p>}
             {rec.reason && <p className="font-body-sm">Reason: {rec.reason}</p>}
             {rec.prover && rec.prover.replace(/0x0+/, "") !== "" && (
@@ -210,8 +359,8 @@ export default function ClaimPage() {
           <div className="bg-surface-container-lowest p-space-xl rounded-2xl max-w-lg w-full flex flex-col gap-space-md">
             <h2 className="font-headline-lg text-headline-md uppercase">Confirm prove</h2>
             <p className="font-body-md text-on-surface-variant">
-              This calls prove() on-chain. Validators fetch the live page. You do not write the
-              verdict.
+              This sends prove. It is a fee-bearing write. Validators fetch the
+              page themselves and check the quote against that fetch. You do not write the verdict.
             </p>
             <div className="flex gap-space-sm justify-end">
               <button type="button" onClick={() => setConfirmProve(false)}>
@@ -223,7 +372,7 @@ export default function ClaimPage() {
                 disabled={busy === "prove"}
                 onClick={onProve}
               >
-                {busy === "prove" ? "Proving…" : "Execute prove"}
+                {busy === "prove" ? "Proving..." : "Prove claim"}
               </button>
             </div>
           </div>

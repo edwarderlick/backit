@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "network": "studio-dev",
+  "measuredAt": "2026-09-25T00:00:00Z",
+  "chainId": 61997,
+  "deploy": {
+    "leaderTimeunitsAllocation": "100",
+    "validatorTimeunitsAllocation": "200",
+    "rotations": ["0"]
+  },
+  "methods": {}
+}

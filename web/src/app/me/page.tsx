@@ -3,13 +3,13 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useGenLayer } from "@/components/GenLayerProvider";
-import { getCredit, listBacks, withdrawCredits, type BackRecord } from "@/lib/contract";
+import { getCredit, listRecent, withdrawCredits, type BackRecord } from "@/lib/contract";
 import { formatGen, hostOf, shortAddr, shortId } from "@/lib/format";
 import { EmptyState, ErrorState, LoadingState } from "@/components/EmptyState";
 import { StateChip } from "@/components/StateChip";
 
 export default function MePage() {
-  const { client, account, connect } = useGenLayer();
+  const { client, kit, account, connect } = useGenLayer();
   const [rows, setRows] = useState<BackRecord[]>([]);
   const [credit, setCredit] = useState(BigInt(0));
   const [loading, setLoading] = useState(false);
@@ -20,7 +20,7 @@ export default function MePage() {
     if (!client || !account) return;
     let live = true;
     setLoading(true);
-    Promise.all([listBacks(client), getCredit(client, account)])
+    Promise.all([listRecent(client), getCredit(client, account)])
       .then(([r, cr]) => {
         if (!live) return;
         setRows(r);
@@ -47,11 +47,11 @@ export default function MePage() {
     .reduce((s, r) => s + BigInt(r.amount || 0), BigInt(0));
 
   async function onWithdraw() {
-    if (!client) return;
+    if (!kit) return;
     setBusy(true);
     setErr(null);
     try {
-      await withdrawCredits(client);
+      await withdrawCredits(kit);
       const cr = await getCredit(client, account!);
       setCredit(cr);
     } catch (e: unknown) {
@@ -65,7 +65,7 @@ export default function MePage() {
     return (
       <div className="max-w-content-max-width mx-auto px-gutter-desktop py-space-3xl">
         <h1 className="font-headline-xl text-headline-xl uppercase">MY BACKS</h1>
-        <p className="font-body-md mt-space-sm mb-space-lg">Connect a StudioNet wallet to see your backs and credits.</p>
+        <p className="font-body-md mt-space-sm mb-space-lg">Connect a Studio Next wallet to see your recent backs and credits.</p>
         <button
           className="px-space-xl py-space-sm rounded-full bg-secondary-container font-badge-numeral"
           type="button"
@@ -88,7 +88,7 @@ export default function MePage() {
                 {shortAddr(account)}
               </span>
               <span className="px-space-sm py-space-2xs rounded-full bg-primary text-on-primary font-label-mono-sm">
-                STUDIONET
+                STUDIO NEXT
               </span>
             </div>
           </div>

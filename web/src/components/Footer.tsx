@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CONTRACT_ADDRESS } from "@/lib/chain";
+import { CONTRACT_ADDRESS, EXPLORER_URL } from "@/lib/chain";
 import { shortAddr } from "@/lib/format";
 
 export function Footer() {
@@ -40,11 +40,15 @@ export function Footer() {
               </a>
               <a
                 className="hover:text-secondary-container transition-colors"
-                href="https://explorer-studio.genlayer.com/address/0xEb3c460DD484fd3A4bF1003FA9C29f25B3c45568"
+                href={
+                  CONTRACT_ADDRESS
+                    ? `${EXPLORER_URL}/address/${CONTRACT_ADDRESS}`
+                    : EXPLORER_URL
+                }
                 target="_blank"
                 rel="noreferrer"
               >
-                StudioNet contract
+                Studio Next contract
               </a>
               <a
                 className="hover:text-secondary-container transition-colors"
@@ -66,14 +70,20 @@ export function Footer() {
           </div>
         </div>
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-space-sm pt-space-xl bg-primary-container/40 p-space-md rounded-xl font-label-mono-sm text-label-mono-sm text-on-primary-container">
-          <div className="flex items-center gap-space-xs">
+          <a
+            className="flex items-center gap-space-xs hover:text-secondary-container transition-colors"
+            href={CONTRACT_ADDRESS ? `${EXPLORER_URL}/address/${CONTRACT_ADDRESS}` : EXPLORER_URL}
+            target="_blank"
+            rel="noreferrer"
+            title="Open current BackIt contract on Studio Next explorer"
+          >
             <span className="w-2 h-2 rounded-full bg-secondary-container" />
             <span>
               CONTRACT: {CONTRACT_ADDRESS ? shortAddr(CONTRACT_ADDRESS) : "not deployed"} (GENLAYER
               INTELLIGENT CONTRACT)
             </span>
-          </div>
-          <div>BackIt · StudioNet test GEN · no real value</div>
+          </a>
+          <div>BackIt · Studio Next test GEN · no real value</div>
         </div>
       </div>
     </footer>

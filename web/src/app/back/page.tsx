@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useGenLayer } from "@/components/GenLayerProvider";
 import { backClaim } from "@/lib/contract";
+import { evidenceDomainMessage, isAllowedEvidenceDomain } from "@/lib/evidence";
 import { formatGen, hostOf, parseGen } from "@/lib/format";
 import { ErrorState } from "@/components/EmptyState";
 
@@ -11,7 +12,7 @@ const KINDS = ["FACT", "LISTING", "PRESS", "JOB", "STATUS", "OTHER"] as const;
 
 export default function BackPage() {
   const router = useRouter();
-  const { client, account, connect, wrongNetwork } = useGenLayer();
+  const { client, kit, account, connect, wrongNetwork } = useGenLayer();
   const [step, setStep] = useState(1);
   const [claim, setClaim] = useState("");
   const [url, setUrl] = useState("");
@@ -21,6 +22,7 @@ export default function BackPage() {
   const [err, setErr] = useState<string | null>(null);
 
   const host = useMemo(() => (url.startsWith("https://") ? hostOf(url) : "—"), [url]);
+  const sourceAllowed = useMemo(() => !url.trim() || isAllowedEvidenceDomain(url.trim()), [url]);
   const wei = useMemo(() => {
     try {
       return parseGen(bond);
@@ -29,7 +31,8 @@ export default function BackPage() {
     }
   }, [bond]);
   const fee = (wei * BigInt(250)) / BigInt(10000);
-  const rest = wei > fee ? wei - fee : BigInt(0);
+  const proverPay = (wei * BigInt(1000)) / BigInt(10000);
+  const rest = wei > fee + proverPay ? wei - fee - proverPay : BigInt(0);
 
   async function lock() {
     setErr(null);
@@ -38,11 +41,11 @@ export default function BackPage() {
       return;
     }
     if (wrongNetwork) {
-      setErr("Switch wallet to GenLayer StudioNet (chain 61999).");
+      setErr("Switch wallet to GenLayer Studio Next (chain 61997).");
       return;
     }
-    if (!client) {
-      setErr("Wallet client not ready.");
+    if (!client || !kit) {
+      setErr("Wallet is not ready to sign a fee-bearing write.");
       return;
     }
     if (claim.trim().length === 0 || claim.length > 280) {
@@ -53,13 +56,17 @@ export default function BackPage() {
       setErr("URL must be https:// and at most 512 characters.");
       return;
     }
+    if (!isAllowedEvidenceDomain(url.trim())) {
+      setErr(`Source domain is not allowed for evidence. ${evidenceDomainMessage()}`);
+      return;
+    }
     if (wei <= BigInt(0)) {
       setErr("Bond must be greater than 0 test GEN.");
       return;
     }
     setBusy(true);
     try {
-      const { id } = await backClaim(client, claim.trim(), url.trim(), kind, wei);
+      const { id } = await backClaim(kit, client, claim.trim(), url.trim(), kind, wei);
       router.push(`/claim/${id}`);
     } catch (e: unknown) {
       setErr(e instanceof Error ? e.message : "back() failed");
@@ -80,7 +87,7 @@ export default function BackPage() {
         <div className="max-w-content-max-width mx-auto px-gutter-desktop flex flex-col items-center text-center">
           <div className="inline-flex items-center gap-space-xs px-space-md py-space-2xs rounded-full bg-surface-container font-label-mono-sm text-label-mono-sm uppercase mb-space-md">
             <span className="w-2 h-2 rounded-full bg-secondary-container" />
-            StudioNet Protocol · Deterministic Web Consensus
+            Studio Next · Deterministic Web Consensus
           </div>
           <h1 className="font-headline-xl text-headline-xl uppercase tracking-tight text-primary max-w-4xl">
             BACK A CLAIM. PUT UP OR SHUT UP.
@@ -161,7 +168,7 @@ export default function BackPage() {
                   className="w-full px-space-md py-space-sm bg-surface-container-low rounded-xl"
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
-                  placeholder="https://example.com/announcement"
+                  placeholder="https://docs.genlayer.com/"
                 />
                 <div className="font-label-mono-sm text-label-mono-sm text-surface-tint">
                   Must start with https:// · no javascript: · max 512 chars
@@ -169,6 +176,11 @@ export default function BackPage() {
                 <div className="p-space-md rounded-xl bg-surface-container font-badge-numeral">
                   Hostname: {host}
                 </div>
+                {!sourceAllowed && (
+                  <div className="p-space-md rounded-xl bg-error-container text-on-error-container font-body-sm">
+                    {evidenceDomainMessage()}
+                  </div>
+                )}
                 <div className="flex justify-between">
                   <button type="button" onClick={() => setStep(1)}>
                     ← Back
@@ -192,7 +204,7 @@ export default function BackPage() {
                   onChange={(e) => setBond(e.target.value)}
                 />
                 <p className="font-body-md text-on-surface-variant">
-                  StudioNet test GEN. No real value. TRUE takes 2.5% to treasury.
+                  Studio Next test GEN. No real value. A TRUE settlement pays 2.5% treasury, 10% prover, 87.5% poster.
                 </p>
                 <div className="flex justify-between">
                   <button type="button" onClick={() => setStep(2)}>
@@ -237,12 +249,14 @@ export default function BackPage() {
             <div className="font-label-mono-sm text-secondary-container uppercase mb-space-sm">Payout preview</div>
             <div className="font-headline-md text-headline-md uppercase mb-space-md">If TRUE</div>
             <p className="font-body-md text-on-primary-container">
-              Treasury {formatGen(fee)} GEN (2.5%). Poster remainder {formatGen(rest)} GEN.
+              Treasury {formatGen(fee)} GEN (2.5%). Prover {formatGen(proverPay)} GEN (10%). Poster {formatGen(rest)} GEN (87.5%).
             </p>
             <div className="font-headline-md text-headline-md uppercase mt-space-lg mb-space-xs">If FALSE</div>
             <p className="font-body-md text-on-primary-container">Entire bond to prover.</p>
-            <div className="font-headline-md text-headline-md uppercase mt-space-lg mb-space-xs">If THIN / CANCELED</div>
+            <div className="font-headline-md text-headline-md uppercase mt-space-lg mb-space-xs">If THIN</div>
             <p className="font-body-md text-on-primary-container">100% refund poster.</p>
+            <div className="font-headline-md text-headline-md uppercase mt-space-lg mb-space-xs">If canceled before a proof lock</div>
+            <p className="font-body-md text-on-primary-container">10% stays in the treasury. 90% returns to the poster.</p>
           </aside>
         </div>
       </section>

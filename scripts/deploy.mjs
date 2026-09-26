@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Deploy contracts/backit.py to the current genlayer CLI network (use studionet).
+ * Deploy contracts/backit.py to Studio Next (chain 61997).
  * Does not create a GitHub remote.
  */
 import { spawnSync } from "node:child_process";
@@ -19,8 +19,17 @@ function run(cmd, args) {
   return r.stdout || "";
 }
 
+const rpc = "https://studio-dev.genlayer.com/api";
 run("genlayer", ["network", "info"]);
-const out = run("genlayer", ["deploy", "--contract", contract]);
+const out = run("genlayer", [
+  "deploy",
+  "--contract",
+  contract,
+  "--rpc",
+  rpc,
+  "--fee-profile",
+  resolve(root, "fee-profile.json"),
+]);
 const labeled = out.match(/['"]Contract Address['"]\s*:\s*['"](0x[a-fA-F0-9]{40})['"]/);
 const recipient = out.match(/recipient:\s*['"](0x[a-fA-F0-9]{40})['"]/);
 const addr = labeled?.[1] || recipient?.[1];
@@ -30,8 +39,10 @@ if (!addr || /^0x0+$/i.test(addr)) {
 }
 const env = `NEXT_PUBLIC_CONTRACT_ADDRESS=${addr}
 GENLAYER_CONTRACT_ADDRESS=${addr}
-NEXT_PUBLIC_STUDIO_RPC_URL=https://studio.genlayer.com/api
-GENLAYER_RPC_URL=https://studio.genlayer.com/api
+NEXT_PUBLIC_STUDIO_RPC_URL=${rpc}
+NEXT_PUBLIC_GENLAYER_RPC_URL=${rpc}
+NEXT_PUBLIC_GENLAYER_CHAIN_ID=61997
+GENLAYER_RPC_URL=${rpc}
 `;
 writeFileSync(resolve(root, ".env.local"), env);
 writeFileSync(resolve(root, "web/.env.local"), env);

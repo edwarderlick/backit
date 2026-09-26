@@ -121,3 +121,31 @@ First TRUE fixture: `https://example.com/` (no CF). Then retry Wikipedia on the 
 GitHub blog and Python Insider both THIN'd with "truncated before the article body" / "mostly metadata". GET returned a huge HTML shell; LLM only saw the first 12k of nav. Refunds were correct (2 GEN to poster, treasury unchanged at 0.10).
 
 Fix on `0xEb3c460DD484fd3A4bF1003FA9C29f25B3c45568` tx `0x7c3b1ff3…a170f1d4`: strip script/nav/header/footer tags before the excerpt, and `web.render` when stripped text is still chrome-thin. 18 direct tests passed.
+
+## Studio Next 403 Render Fallback (2026-09-25)
+
+OpenAI and Coinbase proof fixtures on `0x5b9DDFdea6Cd444560398A56189250b0b422030d` settled `THIN` because `_fetch_source()` returned immediately on `HTTP 403` before `gl.nondet.web.render`.
+
+Fix deployed to Studio dev contract `0x8418053BF408EC23C4E71A9144E93a49F920F4eC` tx `0xfebbea8467b308de2ace10b48ece7e3737d50f6445b54011e28b5378bec0ebcc`: 403, empty, bot-wall, and chrome-thin pages now try render text/html first. 404 and 5xx still settle `THIN`; 403 remains `THIN` if render is also unreadable. Direct tests 35 passed, Next build passed, lint static checks passed (local validation still missing runner tar).
+
+## Studio Next Verifier Error Fallback (2026-09-25)
+
+`prove()` on `0x8418053BF408EC23C4E71A9144E93a49F920F4eC` could show `FINALIZED FINISHED_WITH_ERROR` even though MetaMask/explorer showed the outer tx successful. Root cause: the leader raised `[LLM_ERROR]` for malformed AI JSON, unsupported quotes, or weak reasons. That rolls back storage, so the claim remains `OPEN`.
+
+Fix deployed to Studio dev contract `0x66e2F3E56632bB216Df175158226340619a159C7` tx `0x85d450c2c62723f9311ecdbbdc222a2e9a4fbf52df00029fa915da5629dde652`: AI verifier unavailability/unusable output/unsupported quote/unsupported reason now settles `THIN` and refunds poster instead of reverting. Direct tests 35 passed, Next build passed, lint static checks passed (local validation still missing runner tar).
+
+## Independent Validator Quote Verification (2026-09-25)
+
+Steward review required validators to verify evidence instead of accepting enum-only agreement. `0x66e2F3E56632bB216Df175158226340619a159C7` still made validators inspect only the leader result shape, which was too weak.
+
+Fix deployed to Studio dev contract `0xF118F6A0Df9B0480B01932f0D251e268F2C429B5` tx `0x44b0d6623d22810252088bf3c5a698f5a5e37318364650b6eedaaa8b3d531415`: validators now independently fetch/render the source, reject TRUE/FALSE if their fetch is THIN, require the leader quote to exist in their independently fetched excerpt, and require the quote/reason shape to support the selected outcome. Direct tests 35 passed, Next build passed, Studio Next integration read passed against the deployed contract, lint static checks passed (local validation still missing runner tar).
+
+## Qualified Domain Allowlist (2026-09-25)
+
+Steward review also allowed resolving the evidence model with qualified authoritative domains. Implemented a contract allowlist for official sources including GenLayer/OpenAI/Stripe/Coinbase docs/status/product domains plus selected protocol/vendor domains used by fixtures (`bitcoin.org`, `ethereum.org`, `blog.python.org`, `blog.google`). `back()` now rejects unlisted source domains before locking funds. `prove()` also checks the final redirect URL and settles `THIN` if an allowlisted source redirects to an unlisted host.
+
+Frontend `/back` mirrors the allowlist and shows a pre-signing warning for unlisted domains. Tests migrated away from `example.com` fixtures and added explicit unlisted-domain and unlisted-final-redirect coverage. Deployed to Studio dev contract `0x1833BC2571945AeA73dD288334B5a78c6b401187` tx `0x5047998114190ed27113cea5e799287606655ed4eeaf8c062a326d941c81ee20`. Direct tests 37 passed, Next build passed, Studio Next integration read passed, lint static checks passed (local validation still missing runner tar).
+
+## Negative Listing Reason Support (2026-09-26)
+
+Coinbase-style negative listing claims could still settle `THIN` when the verifier returned `FALSE` with a positive availability reason such as "the price page lists USDC as available for trading"; the reason guard did not count that as FALSE support. Updated `_reason_supports()` so negative availability/listing/support claims accept positive listing, trading, price-page, asset-page, and support reasons. Added a direct regression test for "USDC is not available on Coinbase's centralized exchange." Deployed to Studio dev contract `0x4Eac5CdBdfF6307a0542393ca72627A823AF1D9A` tx `0x80f0f6572d8a05fb3322b4eb36784f586fdae5aba7e734cd72d5c8f0079bbf91`. Direct tests 38 passed, Next build passed, Studio Next integration read passed, lint static checks passed (local validation still missing runner tar).

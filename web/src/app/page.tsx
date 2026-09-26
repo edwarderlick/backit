@@ -6,7 +6,7 @@ export default function LandingPage() {
       <section className="relative w-full overflow-hidden px-gutter-desktop pt-space-xl pb-space-3xl md:pb-space-4xl flex flex-col items-center text-center">
         <div className="inline-flex items-center gap-space-xs px-space-md py-space-2xs rounded-full bg-surface-container font-label-mono-sm text-label-mono-sm uppercase tracking-widest text-on-surface shadow-sm mb-space-lg">
           <span className="w-2 h-2 rounded-full bg-secondary-container" />
-          <span>GENLAYER STUDIONET PROTOCOL · SAME-SESSION LIVE-WEB SETTLEMENT</span>
+          <span>GENLAYER STUDIO NEXT · SAME-SESSION LIVE-WEB SETTLEMENT</span>
         </div>
         <h1 className="font-display-hero text-display-hero uppercase tracking-tight text-primary max-w-5xl text-balance leading-[0.95] mb-space-lg">
           PUT UP OR SHUT UP.
@@ -16,7 +16,7 @@ export default function LandingPage() {
         <p className="font-body-lg text-body-lg text-on-surface-variant max-w-3xl text-balance mb-space-2xl">
           BackIt is an atomic live-web primitive. Back a checkable statement with a single HTTPS URL.
           Anyone can trigger consensus. Settled in one write — no juries, no docket, no appeal window.
-          StudioNet test GEN only. No real value.
+          Studio Next test GEN only. No real value.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-space-sm mb-space-3xl">
           <Link
@@ -69,7 +69,7 @@ export default function LandingPage() {
               <span className="font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase">
                 TRUE remainder
               </span>
-              <div className="font-badge-numeral text-body-md font-bold text-secondary">97.5% to poster</div>
+              <div className="font-badge-numeral text-body-md font-bold text-secondary">87.5% to poster</div>
             </div>
           </div>
         </div>
@@ -98,7 +98,7 @@ export default function LandingPage() {
           <div>
             <div className="font-display-hero text-headline-xl uppercase">TRUE</div>
             <div className="font-label-mono-sm text-label-mono-sm uppercase font-bold mt-space-2xs">
-              2.5% treasury · 97.5% poster
+              2.5% treasury · 10% prover · 87.5% poster
             </div>
           </div>
           <div>
@@ -114,9 +114,9 @@ export default function LandingPage() {
             </div>
           </div>
           <div>
-            <div className="font-display-hero text-headline-xl uppercase">2.5%</div>
+            <div className="font-display-hero text-headline-xl uppercase">10%</div>
             <div className="font-label-mono-sm text-label-mono-sm uppercase font-bold mt-space-2xs">
-              Fixed TRUE protocol fee
+              Prover reward when TRUE
             </div>
           </div>
         </div>
@@ -132,7 +132,7 @@ export default function LandingPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
             {[
-              ["TRUE", "RFC 791 Internet Protocol was published in September 1981.", "datatracker.ietf.org/doc/html/rfc791", "2.5% treasury · 97.5% poster"],
+              ["TRUE", "RFC 791 Internet Protocol was published in September 1981.", "datatracker.ietf.org/doc/html/rfc791", "2.5% treasury · 10% prover · 87.5% poster"],
               ["FALSE", "RFC 791 is dated 2024.", "datatracker.ietf.org/doc/html/rfc791", "100% to the prover"],
               ["THIN", "Bitcoin whitepaper was released in 2008.", "bitcoin.org/bitcoin.pdf", "PDF/binary is unreadable → 100% poster"],
             ].map(([st, claim, url, pay]) => (

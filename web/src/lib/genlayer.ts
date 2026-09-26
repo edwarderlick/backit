@@ -1,25 +1,31 @@
 "use client";
 
 import { createClient } from "genlayer-js";
-import { studionet } from "genlayer-js/chains";
 import { TransactionStatus } from "genlayer-js/types";
-import { STUDIONET_CHAIN_ID, STUDIONET_HEX, STUDIONET_RPC } from "./chain";
+import {
+  browserRpc,
+  EXPLORER_URL,
+  PUBLIC_RPC,
+  STUDIO_NEXT_CHAIN,
+  STUDIO_NEXT_CHAIN_ID,
+  STUDIO_NEXT_HEX,
+} from "./chain";
 import { getActiveProvider, type EthereumProvider } from "./injected-wallets";
 
 export type { EthereumProvider };
 
-function browserEndpoint(): string {
-  if (typeof window === "undefined") return STUDIONET_RPC;
-  return `${window.location.origin}/api/genlayer`;
-}
-
 export function buildClient(account?: string | null, provider?: EthereumProvider) {
   return createClient({
-    chain: studionet,
-    endpoint: browserEndpoint(),
+    chain: STUDIO_NEXT_CHAIN,
+    endpoint: browserRpc(),
     ...(account ? { account: account as `0x${string}` } : {}),
     ...(provider ? { provider } : {}),
   } as Parameters<typeof createClient>[0]);
+}
+
+/** Reads do not need a wallet. Browse uses this so the feed is not stuck on connect. */
+export function buildReadClient() {
+  return buildClient();
 }
 
 export function assertExecutionOk(receipt: unknown): void {
@@ -28,7 +34,7 @@ export function assertExecutionOk(receipt: unknown): void {
   const execName = String(rec.txExecutionResultName || rec.execution_result || "");
   if (/ERROR|FAILED|ROLLBACK/i.test(execName) && /FINISHED_WITH_RETURN/i.test(execName) === false) {
     if (/FINISHED_WITH_ERROR|ERROR|FAILED|rollback/i.test(execName)) {
-      throw new Error(`StudioNet execution failed: ${execName}`);
+      throw new Error(`Studio Next execution failed: ${execName}`);
     }
   }
   const consensus = rec.consensus_data as Record<string, unknown> | undefined;
@@ -101,15 +107,15 @@ export function getEthereum(): EthereumProvider | undefined {
   return getActiveProvider() || (window as unknown as { ethereum?: EthereumProvider }).ethereum;
 }
 
-export async function switchToStudioNet(eth: EthereumProvider) {
+export async function switchToStudioNext(eth: EthereumProvider) {
   const chainIdHex = String(await eth.request({ method: "eth_chainId" }));
   const current = parseInt(chainIdHex, 16);
-  const target = studionet.id || STUDIONET_CHAIN_ID;
+  const target = STUDIO_NEXT_CHAIN.id || STUDIO_NEXT_CHAIN_ID;
   if (current === target) return current;
   try {
     await eth.request({
       method: "wallet_switchEthereumChain",
-      params: [{ chainId: STUDIONET_HEX }],
+      params: [{ chainId: STUDIO_NEXT_HEX }],
     });
   } catch (switchError: unknown) {
     const code = (switchError as { code?: number }).code;
@@ -118,11 +124,11 @@ export async function switchToStudioNet(eth: EthereumProvider) {
         method: "wallet_addEthereumChain",
         params: [
           {
-            chainId: STUDIONET_HEX,
-            chainName: "GenLayer StudioNet",
-            rpcUrls: [STUDIONET_RPC],
+            chainId: STUDIO_NEXT_HEX,
+            chainName: "GenLayer Studio Next",
+            rpcUrls: [PUBLIC_RPC],
             nativeCurrency: { name: "GEN", symbol: "GEN", decimals: 18 },
-            blockExplorerUrls: ["https://explorer-studio.genlayer.com"],
+            blockExplorerUrls: [EXPLORER_URL],
           },
         ],
       });

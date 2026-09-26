@@ -52,7 +52,7 @@ export function WalletModal() {
               Connect wallet
             </h2>
             <p className="mt-space-2xs font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-on-surface-variant">
-              StudioNet chain 61999. Test GEN only.
+              Studio Next chain 61997. Test GEN only.
             </p>
           </div>
           <button
@@ -142,7 +142,7 @@ export function WalletModal() {
 
         <p className="mt-space-md font-body-sm text-on-surface-variant">
           WalletConnect QR for mobile is not wired yet. Use an injected browser wallet for this
-          public StudioNet test.
+          public Studio Next test.
         </p>
 
         {error ? (

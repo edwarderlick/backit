@@ -16,7 +16,7 @@ export default function HowPage() {
           </h1>
           <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-space-lg">
             Not a court. Not a docket. Not a delayed oracle. BackIt is a same-session live-web
-            verification protocol on GenLayer StudioNet. Test GEN only.
+            verification protocol on GenLayer Studio Next. Test GEN only.
           </p>
           <div className="flex flex-wrap justify-center gap-space-md mt-space-xl">
             <Link
@@ -43,9 +43,9 @@ export default function HowPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
             {[
               ["01", "Back", "Poster locks test GEN on one sentence + one HTTPS URL. Kind is a label only."],
-              ["02", "Open", "Anyone may prove. Poster may cancel while OPEN. No deadline."],
-              ["03", "Prove", "Permissionless. Validators fetch the live page and settle in that write."],
-              ["04", "Pay", "TRUE 2.5% treasury / rest poster. FALSE 100% prover. THIN/CANCELED 100% poster."],
+              ["02", "Open", "Anyone may commit a proof. Cancel is only open before that lock, and it slashes 10%."],
+              ["03", "Prove", "Commit, then prove. Validators re-fetch the page and require the quote in that excerpt."],
+              ["04", "Pay", "TRUE: 2.5% treasury, 10% prover, 87.5% poster. FALSE: 100% prover. THIN: 100% poster."],
             ].map(([n, t, b]) => (
               <div key={n} className="bg-surface rounded-xl p-space-lg flex flex-col gap-space-sm">
                 <div className="w-8 h-8 rounded-full bg-secondary-container font-badge-numeral text-badge-numeral flex items-center justify-center">
@@ -65,8 +65,8 @@ export default function HowPage() {
           <p className="font-body-md text-body-md text-on-primary-container mt-space-sm">
             Judgment lives in the Intelligent Contract. The frontend never writes a verdict. There is
             no appeal, keeper, countdown, NFT, CASE counter, or validator vote theater. Prove twice
-            reverts. Cancel after settle reverts. A PDF, CAPTCHA, 404, or 5xx is THIN (refund), not
-            FALSE. If the LLM returns garbage, prove reverts and the poster can cancel for a full refund.
+            reverts. Cancel after a proof lock reverts. A PDF, CAPTCHA, 404, or 5xx is THIN (refund), not
+            FALSE. Page text is untrusted. If the quote is not on the fetched page, prove reverts and the bond stays open.
           </p>
         </div>
       </section>

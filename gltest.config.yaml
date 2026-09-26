@@ -6,3 +6,4 @@ networks:
   default: localnet
   localnet: {}
   studionet: {}
+  studio_devnet: {}

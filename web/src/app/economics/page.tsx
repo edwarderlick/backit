@@ -14,6 +14,11 @@ export default function EconomicsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!CONTRACT_ADDRESS) {
+      setErr("Contract address is not set for this deployment.");
+      setLoading(false);
+      return;
+    }
     if (!client) return;
     setLoading(true);
     getEconomics(client)
@@ -71,9 +76,9 @@ export default function EconomicsPage() {
                 <div className="font-label-mono-sm">WITHDRAW() PULL</div>
               </div>
               <div className="bg-surface-container-high p-space-lg rounded-xl">
-                <div className="font-label-mono-sm uppercase">Fee bps</div>
-                <div className="font-headline-lg">{eco.fee_bps}</div>
-                <div className="font-label-mono-sm">KIND DOES NOT CHANGE THIS</div>
+                <div className="font-label-mono-sm uppercase">TRUE split bps</div>
+                <div className="font-headline-lg">{eco.fee_bps} / {eco.prover_bps}</div>
+                <div className="font-label-mono-sm">TREASURY / PROVER. CANCEL SLASH {eco.cancel_bps}</div>
               </div>
             </div>
           )}
@@ -83,10 +88,10 @@ export default function EconomicsPage() {
       <section className="w-full py-space-3xl px-gutter-desktop">
         <div className="max-w-content-max-width mx-auto grid grid-cols-1 md:grid-cols-2 gap-space-lg">
           {[
-            ["TRUE", "2.5% stays in contract treasury. Remainder to poster as native transfer, else credits."],
+            ["TRUE", "2.5% treasury, 10% prover, 87.5% poster. Native transfer, else withdrawable credits."],
             ["FALSE", "Entire bond to the prover. Dust: integer wei, no extra haircut."],
-            ["THIN", "100% refund poster. 404/403/empty/CAPTCHA/5xx never slash."],
-            ["CANCELED", "Poster-only while OPEN. 100% refund."],
+            ["THIN", "100% refund poster. 404/403/empty/CAPTCHA/5xx and injected page instructions never slash."],
+            ["CANCELED", "Poster only while OPEN and before a proof lock. 10% treasury, 90% poster."],
           ].map(([t, b]) => (
             <div key={t} className="bg-surface-container-lowest p-space-lg rounded-xl">
               <div className="font-headline-md uppercase">{t}</div>
