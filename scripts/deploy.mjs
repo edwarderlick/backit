@@ -6,21 +6,28 @@
 import { spawnSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { homedir } from "node:os";
 
 const root = resolve(import.meta.dirname, "..");
 const contract = resolve(root, "contracts/backit.py");
 
 function run(cmd, args) {
   console.log(`$ ${cmd} ${args.join(" ")}`);
-  const r = spawnSync(cmd, args, { cwd: root, encoding: "utf8", shell: true });
+  let bin = cmd;
+  let finalArgs = args;
+  if (process.platform === "win32" && cmd === "genlayer") {
+    bin = "node";
+    finalArgs = [resolve(homedir(), "AppData/Roaming/npm/node_modules/genlayer/dist/index.js"), ...args];
+  }
+  const r = spawnSync(bin, finalArgs, { cwd: root, encoding: "utf8", shell: false });
   process.stdout.write(r.stdout || "");
   process.stderr.write(r.stderr || "");
+  if (r.error) console.error(r.error);
   if (r.status !== 0) process.exit(r.status ?? 1);
   return r.stdout || "";
 }
 
 const rpc = "https://studio-dev.genlayer.com/api";
-run("genlayer", ["network", "info"]);
 const out = run("genlayer", [
   "deploy",
   "--contract",

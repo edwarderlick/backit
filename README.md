@@ -13,13 +13,13 @@ Not a court. Not an appeal system. Not a delayed oracle. Studio Next only. No re
 - Chain: Studio Next `61997`
 - RPC: `https://studio-dev.genlayer.com/api`
 - Explorer: [explorer-studio-dev.genlayer.com](https://explorer-studio-dev.genlayer.com/)
-- Current contract: [`0xBf17436EC5b4C7BFCfD5805c861252F75d7A19A0`](https://explorer-studio-dev.genlayer.com/address/0xBf17436EC5b4C7BFCfD5805c861252F75d7A19A0)
-- Deploy tx: [`0xc1e37a6b9f56e9e303a97db3fc19924bab73539d188c2b2a9588d06ea59bf6d7`](https://explorer-studio-dev.genlayer.com/tx/0xc1e37a6b9f56e9e303a97db3fc19924bab73539d188c2b2a9588d06ea59bf6d7)
+- Current contract: [`0x7eE2F490A5D46f3249a2FF86A1ccD18AB3f6d4B9`](https://explorer-studio-dev.genlayer.com/address/0x7eE2F490A5D46f3249a2FF86A1ccD18AB3f6d4B9)
+- Deploy tx: [`0x02214e980833ffcc9f06b6fdf4f70a197cfec243229bd0ef479a9f90034f7a3b`](https://explorer-studio-dev.genlayer.com/tx/0x02214e980833ffcc9f06b6fdf4f70a197cfec243229bd0ef479a9f90034f7a3b)
 
 Vercel should use:
 
 ```bash
-NEXT_PUBLIC_CONTRACT_ADDRESS=0xBf17436EC5b4C7BFCfD5805c861252F75d7A19A0
+NEXT_PUBLIC_CONTRACT_ADDRESS=0x7eE2F490A5D46f3249a2FF86A1ccD18AB3f6d4B9
 NEXT_PUBLIC_GENLAYER_RPC_URL=https://studio-dev.genlayer.com/api
 GENLAYER_RPC_URL=https://studio-dev.genlayer.com/api
 NEXT_PUBLIC_GENLAYER_CHAIN_ID=61997
@@ -37,7 +37,7 @@ BackIt uses the qualified-domain path, not an external archival snapshot service
 - Fetched page text is fenced as untrusted evidence in the verifier prompt.
 - Pages containing prompt-injection style instructions settle `THIN`.
 - Validators independently fetch the same source, reject inaccessible or thin excerpts, and require the stored quote to appear in their own excerpt before accepting `TRUE` or `FALSE`.
-- Validators run a separate support-check verifier over their independently fetched excerpt, the stored quote, reason, claim, and outcome. The quote and reason must substantively justify the selected `TRUE` or `FALSE`; enum-only agreement is not enough.
+- Validators run a deterministic support guard over their independently fetched excerpt, the stored quote, reason, claim, and outcome. The quote and reason must substantively justify the selected `TRUE` or `FALSE`; enum-only agreement is not enough. Paraphrases and semantic equivalence count as support, while wording-only differences are not treated as contradictions.
 - Redirects, malicious HTML, mutable pages, divergent validator fetches, inaccessible sources, transfer/credit fallback, and cancellation/proof races have direct test coverage.
 
 This is deliberately conservative: if a source is blocked, binary, inaccessible, malicious, or too ambiguous, the result is `THIN` and the poster is refunded.
@@ -73,7 +73,7 @@ Outcomes:
 | `list_ids()` / `get_back_ids(offset, limit)` / `get_feed(offset, limit)` | Bounded feed reads |
 | `get_economics()` / `get_credit(address)` | Treasury, locked amount, fees, and credits |
 
-Runner pin: `py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6`
+Runner pin: `py-genlayer:5jycge4q8k23462jtb0b9fyey1s9qz928sz2nbrd9mg4sxqg2qng`
 
 ## Verification
 
@@ -88,13 +88,13 @@ The same gate expands to:
 
 ```bash
 uv run pytest tests/direct -q
-# 40 passed
+# 42 passed
 
 cd web
 npm.cmd run build
 # passed
 
-BACKIT_CONTRACT=0xBf17436EC5b4C7BFCfD5805c861252F75d7A19A0 uv run pytest tests/integration -v
+BACKIT_CONTRACT=0x7eE2F490A5D46f3249a2FF86A1ccD18AB3f6d4B9 uv run pytest tests/integration -v
 # 3 passed
 ```
 

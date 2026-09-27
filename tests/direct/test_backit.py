@@ -17,6 +17,10 @@ COINBASE_USDC_PAGE = (
     "USDC price page. USDC is available on Coinbase. "
     "Coinbase supports USD Coin trading on its centralized exchange."
 )
+GENLAYER_PROTOCOL_PAGE = (
+    "GenLayer is an intelligent blockchain for applications that need consensus on outcomes "
+    "derived from natural language, live web data, or other non-deterministic inputs."
+)
 
 
 def _mock_get(direct_vm, url_part, status, body):
@@ -26,11 +30,7 @@ def _mock_get(direct_vm, url_part, status, body):
     )
 
 
-def _mock_llm(direct_vm, outcome, quote="q", reason="r", support=True):
-    direct_vm.mock_llm(
-        r"SUPPORT_CHECK",
-        json.dumps({"supported": support, "reason": "quote and reason support outcome" if support else "unsupported"}),
-    )
+def _mock_llm(direct_vm, outcome, quote="q", reason="r"):
     direct_vm.mock_llm(
         r".*",
         json.dumps({"outcome": outcome, "quote": quote, "reason": reason}),
@@ -111,12 +111,12 @@ def test_kind_does_not_change_payout_math(direct_vm, direct_deploy, direct_alice
     for kind in ("FACT", "LISTING", "PRESS", "JOB", "STATUS", "OTHER"):
         direct_vm.sender = direct_alice
         direct_vm.value = 10000
-        bid = c.back(f"kind {kind} claim text", f"https://docs.genlayer.com/{kind}", kind)
+        bid = c.back("Bitcoin whitepaper was released in 2008", f"https://docs.genlayer.com/{kind}", kind)
         rec = c.get_back(bid)
         assert rec["amount"] == 10000
         assert rec["kind"] == kind
         _mock_get(direct_vm, f"docs.genlayer.com/{kind}", 200, TRUE_PAGE)
-        _mock_llm(direct_vm, "TRUE", quote="2008", reason="page matches the claim")
+        _mock_llm(direct_vm, "TRUE", quote="released in 2008", reason="page matches the claim")
         direct_vm.sender = direct_bob
         c.prove(bid)
         rec = c.get_back(bid)
@@ -457,13 +457,63 @@ def test_support_verifier_rejects_related_quote_that_does_not_justify_outcome(
         "FALSE",
         quote="Bitcoin: A Peer-to-Peer Electronic Cash System",
         reason="the page contradicts the claim",
-        support=False,
     )
     direct_vm.sender = direct_bob
     c.prove(bid)
     rec = c.get_back(bid)
     assert rec["state"] == "THIN"
     assert "unsupported quote/reason" in rec["reason"].lower()
+
+
+def test_semantic_equivalence_blocks_pedantic_false_for_genlayer_protocol(
+    direct_vm, direct_deploy, direct_alice, direct_bob
+):
+    c = direct_deploy(CONTRACT)
+    direct_vm.sender = direct_alice
+    direct_vm.value = 1000
+    bid = c.back(
+        "GenLayer is an intelligent blockchain for applications that need consensus on live web data.",
+        "https://docs.genlayer.com/understand-genlayer-protocol",
+        "FACT",
+    )
+    quote = GENLAYER_PROTOCOL_PAGE
+    _mock_get(direct_vm, "docs.genlayer.com/understand-genlayer-protocol", 200, GENLAYER_PROTOCOL_PAGE)
+    _mock_llm(
+        direct_vm,
+        "FALSE",
+        quote=quote,
+        reason="The page says consensus on outcomes derived from live web data, not consensus on live web data itself.",
+    )
+    direct_vm.sender = direct_bob
+    c.prove(bid)
+    rec = c.get_back(bid)
+    assert rec["state"] == "THIN"
+    assert "unsupported quote/reason" in rec["reason"].lower()
+
+
+def test_semantic_equivalence_accepts_true_for_genlayer_protocol(
+    direct_vm, direct_deploy, direct_alice, direct_bob
+):
+    c = direct_deploy(CONTRACT)
+    direct_vm.sender = direct_alice
+    direct_vm.value = 1000
+    bid = c.back(
+        "GenLayer is an intelligent blockchain for applications that need consensus on live web data.",
+        "https://docs.genlayer.com/understand-genlayer-protocol",
+        "FACT",
+    )
+    quote = GENLAYER_PROTOCOL_PAGE
+    _mock_get(direct_vm, "docs.genlayer.com/understand-genlayer-protocol", 200, GENLAYER_PROTOCOL_PAGE)
+    _mock_llm(
+        direct_vm,
+        "TRUE",
+        quote=quote,
+        reason="The quoted page supports the claim with equivalent wording.",
+    )
+    direct_vm.sender = direct_bob
+    c.prove(bid)
+    rec = c.get_back(bid)
+    assert rec["state"] == "TRUE"
 
 
 def test_validator_rejects_quote_reason_without_substantive_support(
@@ -480,15 +530,11 @@ def test_validator_rejects_quote_reason_without_substantive_support(
 
     direct_vm.clear_mocks()
     _mock_get(direct_vm, "bitcoin.org", 200, TRUE_PAGE)
-    direct_vm.mock_llm(
-        r"SUPPORT_CHECK",
-        json.dumps({"supported": False, "reason": "quote is related but does not justify the requested outcome"}),
-    )
     assert (
         direct_vm.run_validator(
             leader_result={
                 "outcome": "TRUE",
-                "quote": "released in 2008",
+                "quote": "Bitcoin: A Peer-to-Peer Electronic Cash System",
                 "reason": "page matches the claim",
                 "final_url": "https://bitcoin.org/html",
                 "content_hash": c.get_back(bid)["content_hash"],
