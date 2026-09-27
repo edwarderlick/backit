@@ -13,13 +13,13 @@ Not a court. Not an appeal system. Not a delayed oracle. Studio Next only. No re
 - Chain: Studio Next `61997`
 - RPC: `https://studio-dev.genlayer.com/api`
 - Explorer: [explorer-studio-dev.genlayer.com](https://explorer-studio-dev.genlayer.com/)
-- Current contract: [`0x4Eac5CdBdfF6307a0542393ca72627A823AF1D9A`](https://explorer-studio-dev.genlayer.com/address/0x4Eac5CdBdfF6307a0542393ca72627A823AF1D9A)
-- Deploy tx: [`0x80f0f6572d8a05fb3322b4eb36784f586fdae5aba7e734cd72d5c8f0079bbf91`](https://explorer-studio-dev.genlayer.com/tx/0x80f0f6572d8a05fb3322b4eb36784f586fdae5aba7e734cd72d5c8f0079bbf91)
+- Current contract: [`0xBf17436EC5b4C7BFCfD5805c861252F75d7A19A0`](https://explorer-studio-dev.genlayer.com/address/0xBf17436EC5b4C7BFCfD5805c861252F75d7A19A0)
+- Deploy tx: [`0xc1e37a6b9f56e9e303a97db3fc19924bab73539d188c2b2a9588d06ea59bf6d7`](https://explorer-studio-dev.genlayer.com/tx/0xc1e37a6b9f56e9e303a97db3fc19924bab73539d188c2b2a9588d06ea59bf6d7)
 
 Vercel should use:
 
 ```bash
-NEXT_PUBLIC_CONTRACT_ADDRESS=0x4Eac5CdBdfF6307a0542393ca72627A823AF1D9A
+NEXT_PUBLIC_CONTRACT_ADDRESS=0xBf17436EC5b4C7BFCfD5805c861252F75d7A19A0
 NEXT_PUBLIC_GENLAYER_RPC_URL=https://studio-dev.genlayer.com/api
 GENLAYER_RPC_URL=https://studio-dev.genlayer.com/api
 NEXT_PUBLIC_GENLAYER_CHAIN_ID=61997
@@ -37,7 +37,7 @@ BackIt uses the qualified-domain path, not an external archival snapshot service
 - Fetched page text is fenced as untrusted evidence in the verifier prompt.
 - Pages containing prompt-injection style instructions settle `THIN`.
 - Validators independently fetch the same source, reject inaccessible or thin excerpts, and require the stored quote to appear in their own excerpt before accepting `TRUE` or `FALSE`.
-- Validators also require the quote and reason to support the selected outcome, so enum-only agreement is not enough.
+- Validators run a separate support-check verifier over their independently fetched excerpt, the stored quote, reason, claim, and outcome. The quote and reason must substantively justify the selected `TRUE` or `FALSE`; enum-only agreement is not enough.
 - Redirects, malicious HTML, mutable pages, divergent validator fetches, inaccessible sources, transfer/credit fallback, and cancellation/proof races have direct test coverage.
 
 This is deliberately conservative: if a source is blocked, binary, inaccessible, malicious, or too ambiguous, the result is `THIN` and the poster is refunded.
@@ -80,14 +80,21 @@ Runner pin: `py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6`
 Latest local verification for the current contract:
 
 ```bash
+npm run verify
+# direct tests + production web build + Studio Next integration
+```
+
+The same gate expands to:
+
+```bash
 uv run pytest tests/direct -q
-# 38 passed
+# 40 passed
 
 cd web
 npm.cmd run build
 # passed
 
-BACKIT_CONTRACT=0x4Eac5CdBdfF6307a0542393ca72627A823AF1D9A uv run pytest tests/integration -v
+BACKIT_CONTRACT=0xBf17436EC5b4C7BFCfD5805c861252F75d7A19A0 uv run pytest tests/integration -v
 # 3 passed
 ```
 

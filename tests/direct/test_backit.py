@@ -26,7 +26,11 @@ def _mock_get(direct_vm, url_part, status, body):
     )
 
 
-def _mock_llm(direct_vm, outcome, quote="q", reason="r"):
+def _mock_llm(direct_vm, outcome, quote="q", reason="r", support=True):
+    direct_vm.mock_llm(
+        r"SUPPORT_CHECK",
+        json.dumps({"supported": support, "reason": "quote and reason support outcome" if support else "unsupported"}),
+    )
     direct_vm.mock_llm(
         r".*",
         json.dumps({"outcome": outcome, "quote": quote, "reason": reason}),
@@ -434,6 +438,60 @@ def test_validator_equivalence_requires_supported_quote_and_reason(direct_vm, di
                 "reason": "page matches the claim",
                 "final_url": rec["final_url"],
                 "content_hash": rec["content_hash"],
+            }
+        )
+        is False
+    )
+
+
+def test_support_verifier_rejects_related_quote_that_does_not_justify_outcome(
+    direct_vm, direct_deploy, direct_alice, direct_bob
+):
+    c = direct_deploy(CONTRACT)
+    direct_vm.sender = direct_alice
+    direct_vm.value = 1000
+    bid = c.back("Bitcoin whitepaper was released in 2009", "https://bitcoin.org/html", "FACT")
+    _mock_get(direct_vm, "bitcoin.org", 200, TRUE_PAGE)
+    _mock_llm(
+        direct_vm,
+        "FALSE",
+        quote="Bitcoin: A Peer-to-Peer Electronic Cash System",
+        reason="the page contradicts the claim",
+        support=False,
+    )
+    direct_vm.sender = direct_bob
+    c.prove(bid)
+    rec = c.get_back(bid)
+    assert rec["state"] == "THIN"
+    assert "unsupported quote/reason" in rec["reason"].lower()
+
+
+def test_validator_rejects_quote_reason_without_substantive_support(
+    direct_vm, direct_deploy, direct_alice, direct_bob
+):
+    c = direct_deploy(CONTRACT)
+    direct_vm.sender = direct_alice
+    direct_vm.value = 1000
+    bid = c.back("Bitcoin whitepaper was released in 2008", "https://bitcoin.org/html", "FACT")
+    _mock_get(direct_vm, "bitcoin.org", 200, TRUE_PAGE)
+    _mock_llm(direct_vm, "TRUE", quote="released in 2008", reason="page matches the claim")
+    direct_vm.sender = direct_bob
+    c.prove(bid)
+
+    direct_vm.clear_mocks()
+    _mock_get(direct_vm, "bitcoin.org", 200, TRUE_PAGE)
+    direct_vm.mock_llm(
+        r"SUPPORT_CHECK",
+        json.dumps({"supported": False, "reason": "quote is related but does not justify the requested outcome"}),
+    )
+    assert (
+        direct_vm.run_validator(
+            leader_result={
+                "outcome": "TRUE",
+                "quote": "released in 2008",
+                "reason": "page matches the claim",
+                "final_url": "https://bitcoin.org/html",
+                "content_hash": c.get_back(bid)["content_hash"],
             }
         )
         is False

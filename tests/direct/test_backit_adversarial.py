@@ -21,7 +21,11 @@ def _mock_get(direct_vm, url_part, status, body):
     )
 
 
-def _mock_llm(direct_vm, outcome, quote="q", reason="r"):
+def _mock_llm(direct_vm, outcome, quote="q", reason="r", support=True):
+    direct_vm.mock_llm(
+        r"SUPPORT_CHECK",
+        json.dumps({"supported": support, "reason": "quote and reason support outcome" if support else "unsupported"}),
+    )
     direct_vm.mock_llm(
         r".*",
         json.dumps({"outcome": outcome, "quote": quote, "reason": reason}),
