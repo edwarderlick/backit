@@ -610,7 +610,30 @@ class BackIt(gl.contract.Contract):
                     " support page",
                 )
             )
-            return negative_listing_claim and positive_listing_quote
+            if negative_listing_claim and positive_listing_quote:
+                return True
+            negative_protocol_claim = any(
+                p in claim_low
+                for p in (
+                    "not a blockchain",
+                    "not blockchain",
+                    "not a protocol",
+                    "not protocol",
+                    "only a static",
+                    "static documentation website",
+                )
+            )
+            positive_protocol_quote = any(
+                p in quote_low
+                for p in (
+                    " blockchain",
+                    " protocol",
+                    " consensus",
+                    " applications",
+                    " non-deterministic",
+                )
+            )
+            return negative_protocol_claim and positive_protocol_quote
 
         def _reason_supports(outcome: str, reason: str) -> bool:
             low = str(reason or "").lower()
@@ -645,7 +668,30 @@ class BackIt(gl.contract.Contract):
                         "support page",
                     )
                 )
-                return negative_listing_claim and positive_listing_reason
+                if negative_listing_claim and positive_listing_reason:
+                    return True
+                negative_protocol_claim = any(
+                    p in claim_low
+                    for p in (
+                        "not a blockchain",
+                        "not blockchain",
+                        "not a protocol",
+                        "not protocol",
+                        "only a static",
+                        "static documentation website",
+                    )
+                )
+                positive_protocol_reason = any(
+                    p in low
+                    for p in (
+                        "blockchain",
+                        "protocol",
+                        "consensus",
+                        "applications",
+                        "non-deterministic",
+                    )
+                )
+                return negative_protocol_claim and positive_protocol_reason
             if outcome == "THIN":
                 return True
             return False

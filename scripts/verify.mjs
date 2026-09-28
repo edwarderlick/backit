@@ -2,7 +2,7 @@ import { spawnSync } from "node:child_process";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const CURRENT_CONTRACT = "0x7eE2F490A5D46f3249a2FF86A1ccD18AB3f6d4B9";
+const CURRENT_CONTRACT = "0x0F3c9a99E4dBBE909cFe0778684B31e2D2526349";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, "..");
 const npmCmd = process.platform === "win32" ? "npm.cmd" : "npm";

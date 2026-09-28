@@ -5,8 +5,8 @@
 - Network: `studio-dev` / chain `61997` (`0xf22d`)
 - RPC: `https://studio-dev.genlayer.com/api`
 - Explorer: `https://explorer-studio-dev.genlayer.com`
-- Contract: `0x7eE2F490A5D46f3249a2FF86A1ccD18AB3f6d4B9`
-- Deploy tx: `0x02214e980833ffcc9f06b6fdf4f70a197cfec243229bd0ef479a9f90034f7a3b`
+- Contract: `0x0F3c9a99E4dBBE909cFe0778684B31e2D2526349`
+- Deploy tx: `0xb68cc69c248689dc6835fb873e055a7f99100552e4c79be9332bc851435b9faf`
 - Deploy receipt stdout/stderr: empty
 - Fee deposit used: `25000000000002588` wei
 
@@ -15,7 +15,7 @@
 - `uv run pytest tests/direct -v`: 38 passed
 - `uv run genvm-lint check contracts/backit.py`: static lint passed; SDK validation cannot load the local Studio Next runner tar from the linter cache
 - `npm.cmd run build` in `web/`: passed
-- `BACKIT_CONTRACT=0x7eE2F490A5D46f3249a2FF86A1ccD18AB3f6d4B9 uv run pytest tests/integration -v`: 3 passed
+- `BACKIT_CONTRACT=0x0F3c9a99E4dBBE909cFe0778684B31e2D2526349 uv run pytest tests/integration -v`: 3 passed
 - `genlayer schema`: exposes `back`, `cancel`, `get_back`, `get_back_ids`, `get_credit`, `get_economics`, `get_feed`, `list_ids`, `prove`, `withdraw`
 - Read-only smoke:
   - `list_ids` returned `[]`

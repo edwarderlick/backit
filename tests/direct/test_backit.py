@@ -516,6 +516,31 @@ def test_semantic_equivalence_accepts_true_for_genlayer_protocol(
     assert rec["state"] == "TRUE"
 
 
+def test_negative_protocol_claim_accepts_positive_blockchain_quote(
+    direct_vm, direct_deploy, direct_alice, direct_bob
+):
+    c = direct_deploy(CONTRACT)
+    direct_vm.sender = direct_alice
+    direct_vm.value = 1000
+    bid = c.back(
+        "GenLayer is only a static documentation website and not a blockchain protocol.",
+        "https://docs.genlayer.com/understand-genlayer-protocol",
+        "OTHER",
+    )
+    _mock_get(direct_vm, "docs.genlayer.com/understand-genlayer-protocol", 200, GENLAYER_PROTOCOL_PAGE)
+    _mock_llm(
+        direct_vm,
+        "FALSE",
+        quote=GENLAYER_PROTOCOL_PAGE,
+        reason="The quote describes GenLayer as an intelligent blockchain for applications.",
+    )
+    direct_vm.sender = direct_bob
+    c.prove(bid)
+    rec = c.get_back(bid)
+    assert rec["state"] == "FALSE"
+    assert rec["paid_to_prover"] + rec["credit_prover"] == 1000
+
+
 def test_validator_rejects_quote_reason_without_substantive_support(
     direct_vm, direct_deploy, direct_alice, direct_bob
 ):
