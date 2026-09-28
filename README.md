@@ -13,13 +13,13 @@ Not a court. Not an appeal system. Not a delayed oracle. Studio Next only. No re
 - Chain: Studio Next `61997`
 - RPC: `https://studio-dev.genlayer.com/api`
 - Explorer: [explorer-studio-dev.genlayer.com](https://explorer-studio-dev.genlayer.com/)
-- Current contract: [`0x0F3c9a99E4dBBE909cFe0778684B31e2D2526349`](https://explorer-studio-dev.genlayer.com/address/0x0F3c9a99E4dBBE909cFe0778684B31e2D2526349)
-- Deploy tx: [`0xb68cc69c248689dc6835fb873e055a7f99100552e4c79be9332bc851435b9faf`](https://explorer-studio-dev.genlayer.com/tx/0xb68cc69c248689dc6835fb873e055a7f99100552e4c79be9332bc851435b9faf)
+- Current contract: [`0x15A3AE82d4AC497A551B92Edde65b919275eB9e7`](https://explorer-studio-dev.genlayer.com/address/0x15A3AE82d4AC497A551B92Edde65b919275eB9e7)
+- Deploy tx: [`0xdec6deffab5f954be64cbb158325b052094fa07d5f432a19306bcf762e1dbf37`](https://explorer-studio-dev.genlayer.com/tx/0xdec6deffab5f954be64cbb158325b052094fa07d5f432a19306bcf762e1dbf37)
 
 Vercel should use:
 
 ```bash
-NEXT_PUBLIC_CONTRACT_ADDRESS=0x0F3c9a99E4dBBE909cFe0778684B31e2D2526349
+NEXT_PUBLIC_CONTRACT_ADDRESS=0x15A3AE82d4AC497A551B92Edde65b919275eB9e7
 NEXT_PUBLIC_GENLAYER_RPC_URL=https://studio-dev.genlayer.com/api
 GENLAYER_RPC_URL=https://studio-dev.genlayer.com/api
 NEXT_PUBLIC_GENLAYER_CHAIN_ID=61997
@@ -88,13 +88,13 @@ The same gate expands to:
 
 ```bash
 uv run pytest tests/direct -q
-# 43 passed
+# 44 passed
 
 cd web
 npm.cmd run build
 # passed
 
-BACKIT_CONTRACT=0x0F3c9a99E4dBBE909cFe0778684B31e2D2526349 uv run pytest tests/integration -v
+BACKIT_CONTRACT=0x15A3AE82d4AC497A551B92Edde65b919275eB9e7 uv run pytest tests/integration -v
 # 3 passed
 ```
 

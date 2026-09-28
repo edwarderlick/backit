@@ -638,7 +638,33 @@ class BackIt(gl.contract.Contract):
         def _reason_supports(outcome: str, reason: str) -> bool:
             low = str(reason or "").lower()
             if outcome == "TRUE":
-                return any(w in low for w in ("support", "match", "state", "states", "confirm", "according"))
+                if any(w in low for w in ("contradict", "false", "not support", "instead", "different")):
+                    return False
+                if any(
+                    w in low
+                    for w in (
+                        "support",
+                        "match",
+                        "state",
+                        "states",
+                        "confirm",
+                        "according",
+                        "describe",
+                        "describes",
+                        "says",
+                        "mentions",
+                        "equivalent",
+                        "consistent",
+                    )
+                ):
+                    return True
+                claim_tokens = set(_tokens(claim_text))
+                reason_tokens = set(_tokens(reason))
+                hits = 0
+                for token in claim_tokens:
+                    if token in reason_tokens:
+                        hits += 1
+                return hits >= 2
             if outcome == "FALSE":
                 if any(w in low for w in ("contradict", "false", "not ", "instead", "different")):
                     return True
