@@ -6,7 +6,7 @@ export const PUBLIC_RPC =
   process.env.NEXT_PUBLIC_GENLAYER_RPC_URL ||
   "https://studio-dev.genlayer.com/api";
 export const EXPLORER_URL = "https://explorer-studio-dev.genlayer.com";
-export const DEFAULT_CONTRACT_ADDRESS = "0x15A3AE82d4AC497A551B92Edde65b919275eB9e7" as const;
+export const DEFAULT_CONTRACT_ADDRESS = "0x1C549AA74bEf8d34BCa5B0c0Fa538096d55dB175" as const;
 export const CONTRACT_ADDRESS = (
   process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || DEFAULT_CONTRACT_ADDRESS
 ) as `0x${string}`;

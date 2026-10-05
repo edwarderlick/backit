@@ -13,13 +13,13 @@ Not a court. Not an appeal system. Not a delayed oracle. Studio Next only. No re
 - Chain: Studio Next `61997`
 - RPC: `https://studio-dev.genlayer.com/api`
 - Explorer: [explorer-studio-dev.genlayer.com](https://explorer-studio-dev.genlayer.com/)
-- Current contract: [`0x15A3AE82d4AC497A551B92Edde65b919275eB9e7`](https://explorer-studio-dev.genlayer.com/address/0x15A3AE82d4AC497A551B92Edde65b919275eB9e7)
-- Deploy tx: [`0xdec6deffab5f954be64cbb158325b052094fa07d5f432a19306bcf762e1dbf37`](https://explorer-studio-dev.genlayer.com/tx/0xdec6deffab5f954be64cbb158325b052094fa07d5f432a19306bcf762e1dbf37)
+- Current contract: [`0x1C549AA74bEf8d34BCa5B0c0Fa538096d55dB175`](https://explorer-studio-dev.genlayer.com/address/0x1C549AA74bEf8d34BCa5B0c0Fa538096d55dB175)
+- Deploy tx: [`0x391a0755eab905ce8940d8a0cdc5ea46b6609348e3faaa3220c29a936f092b88`](https://explorer-studio-dev.genlayer.com/tx/0x391a0755eab905ce8940d8a0cdc5ea46b6609348e3faaa3220c29a936f092b88)
 
 Vercel should use:
 
 ```bash
-NEXT_PUBLIC_CONTRACT_ADDRESS=0x15A3AE82d4AC497A551B92Edde65b919275eB9e7
+NEXT_PUBLIC_CONTRACT_ADDRESS=0x1C549AA74bEf8d34BCa5B0c0Fa538096d55dB175
 NEXT_PUBLIC_GENLAYER_RPC_URL=https://studio-dev.genlayer.com/api
 GENLAYER_RPC_URL=https://studio-dev.genlayer.com/api
 NEXT_PUBLIC_GENLAYER_CHAIN_ID=61997
@@ -88,17 +88,17 @@ The same gate expands to:
 
 ```bash
 uv run pytest tests/direct -q
-# 44 passed
+# 51 passed
 
 cd web
 npm.cmd run build
 # passed
 
-BACKIT_CONTRACT=0x15A3AE82d4AC497A551B92Edde65b919275eB9e7 uv run pytest tests/integration -v
+BACKIT_CONTRACT=0x1C549AA74bEf8d34BCa5B0c0Fa538096d55dB175 uv run pytest tests/integration -v
 # 3 passed
 ```
 
-`uv run genvm-lint check contracts/backit.py` passes static lint. The SDK validation step can fail locally if the cached Studio Next runner tar is missing from `runners/py-genlayer/...`.
+The project pins `genlayer-test==0.30.0rc2` in `pyproject.toml` and `uv.lock`, including the `gltest.direct.sdk_compat` module used by direct-test setup. `uv run genvm-lint check contracts/backit.py` passes lint and SDK validation.
 
 ## Local Development
 
@@ -122,7 +122,7 @@ Deploy contract:
 node scripts/deploy.mjs
 ```
 
-That writes `.env.local` and `web/.env.local` with the new address. After redeploying the contract, update `NEXT_PUBLIC_CONTRACT_ADDRESS` in Vercel if it is set there.
+The deploy script estimates current Studio Next fees, waits for a finalized successful execution, and writes `.env.local` and `web/.env.local` with the new address. Set `BACKIT_DEPLOY_ACCOUNT` to choose an existing unlocked GenLayer CLI account. Set `BACKIT_DEPLOY_HASH` to resume receipt verification without sending another transaction. Update `NEXT_PUBLIC_CONTRACT_ADDRESS` in Vercel separately; the public site is not changed by local deployment.
 
 Pushes to `main` trigger Vercel for [backit-seven.vercel.app](https://backit-seven.vercel.app/).
 

@@ -680,3 +680,57 @@ def test_withdraw_without_credits_reverts(direct_vm, direct_deploy, direct_alice
     with pytest.raises(Exception) as exc:
         c.withdraw()
     assert "no credits" in str(exc.value).lower()
+
+
+@pytest.mark.parametrize(
+    "claim,quote",
+    [
+        ("Bitcoin whitepaper was released in 2008", "Bitcoin whitepaper was released in 2009"),
+        ("The protocol fee is 2.5 percent", "The protocol fee is 3.5 percent"),
+        ("The launch happened in May 2025", "The launch happened in June 2025"),
+        ("The protocol fee is five percent", "The protocol fee is six percent"),
+        ("USDC is available for trading", "USDT is available for trading"),
+        ("Bitcoin whitepaper was released in 2008", "Bitcoin whitepaper was released in 2008, not 2009"),
+    ],
+)
+def test_true_rejects_material_value_conflict(
+    direct_vm, direct_deploy, direct_alice, direct_bob, claim, quote
+):
+    c = direct_deploy(CONTRACT)
+    direct_vm.sender = direct_alice
+    direct_vm.value = 1000
+    bid = c.back(claim, "https://docs.genlayer.com/value", "FACT")
+    _mock_get(direct_vm, "docs.genlayer.com/value", 200, quote)
+    _mock_llm(direct_vm, "TRUE", quote=quote, reason="The page matches the claim")
+    direct_vm.sender = direct_bob
+    c.prove(bid)
+    rec = c.get_back(bid)
+    assert rec["state"] == "THIN"
+    assert rec["paid_to_poster"] + rec["credit_poster"] == 1000
+
+
+def test_validator_rejects_forged_true_with_conflicting_value(
+    direct_vm, direct_deploy, direct_alice, direct_bob
+):
+    c = direct_deploy(CONTRACT)
+    direct_vm.sender = direct_alice
+    direct_vm.value = 1000
+    bid = c.back("Bitcoin whitepaper was released in 2008", "https://bitcoin.org/html", "FACT")
+    _mock_get(direct_vm, "bitcoin.org", 200, TRUE_PAGE)
+    _mock_llm(direct_vm, "TRUE", quote="released in 2008", reason="page matches the claim")
+    direct_vm.sender = direct_bob
+    c.prove(bid)
+    assert c.get_back(bid)["state"] == "TRUE"
+
+    conflicting_page = "Bitcoin whitepaper was released in 2009."
+    direct_vm.clear_mocks()
+    _mock_get(direct_vm, "bitcoin.org", 200, conflicting_page)
+    assert direct_vm.run_validator(
+        leader_result={
+            "outcome": "TRUE",
+            "quote": conflicting_page,
+            "reason": "page matches the claim",
+            "final_url": "https://bitcoin.org/html",
+            "content_hash": c.get_back(bid)["content_hash"],
+        }
+    ) is False

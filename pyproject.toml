@@ -1,0 +1,12 @@
+[project]
+name = "backit"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+  "genlayer-test==0.30.0rc2",
+  "genvm-linter>=0.3.0",
+  "pytest>=8.0.0",
+]
+
+[tool.uv]
+prerelease = 'allow'

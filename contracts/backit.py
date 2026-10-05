@@ -40,7 +40,9 @@ OUTCOMES = ("TRUE", "FALSE", "THIN")
 
 import genlayer.storage
 
-@genlayer.storage.allow
+allow_storage = genlayer.storage.allow
+
+@allow_storage
 @dataclass
 class Back:
     id: str
@@ -556,11 +558,65 @@ class BackIt(gl.contract.Contract):
             words = re.findall(r"[a-z0-9]+", str(text or "").lower())
             return [w for w in words if len(w) > 3 and w not in stop]
 
+        def _material_values_match(quote: str) -> bool:
+            # Token overlap must not turn a conflicting date or quantity into TRUE.
+            # When a cited sentence contains extra numeric values, fail closed.
+            def numbers(value: str) -> set[str]:
+                found = re.findall(r"(?<![a-z0-9])\d[\d,]*(?:\.\d+)?(?![a-z0-9])", value.lower())
+                return {item.replace(",", "") for item in found}
+
+            claim_numbers = numbers(claim_text)
+            quote_numbers = numbers(quote)
+            if claim_numbers and claim_numbers != quote_numbers:
+                return False
+
+            number_words = {
+                "zero", "one", "two", "three", "four", "five", "six", "seven",
+                "eight", "nine", "ten", "eleven", "twelve", "thirteen",
+                "fourteen", "fifteen", "sixteen", "seventeen", "eighteen",
+                "nineteen", "twenty", "thirty", "forty", "fifty", "sixty",
+                "seventy", "eighty", "ninety", "hundred", "thousand",
+                "million", "billion", "trillion",
+            }
+
+            def named_numbers(value: str) -> set[str]:
+                return set(re.findall(r"[a-z]+", value.lower())) & number_words
+
+            claim_named_numbers = named_numbers(claim_text)
+            if claim_named_numbers and claim_named_numbers != named_numbers(quote):
+                return False
+
+            def identifiers(value: str) -> set[str]:
+                return set(re.findall(r"\b[A-Z][A-Z0-9]{2,}\b", value))
+
+            claim_ids = identifiers(claim_text)
+            quote_ids = identifiers(quote)
+            if claim_ids and quote_ids and not claim_ids.issubset(quote_ids):
+                return False
+
+            months = (
+                "january", "february", "march", "april", "may", "june",
+                "july", "august", "september", "october", "november", "december",
+            )
+
+            def named_months(value: str) -> set[str]:
+                words = set(re.findall(r"[a-z]+", value.lower()))
+                return {month for month in months if month in words}
+
+            claim_months = named_months(claim_text)
+            if claim_months and claim_months != named_months(quote):
+                return False
+            return True
+
         def _quote_materially_supports_positive_claim(quote: str) -> bool:
-            if _claim_has_negation(claim_text):
+            if _claim_has_negation(claim_text) or not _material_values_match(quote):
                 return False
             quote_low = " " + str(quote or "").lower() + " "
-            if any(marker in quote_low for marker in (" not ", " instead ", " rather than ", " different ", " contradict")):
+            if any(marker in quote_low for marker in (
+                " not ", " no ", " never ", " without ", " unavailable ",
+                " unlisted ", " unsupported ", " instead ", " rather than ",
+                " different ", " contradict",
+            )):
                 return False
             claim_tokens = _tokens(claim_text)
             quote_tokens = set(_tokens(quote))
