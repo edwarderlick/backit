@@ -11,9 +11,10 @@ npm run dev
 
 Env (`web/.env.local`):
 
-```
-NEXT_PUBLIC_CONTRACT_ADDRESS=0xEb3c460DD484fd3A4bF1003FA9C29f25B3c45568
-NEXT_PUBLIC_STUDIO_RPC_URL=https://studio.genlayer.com/api
+```text
+NEXT_PUBLIC_CONTRACT_ADDRESS=0x993FC4E6B1a678f8793296d61812C63cB88fb06c
+NEXT_PUBLIC_GENLAYER_RPC_URL=https://studio-dev.genlayer.com/api
+NEXT_PUBLIC_GENLAYER_CHAIN_ID=61997
 ```
 
-Browser RPC goes through `POST /api/genlayer` (Studio CORS). Injected EIP-6963 wallets only. Chain 61999.
+Browser RPC goes through `POST /api/genlayer` (Studio CORS). Injected EIP-6963 wallets only. Studio Next chain 61997.
