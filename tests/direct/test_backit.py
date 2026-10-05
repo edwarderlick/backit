@@ -30,7 +30,13 @@ def _mock_get(direct_vm, url_part, status, body):
     )
 
 
-def _mock_llm(direct_vm, outcome, quote="q", reason="r"):
+def _mock_llm(direct_vm, outcome, quote="q", reason="r", relation=None):
+    if relation is None:
+        relation = "SUPPORTS" if outcome == "TRUE" else "CONTRADICTS"
+    direct_vm.mock_llm(
+        r"EVIDENCE_SUPPORT_CHECK",
+        json.dumps({"relation": relation, "reason_faithful": True}),
+    )
     direct_vm.mock_llm(
         r".*",
         json.dumps({"outcome": outcome, "quote": quote, "reason": reason}),
@@ -692,6 +698,7 @@ def test_withdraw_without_credits_reverts(direct_vm, direct_deploy, direct_alice
         ("USDC is available for trading", "USDT is available for trading"),
         ("The company appointed Alice Smith as chief executive", "The company appointed Bob Smith as chief executive"),
         ("Apple released the product in 2025", "Google released the product in 2025"),
+        ("The board approved the merger proposal", "The board rejected the merger proposal"),
         ("Bitcoin whitepaper was released in 2008", "Bitcoin whitepaper was released in 2008; false."),
         ("Bitcoin whitepaper was released in 2008", "Bitcoin whitepaper was released in 2008, not 2009"),
     ],
@@ -704,12 +711,69 @@ def test_true_rejects_material_value_conflict(
     direct_vm.value = 1000
     bid = c.back(claim, "https://docs.genlayer.com/value", "FACT")
     _mock_get(direct_vm, "docs.genlayer.com/value", 200, quote)
-    _mock_llm(direct_vm, "TRUE", quote=quote, reason="The page matches the claim")
+    _mock_llm(
+        direct_vm, "TRUE", quote=quote, reason="The page matches the claim",
+        relation="CONTRADICTS" if "rejected the merger" in quote else None,
+    )
     direct_vm.sender = direct_bob
     c.prove(bid)
     rec = c.get_back(bid)
     assert rec["state"] == "THIN"
     assert rec["paid_to_poster"] + rec["credit_poster"] == 1000
+
+
+
+def test_validator_rejects_forged_true_with_opposite_action(
+    direct_vm, direct_deploy, direct_alice, direct_bob
+):
+    c = direct_deploy(CONTRACT)
+    direct_vm.sender = direct_alice
+    direct_vm.value = 1000
+    claim = "The board approved the merger proposal"
+    bid = c.back(claim, "https://docs.genlayer.com/board", "FACT")
+    good_quote = "The board approved the merger proposal"
+    _mock_get(direct_vm, "docs.genlayer.com/board", 200, good_quote)
+    _mock_llm(direct_vm, "TRUE", quote=good_quote, reason="The quote supports the claim")
+    direct_vm.sender = direct_bob
+    c.prove(bid)
+    assert c.get_back(bid)["state"] == "TRUE"
+
+    bad_quote = "The board rejected the merger proposal"
+    direct_vm.clear_mocks()
+    _mock_get(direct_vm, "docs.genlayer.com/board", 200, bad_quote)
+    direct_vm.mock_llm(
+        r"EVIDENCE_SUPPORT_CHECK",
+        json.dumps({"relation": "CONTRADICTS", "reason_faithful": False}),
+    )
+    assert direct_vm.run_validator(
+        leader_result={
+            "outcome": "TRUE",
+            "quote": bad_quote,
+            "reason": "The page matches the claim",
+        }
+    ) is False
+
+
+def test_validator_fails_closed_when_semantic_check_unavailable(
+    direct_vm, direct_deploy, direct_alice, direct_bob
+):
+    c = direct_deploy(CONTRACT)
+    direct_vm.sender = direct_alice
+    direct_vm.value = 1000
+    claim = "The board approved the merger proposal"
+    bid = c.back(claim, "https://docs.genlayer.com/board", "FACT")
+    quote = "The board approved the merger proposal"
+    _mock_get(direct_vm, "docs.genlayer.com/board", 200, quote)
+    _mock_llm(direct_vm, "TRUE", quote=quote, reason="The quote supports the claim")
+    direct_vm.sender = direct_bob
+    c.prove(bid)
+    assert c.get_back(bid)["state"] == "TRUE"
+
+    direct_vm.clear_mocks()
+    _mock_get(direct_vm, "docs.genlayer.com/board", 200, quote)
+    assert direct_vm.run_validator(
+        leader_result={"outcome": "TRUE", "quote": quote, "reason": "The quote supports the claim"}
+    ) is False
 
 
 def test_validator_rejects_forged_true_with_conflicting_value(

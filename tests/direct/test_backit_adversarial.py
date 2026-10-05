@@ -21,7 +21,13 @@ def _mock_get(direct_vm, url_part, status, body):
     )
 
 
-def _mock_llm(direct_vm, outcome, quote="q", reason="r"):
+def _mock_llm(direct_vm, outcome, quote="q", reason="r", relation=None):
+    if relation is None:
+        relation = "SUPPORTS" if outcome == "TRUE" else "CONTRADICTS"
+    direct_vm.mock_llm(
+        r"EVIDENCE_SUPPORT_CHECK",
+        json.dumps({"relation": relation, "reason_faithful": True}),
+    )
     direct_vm.mock_llm(
         r".*",
         json.dumps({"outcome": outcome, "quote": quote, "reason": reason}),
