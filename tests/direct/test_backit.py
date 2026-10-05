@@ -723,6 +723,37 @@ def test_true_rejects_material_value_conflict(
 
 
 
+
+@pytest.mark.parametrize(
+    "claim,quote",
+    [
+        ("The board approved the merger proposal", "The board rejected the merger proposal"),
+        ("The board approved the merger proposal", "The board has rejected the merger proposal"),
+        ("The board approved the merger proposal", "According to the board, the board rejected the merger proposal"),
+        ("The service remains active today", "The service remains inactive today"),
+        ("The proposal passed the final vote", "The proposal failed the final vote"),
+        ("The company increased its revenue", "The company decreased its revenue"),
+        ("The company increased its revenue", "Revenue at the company decreased"),
+        ("The proposal won the final vote", "The proposal lost the final vote"),
+    ],
+)
+def test_true_rejects_opposite_action_even_if_semantic_checker_approves(
+    direct_vm, direct_deploy, direct_alice, direct_bob, claim, quote
+):
+    c = direct_deploy(CONTRACT)
+    direct_vm.sender = direct_alice
+    direct_vm.value = 1000
+    bid = c.back(claim, "https://docs.genlayer.com/board", "FACT")
+    _mock_get(direct_vm, "docs.genlayer.com/board", 200, quote)
+    _mock_llm(
+        direct_vm, "TRUE", quote=quote, reason="The page matches the claim",
+        relation="SUPPORTS",
+    )
+    direct_vm.sender = direct_bob
+    c.prove(bid)
+    assert c.get_back(bid)["state"] == "THIN"
+
+
 def test_validator_rejects_forged_true_with_opposite_action(
     direct_vm, direct_deploy, direct_alice, direct_bob
 ):
@@ -743,7 +774,7 @@ def test_validator_rejects_forged_true_with_opposite_action(
     _mock_get(direct_vm, "docs.genlayer.com/board", 200, bad_quote)
     direct_vm.mock_llm(
         r"EVIDENCE_SUPPORT_CHECK",
-        json.dumps({"relation": "CONTRADICTS", "reason_faithful": False}),
+        json.dumps({"relation": "SUPPORTS", "reason_faithful": True}),
     )
     assert direct_vm.run_validator(
         leader_result={

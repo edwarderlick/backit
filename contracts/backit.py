@@ -621,8 +621,45 @@ class BackIt(gl.contract.Contract):
                 return False
             return True
 
+        def _near_verbatim_material_conflict(quote: str) -> bool:
+            """Fail closed when otherwise matching evidence substitutes a material word."""
+            def content_words(value: str) -> list[str]:
+                filler = {"the", "and", "for", "has", "was", "are", "its", "from", "into"}
+                return [
+                    word for word in re.findall(r"[a-z0-9]+", str(value or "").lower())
+                    if len(word) >= 3 and word not in filler
+                ]
+
+            claim_words = content_words(claim_text)
+            quote_words = content_words(quote)
+            if len(claim_words) < 3:
+                return False
+            # A single changed content word is material even when the
+            # surrounding subject and object are reordered.
+            missing = set(claim_words) - set(quote_words)
+            added = set(quote_words) - set(claim_words)
+            if len(missing) == 1 and len(added) == 1 and len(set(claim_words) & set(quote_words)) >= 2:
+                return True
+            if len(quote_words) < len(claim_words):
+                return False
+            # Compare every claim-sized span so an introduction to the
+            # evidence cannot hide a changed action or status.
+            for start in range(len(quote_words) - len(claim_words) + 1):
+                window = quote_words[start : start + len(claim_words)]
+                changed = [(a, b) for a, b in zip(claim_words, window) if a != b]
+                if len(changed) != 1:
+                    continue
+                before, after = changed[0]
+                if len(before) >= 4 and len(after) >= 4:
+                    return True
+            return False
+
         def _quote_materially_supports_positive_claim(quote: str) -> bool:
-            if _claim_has_negation(claim_text) or not _material_values_match(quote):
+            if (
+                _claim_has_negation(claim_text)
+                or not _material_values_match(quote)
+                or _near_verbatim_material_conflict(quote)
+            ):
                 return False
             quote_low = " " + str(quote or "").lower() + " "
             if re.search(
@@ -643,6 +680,8 @@ class BackIt(gl.contract.Contract):
             return total > 0 and hits * 100 >= total * 50
 
         def _quote_contradicts_claim(quote: str, reason: str) -> bool:
+            if _near_verbatim_material_conflict(quote):
+                return True
             quote_low = " " + str(quote or "").lower() + " "
             reason_low = " " + str(reason or "").lower() + " "
             if any(marker in quote_low for marker in (" not ", " instead ", " rather than ", " different ", " contradict")):

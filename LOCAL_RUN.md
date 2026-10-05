@@ -1,12 +1,12 @@
 # LOCAL RUN
 
-## Current Studio Next deployment (October 5, 2026)
+## Current Studio Next deployment (October 6, 2026)
 
 - Chain: `61997`; RPC: `https://studio-dev.genlayer.com/api`
-- Contract: `0x993FC4E6B1a678f8793296d61812C63cB88fb06c`
-- Deploy tx: `0xd4bb4bb4c15b601ddcf67fe3b6ef69f799576a76223edc71fcf6f4b238e5e966` (FINALIZED, FINISHED_WITH_RETURN)
-- `npm run verify`: 57 direct tests, production build, 3 Studio Next integration tests passed.
-- Fresh Python 3.12 environment: `uv pip install -r requirements.txt`, `import gltest.direct.sdk_compat`, and `python -m pytest tests/direct/test_backit.py -q` passed (44 tests).
+- Contract: `0x42C9dC27178470A2Bd853Ae15C49E5aa7Cb1ec68`
+- Deploy tx: `0x1ee96bcbdac6d2dad5634cd8aabda34cba2043e590a84fea1ff20c82d7b57eae` (FINALIZED, FINISHED_WITH_RETURN)
+- `npm run verify`: 65 direct tests, production build, 3 Studio Next integration tests passed.
+- Fresh Python 3.12 environment: `uv pip install -r requirements.txt`, `import gltest.direct.sdk_compat`, and `python -m pytest tests/direct/test_backit.py -q` passed (52 tests).
 - GenVM lint and validation passed. Live TRUE and FALSE proof cycles finalized successfully on the current contract.
 
 ## Historical Studio Next run (September 2026)

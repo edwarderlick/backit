@@ -13,13 +13,13 @@ Not a court. Not an appeal system. Not a delayed oracle. Studio Next only. No re
 - Chain: Studio Next `61997`
 - RPC: `https://studio-dev.genlayer.com/api`
 - Explorer: [explorer-studio-dev.genlayer.com](https://explorer-studio-dev.genlayer.com/)
-- Current contract: [`0x993FC4E6B1a678f8793296d61812C63cB88fb06c`](https://explorer-studio-dev.genlayer.com/address/0x993FC4E6B1a678f8793296d61812C63cB88fb06c)
-- Deploy tx: [`0xd4bb4bb4c15b601ddcf67fe3b6ef69f799576a76223edc71fcf6f4b238e5e966`](https://explorer-studio-dev.genlayer.com/tx/0xd4bb4bb4c15b601ddcf67fe3b6ef69f799576a76223edc71fcf6f4b238e5e966)
+- Current contract: [`0x42C9dC27178470A2Bd853Ae15C49E5aa7Cb1ec68`](https://explorer-studio-dev.genlayer.com/address/0x42C9dC27178470A2Bd853Ae15C49E5aa7Cb1ec68)
+- Deploy tx: [`0x1ee96bcbdac6d2dad5634cd8aabda34cba2043e590a84fea1ff20c82d7b57eae`](https://explorer-studio-dev.genlayer.com/tx/0x1ee96bcbdac6d2dad5634cd8aabda34cba2043e590a84fea1ff20c82d7b57eae)
 
 Vercel should use:
 
 ```bash
-NEXT_PUBLIC_CONTRACT_ADDRESS=0x993FC4E6B1a678f8793296d61812C63cB88fb06c
+NEXT_PUBLIC_CONTRACT_ADDRESS=0x42C9dC27178470A2Bd853Ae15C49E5aa7Cb1ec68
 NEXT_PUBLIC_GENLAYER_RPC_URL=https://studio-dev.genlayer.com/api
 GENLAYER_RPC_URL=https://studio-dev.genlayer.com/api
 NEXT_PUBLIC_GENLAYER_CHAIN_ID=61997
@@ -37,7 +37,7 @@ BackIt uses the qualified-domain path, not an external archival snapshot service
 - Fetched page text is fenced as untrusted evidence in the verifier prompt.
 - Pages containing prompt-injection style instructions settle `THIN`.
 - Validators independently fetch the same source, reject inaccessible or thin excerpts, and require the stored quote to appear in their own excerpt before accepting `TRUE` or `FALSE`.
-- Validators run deterministic value checks and an independent semantic check over the claim, stored quote, reason, and outcome. The quote and reason must substantively justify `TRUE` or `FALSE`; enum-only agreement is insufficient. Paraphrases may support a claim, but material contradictions must not. An unavailable or inconclusive semantic check rejects the leader result.
+- Validators run deterministic value checks, near-verbatim material-conflict checks, and an independent semantic check over the claim, stored quote, reason, and outcome. The quote and reason must substantively justify `TRUE` or `FALSE`; enum-only agreement is insufficient. Paraphrases may support a claim, but material contradictions must not. An unavailable or inconclusive semantic check rejects the leader result.
 - Redirects, malicious HTML, mutable pages, divergent validator fetches, inaccessible sources, transfer/credit fallback, and cancellation/proof races have direct test coverage.
 
 This is deliberately conservative: if a source is blocked, binary, inaccessible, malicious, or too ambiguous, the result is `THIN` and the poster is refunded.
@@ -88,18 +88,18 @@ The same gate expands to:
 
 ```bash
 uv run pytest tests/direct -q
-# 57 passed
+# 65 passed
 
 cd web
 npm.cmd run build
 # passed
 
 cd ..
-BACKIT_CONTRACT=0x993FC4E6B1a678f8793296d61812C63cB88fb06c uv run pytest tests/integration -v
+BACKIT_CONTRACT=0x42C9dC27178470A2Bd853Ae15C49E5aa7Cb1ec68 uv run pytest tests/integration -v
 # 3 passed
 ```
 
-The project pins `genlayer-test==0.30.0rc2` in `pyproject.toml`, `uv.lock`, and `requirements.txt`. A fresh Python 3.12 environment installed `requirements.txt`, imported `gltest.direct.sdk_compat`, and passed `python -m pytest tests/direct/test_backit.py -q` (44 tests). `uv run genvm-lint check contracts/backit.py` passes lint and SDK validation.
+The project pins `genlayer-test==0.30.0rc2` in `pyproject.toml`, `uv.lock`, and `requirements.txt`. A fresh Python 3.12 environment installed `requirements.txt`, imported `gltest.direct.sdk_compat`, and passed `python -m pytest tests/direct/test_backit.py -q` (52 tests). `uv run genvm-lint check contracts/backit.py` passes lint and SDK validation.
 
 ## Local Development
 
