@@ -594,6 +594,19 @@ class BackIt(gl.contract.Contract):
             if claim_ids and quote_ids and not claim_ids.issubset(quote_ids):
                 return False
 
+            def proper_names(value: str) -> set[str]:
+                excluded = {"A", "An", "The", "This", "That", "It", "Its", "In", "On", "At", "As", "By", "For", "From"}
+                return {
+                    word.lower()
+                    for word in re.findall(r"\b[A-Z][A-Za-z0-9]+\b", value)
+                    if word not in excluded and not word.isupper()
+                }
+
+            claim_names = proper_names(claim_text)
+            quote_names = proper_names(quote)
+            if claim_names and quote_names and not claim_names.issubset(quote_names):
+                return False
+
             months = (
                 "january", "february", "march", "april", "may", "june",
                 "july", "august", "september", "october", "november", "december",
@@ -612,11 +625,10 @@ class BackIt(gl.contract.Contract):
             if _claim_has_negation(claim_text) or not _material_values_match(quote):
                 return False
             quote_low = " " + str(quote or "").lower() + " "
-            if any(marker in quote_low for marker in (
-                " not ", " no ", " never ", " without ", " unavailable ",
-                " unlisted ", " unsupported ", " instead ", " rather than ",
-                " different ", " contradict",
-            )):
+            if re.search(
+                r"\b(?:not|no|never|without|unavailable|unlisted|unsupported|instead|different|contradict\w*|false|incorrect|inaccurate)\b",
+                quote_low,
+            ) or "rather than" in quote_low:
                 return False
             claim_tokens = _tokens(claim_text)
             quote_tokens = set(_tokens(quote))

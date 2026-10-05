@@ -690,6 +690,9 @@ def test_withdraw_without_credits_reverts(direct_vm, direct_deploy, direct_alice
         ("The launch happened in May 2025", "The launch happened in June 2025"),
         ("The protocol fee is five percent", "The protocol fee is six percent"),
         ("USDC is available for trading", "USDT is available for trading"),
+        ("The company appointed Alice Smith as chief executive", "The company appointed Bob Smith as chief executive"),
+        ("Apple released the product in 2025", "Google released the product in 2025"),
+        ("Bitcoin whitepaper was released in 2008", "Bitcoin whitepaper was released in 2008; false."),
         ("Bitcoin whitepaper was released in 2008", "Bitcoin whitepaper was released in 2008, not 2009"),
     ],
 )
