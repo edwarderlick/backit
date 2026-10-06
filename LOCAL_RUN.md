@@ -3,8 +3,9 @@
 ## Current Studio Next deployment (October 6, 2026)
 
 - Chain: `61997`; RPC: `https://studio-dev.genlayer.com/api`
-- Contract: `0x42C9dC27178470A2Bd853Ae15C49E5aa7Cb1ec68`
-- Deploy tx: `0x1ee96bcbdac6d2dad5634cd8aabda34cba2043e590a84fea1ff20c82d7b57eae` (FINALIZED, FINISHED_WITH_RETURN)
+- Contract: `0x4F6134D424AcfBb6DCB41E24D93060B6F77b53d3`
+- Deploy tx: `0x295773f6926da381701694db9a2773d411cfb724a74fbe2eef9d2c72d34b5eda` (FINALIZED, FINISHED_WITH_RETURN)
+- Deployed source SHA-256: `cbb62b9165c4a2f805c9118f4a964230279cd6ca5fd2cdcb20a0ece1717483ff`
 - `npm run verify`: 65 direct tests, production build, 3 Studio Next integration tests passed.
 - Fresh Python 3.12 environment: `uv pip install -r requirements.txt`, `import gltest.direct.sdk_compat`, and `python -m pytest tests/direct/test_backit.py -q` passed (52 tests).
 - GenVM lint and validation passed. Live TRUE and FALSE proof cycles finalized successfully on the current contract.

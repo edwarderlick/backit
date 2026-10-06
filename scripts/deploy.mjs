@@ -2,6 +2,7 @@
 /** Deploy the checked-out contract to Studio Next (chain 61997). */
 import { createRequire } from "node:module";
 import { readFileSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { resolve } from "node:path";
 import { homedir } from "node:os";
 import { createClient, createAccount } from "../web/node_modules/genlayer-js/dist/index.js";
@@ -30,7 +31,9 @@ console.log("Network: Studio Next 61997");
 console.log("Deployer:", account.address);
 console.log("Estimated fee deposit (wei):", estimate.feeValue.toString());
 
-const code = readFileSync(resolve(root, "contracts/backit.py"), "utf8");
+const code = readFileSync(resolve(root, "contracts/backit.py"), "utf8").replace(/\r\n/g, "\n");
+const codeHash = createHash("sha256").update(code, "utf8").digest("hex");
+console.log("Contract source SHA-256:", codeHash);
 const hash = process.env.BACKIT_DEPLOY_HASH || await client.deployContract({ code, fees });
 if (!/^0x[a-fA-F0-9]{64}$/.test(hash)) throw new Error("Invalid deployment transaction hash");
 console.log("Deployment transaction:", hash);

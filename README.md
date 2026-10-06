@@ -13,13 +13,14 @@ Not a court. Not an appeal system. Not a delayed oracle. Studio Next only. No re
 - Chain: Studio Next `61997`
 - RPC: `https://studio-dev.genlayer.com/api`
 - Explorer: [explorer-studio-dev.genlayer.com](https://explorer-studio-dev.genlayer.com/)
-- Current contract: [`0x42C9dC27178470A2Bd853Ae15C49E5aa7Cb1ec68`](https://explorer-studio-dev.genlayer.com/address/0x42C9dC27178470A2Bd853Ae15C49E5aa7Cb1ec68)
-- Deploy tx: [`0x1ee96bcbdac6d2dad5634cd8aabda34cba2043e590a84fea1ff20c82d7b57eae`](https://explorer-studio-dev.genlayer.com/tx/0x1ee96bcbdac6d2dad5634cd8aabda34cba2043e590a84fea1ff20c82d7b57eae)
+- Current contract: [`0x4F6134D424AcfBb6DCB41E24D93060B6F77b53d3`](https://explorer-studio-dev.genlayer.com/address/0x4F6134D424AcfBb6DCB41E24D93060B6F77b53d3)
+- Deploy tx: [`0x295773f6926da381701694db9a2773d411cfb724a74fbe2eef9d2c72d34b5eda`](https://explorer-studio-dev.genlayer.com/tx/0x295773f6926da381701694db9a2773d411cfb724a74fbe2eef9d2c72d34b5eda)
+- Deployed source SHA-256: `cbb62b9165c4a2f805c9118f4a964230279cd6ca5fd2cdcb20a0ece1717483ff`
 
 Vercel should use:
 
 ```bash
-NEXT_PUBLIC_CONTRACT_ADDRESS=0x42C9dC27178470A2Bd853Ae15C49E5aa7Cb1ec68
+NEXT_PUBLIC_CONTRACT_ADDRESS=0x4F6134D424AcfBb6DCB41E24D93060B6F77b53d3
 NEXT_PUBLIC_GENLAYER_RPC_URL=https://studio-dev.genlayer.com/api
 GENLAYER_RPC_URL=https://studio-dev.genlayer.com/api
 NEXT_PUBLIC_GENLAYER_CHAIN_ID=61997
@@ -95,7 +96,7 @@ npm.cmd run build
 # passed
 
 cd ..
-BACKIT_CONTRACT=0x42C9dC27178470A2Bd853Ae15C49E5aa7Cb1ec68 uv run pytest tests/integration -v
+BACKIT_CONTRACT=0x4F6134D424AcfBb6DCB41E24D93060B6F77b53d3 uv run pytest tests/integration -v
 # 3 passed
 ```
 
